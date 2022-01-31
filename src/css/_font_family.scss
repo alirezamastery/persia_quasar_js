@@ -1,0 +1,33 @@
+// src url paths should be calculated from where the compiled css file will be
+
+@font-face {
+  font-family: Sahel;
+  src: url("./fonts/sahel/Farsi-Digits/Sahel-FD.eot");
+  src: url("./fonts/sahel/Farsi-Digits/Sahel-FD.ttf") format('truetype'),
+  url("./fonts/sahel/Farsi-Digits/Sahel-FD.ttf") format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: Roboto-Regular;
+  font-style: normal;
+  font-weight: normal;
+  src: url('./fonts/Roboto/Roboto-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: Samim;
+  src: url("./fonts/samim/Samim-FD-WOL.eot");
+  src: url("./fonts/samim/Samim-FD-WOL.ttf") format('truetype'),
+  url("./fonts/samim/Samim-FD-WOL.woff") format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: SFSquare;
+  src: url("./fonts/sf-square-head/SF Square Head Condensed.ttf");
+  font-weight: normal;
+  font-style: normal;
+}

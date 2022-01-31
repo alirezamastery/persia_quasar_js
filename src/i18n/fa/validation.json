@@ -1,0 +1,23 @@
+{
+  "code": "fa",
+  "messages": {
+    "required_if": "{_field_} الزامی است",
+    "required": "{_field_} الزامی است"
+  },
+  "names": {
+    "Mobile": "موبایل",
+    "Password": "پسورد",
+    "PriceMin": "قیمت کف",
+    "ActualProduct": "محصول اصلی",
+    "Product": "محصول",
+    "Brand": "برند",
+    "Title": "عنوان",
+    "PriceStep": "پله قیمت",
+    "Amount": "مقدار",
+    "dkpc": "dkpc",
+    "dkp": "dkp",
+    "SelectorValues": "انتخابگرها",
+    "SelectorValue": "انتخابگر",
+    "Type": "نوع"
+  }
+}

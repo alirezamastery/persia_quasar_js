@@ -1,0 +1,23 @@
+{
+  "code": "en",
+  "messages": {
+    "required_if": "{_field_} is required",
+    "required": "{_field_} is required"
+  },
+  "names": {
+    "Mobile": "mobile",
+    "Password": "password",
+    "PriceMin": "minimum price",
+    "ActualProduct": "actual product",
+    "Product": "product",
+    "Brand": "brand",
+    "Title": "title",
+    "PriceStep": "price step",
+    "Amount": "amount",
+    "dkpc": "dkpc",
+    "dkp": "dkp",
+    "SelectorValues": "selector values",
+    "SelectorValue": "selector value",
+    "Type": "type"
+  }
+}
