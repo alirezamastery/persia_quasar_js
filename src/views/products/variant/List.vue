@@ -7,17 +7,15 @@
     :add-route="addRoute"
     :filters="filters"
   >
+
     <template v-slot:col-product="{ props }">
-      <q-btn
-        :to="{name: editRoute, params:{id:props.row.id}}"
-        :label="props.row.product.title"
-        dense
-        flat
-      />
+      <q-btn :to="{name: editRoute, params: {id: props.row.id}}" dense flat>
+        {{ props.row.product.title }}
+      </q-btn>
     </template>
 
     <template v-slot:col-price_min="{ props }">
-      {{ props.row.price_min }}
+      {{ $filters.price(props.row.price_min) }}
     </template>
 
     <template v-slot:col-selector="{ props }">
@@ -37,10 +35,9 @@
 </template>
 
 <script setup>
-import {ref, reactive} from 'vue'
-import urls from 'src/urls'
 import {useI18n} from 'vue-i18n'
 import Table from 'src/components/table/Table.vue'
+import urls from 'src/urls'
 
 const {t} = useI18n()
 const apiRoot = urls.variants
@@ -48,11 +45,17 @@ const editRoute = 'variantEdit'
 const addRoute = 'variantAdd'
 const columns = [
   {name: 'product', label: t('products.product'), field: 'product', align: 'left'},
-  {name: 'dkpc', label: t('products.DKPC'), field: 'dkpc'},
-  {name: 'selector', label: t('products.selector'), field: 'selector'},
-  {name: 'price_min', label: t('products.priceMin'), field: 'price_min', sortable: true},
-  {name: 'has_competition', label: t('products.hasCompetition'), field: 'has_competition', sortable: true},
-  {name: 'is_active', label: t('products.isActive'), field: 'is_active'},
+  {name: 'dkpc', label: t('products.DKPC'), field: 'dkpc', align: 'left'},
+  {name: 'selector', label: t('products.selector'), field: 'selector', align: 'left'},
+  {name: 'price_min', label: t('products.priceMinToman'), field: 'price_min', align: 'left', sortable: true},
+  {
+    name: 'has_competition',
+    label: t('products.hasCompetition'),
+    field: 'has_competition',
+    align: 'center',
+    sortable: true,
+  },
+  {name: 'is_active', label: t('products.isActive'), field: 'is_active', align: 'center'},
 ]
 
 const filters = [
@@ -69,7 +72,3 @@ const filters = [
 ]
 
 </script>
-
-<style scoped>
-
-</style>

@@ -15,13 +15,14 @@
     :options="filter.options"
     :label="$t(filter.label)"
     dense
+    filled
     class="q-pa-sm"
   />
 
   <DateQ
     v-else-if="uiType === 'date'"
-    @date-change="inputValue = $event"
     :filter-data="filter"
+    @date-change="inputValue = $event"
   />
 
   <div v-else>Invalid Filter type</div>
@@ -57,7 +58,6 @@ const uiType = computed(() => {
 
 watch(() => resetSignal.value, () => inputValue.value = null)
 watch(inputValue, () => {
-  console.log('new vale', inputValue.value)
   emits('update:modelValue', inputValue.value)
 })
 

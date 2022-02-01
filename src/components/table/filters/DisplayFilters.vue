@@ -1,6 +1,6 @@
 <template>
   <div
-    class="col-xs-12 col-md-4 col-lg-3 col-xl-2 q-mx-sm bordered"
+    class="col-xs-12 col-md-3 col-lg-3 col-xl-2 q-mx-sm bordered"
     style="height: fit-content"
   >
     <div
@@ -37,7 +37,7 @@
 <script setup>
 import {ref, watch} from 'vue'
 import FilterTypes from './FilterTypes.vue'
-import useGeneralStore from '../../../stores/general'
+import useGeneralStore from 'src/stores/general'
 import {useQuasar} from 'quasar'
 
 const emits = defineEmits(['filter-change'])

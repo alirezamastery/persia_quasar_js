@@ -10,7 +10,10 @@
 
       <div class="col">
 
-        <TableHeader api-root=""/>
+        <TableHeader
+          :api-root="apiRoot"
+          @search-input="searchPhrase = $event"
+        />
 
         <q-table
           :rows="data.items"
@@ -43,8 +46,6 @@
           </template>
         </q-table>
 
-        <q-separator/>
-
         <Pagination
           :page="page"
           :page-size="pageSize"
@@ -55,8 +56,7 @@
           @page-select="handlePageSelect"
           @page-size-select="pageSize = $event"
         />
-
-        <q-separator/>
+        <q-separator class="q-mb-sm"/>
       </div>
 
       <DisplayFilters
@@ -71,7 +71,7 @@
 
 
 <script setup>
-import {ref, reactive, defineEmits, defineProps, watch} from 'vue'
+import {ref, reactive, watch} from 'vue'
 import {axiosInstance} from 'src/boot/axios'
 import Pagination from './Pagination.vue'
 import DisplayFilters from './filters/DisplayFilters.vue'
@@ -118,6 +118,11 @@ watch(pageSize, () => {
   page.value = 1
   fetchData()
 })
+watch(searchPhrase, () => {
+  console.log('search phrase')
+  page.value = 1
+  fetchData()
+})
 
 function constructQuery() {
   let query = `?${queries.value}&page_size=${pageSize.value}`
@@ -139,6 +144,7 @@ function handlePageSelect(event) {
 
 function fetchData() {
   const url = props.apiRoot + constructQuery()
+  loading.value = true
   axiosInstance.get(url)
     .then(res => {
       console.log('reFetchData | response', res)
@@ -148,6 +154,7 @@ function fetchData() {
     .catch(err => {
       console.log('reFetchData | error', err)
     })
+    .finally(() => loading.value = false)
 }
 
 function handleRequest(props) {

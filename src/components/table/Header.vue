@@ -11,8 +11,9 @@
       color="primary"
       class="q-mr-sm"
       @click="$router.push({name: addRoute})"
-      v-text="$t('general.create')"
-    />
+    >
+      {{ $t('general.create') }}
+    </q-btn>
   </q-toolbar>
 </template>
 

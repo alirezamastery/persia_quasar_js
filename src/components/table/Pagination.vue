@@ -6,7 +6,8 @@
     <div class="col-12 col-md-6 col-lg-8 col-xl-9 flex justify-center">
       <q-pagination
         v-model="pageValue"
-        :max="5"
+        :max="pageCount"
+        :max-pages="7"
         :disable="tableLoading"
         boundary-numbers
         direction-links

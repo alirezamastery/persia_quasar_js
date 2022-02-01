@@ -8,6 +8,7 @@
   "dkp": "DKP",
   "DKPC": "DKPC",
   "priceMin": "Minimum price",
+  "priceMinToman": "Minimum price (Toman)",
   "productType": "Product Type",
   "hasCompetition": "has competition",
   "isActive": "is active",

@@ -17,6 +17,7 @@
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "lodash": "^4.17.21",
+    "moment-jalaali": "^0.9.4",
     "pinia": "^2.0.0-rc.10",
     "quasar": "^2.0.0",
     "vee-validate": "^4.5.8",

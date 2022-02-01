@@ -8,6 +8,7 @@
   "dkp": "DKP",
   "DKPC": "DKPC",
   "priceMin": "قیمت کف",
+  "priceMinToman": "قیمت کف (تومان)",
   "productType": "نوع محصول",
   "hasCompetition": "دارای رقیب",
   "isActive": "فعال",

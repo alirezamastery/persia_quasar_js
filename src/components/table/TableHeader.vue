@@ -10,7 +10,7 @@
       dense
       hide-hint
       clearable
-      @input="$emit('search-input', this.searchPhrase)"
+      @update:model-value="$emit('search-input', searchPhrase)"
     >
       <template v-slot:append>
         <q-icon name="search"/>
@@ -23,6 +23,15 @@
 export default {
   name: 'TableHeader',
   props: {
+    apiRoot: {
+      type: String,
+      required: true,
+    },
+    queryParam: {
+      type: String,
+      default: 'search',
+      required: false,
+    },
     hideSearch: {
       type: Boolean,
       default: false,
