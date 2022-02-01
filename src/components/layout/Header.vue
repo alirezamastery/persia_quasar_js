@@ -1,5 +1,7 @@
 <template>
-  <q-header>
+  <q-header
+    :class="q.dark.isActive ? 'bg-grey-10 text-white' : 'bg-grey-3 text-black'"
+  >
     <q-toolbar>
       <q-btn
         flat
@@ -14,7 +16,7 @@
         {{ $t('general.siteHeader') }}
       </q-toolbar-title>
 
-      <ThemeToggle />
+      <ThemeToggle/>
 
       <q-btn
         v-if="isAuthenticated"
@@ -28,18 +30,18 @@
 </template>
 
 <script>
-import { computed, ref } from 'vue'
-import { useRouter } from 'vue-router'
-import { useQuasar } from 'quasar'
-import { useUserStore } from 'src/stores/user'
-import {useGeneralStore} from 'src/stores/general'
-import { sidebarOpen, generalState } from 'src/components/layout/composables'
+import {computed, ref} from 'vue'
+import {useRouter} from 'vue-router'
+import {useQuasar} from 'quasar'
+import useUserStore from 'src/stores/user'
+import useGeneralStore from 'src/stores/general'
+import {sidebarOpen, generalState} from 'src/components/layout/composables'
 import ThemeToggle from './ThemeToggle.vue'
 
 export default {
   name: 'Header',
   components: {
-    ThemeToggle
+    ThemeToggle,
   },
   setup() {
     const q = useQuasar()
@@ -62,9 +64,9 @@ export default {
       toggleLeftDrawer,
       isAuthenticated,
       handleLogout,
-      q
+      q,
     }
-  }
+  },
 }
 </script>
 

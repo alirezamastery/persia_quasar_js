@@ -1,7 +1,8 @@
 import {defineStore} from 'pinia'
 import {useRouter} from 'vue-router'
-import router from 'src/router'
+import {routerInstance} from 'src/router'
 import {axiosInstance} from 'src/boot/axios'
+import localDb from 'src/local-db'
 
 const storeID = 'user'
 
@@ -22,17 +23,25 @@ export const useUserStore = defineStore({
   },
   actions: {
     Login(user) {
+      console.log('user', user)
+      localDb.set('user', user)
       this.user = user
     },
     Logout() {
       this.user = null
-      localStorage.removeItem('access_token')
-      localStorage.removeItem('refresh_token')
+      localDb.clearAll()
       axiosInstance.defaults.headers['Authorization'] = ''
-      void router.push({name: 'Login'})
+      routerInstance.push({name: 'Login'})
     },
     SetProfile(payload) {
       this.profile = payload
+      for (const [key, value] of Object.entries(payload)) {
+        console.log(key, value)
+        let val = value
+        if (key === 'avatar' && value !== null)
+          val = process.env.SERVER_BASE_URL + value
+        this.profile[key] = val
+      }
     },
   },
 })

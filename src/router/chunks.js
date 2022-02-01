@@ -1,7 +1,11 @@
 export const home = () =>
-  import(/* webpackChunkName: "general" */ '../views/home.vue')
+  import(/* webpackChunkName: "general" */ '../views/dashboard/Profile.vue')
 export const login = () =>
   import(/* webpackChunkName: "general" */ '../views/auth/Login.vue')
+export const logout = () =>
+  import(/* webpackChunkName: "general" */ '../views/auth/Logout.vue')
+export const profile = () =>
+  import(/* webpackChunkName: "general" */ '../views/dashboard/Profile.vue')
 
 export const actualProductsList = () =>
   import(/* webpackChunkName: "products" */ '../views/products/actualProduct/List.vue')
@@ -36,11 +40,11 @@ export const productTypeAddEdit = () =>
 export const variantsList = () =>
   import(/* webpackChunkName: "products" */ '../views/products/variant/List.vue')
 export const variantAddEdit = () =>
-  import(/* webpackChunkName: "products" */ '../views/products/variant/AddEdit.vue')
+  import(/* webpackChunkName: "products" */ '../views/products/variant/AddEdit_Options.vue')
 
 
-// export const editVariantStatus = () =>
-//   import(/* webpackChunkName: "robot" */ '../views/robot/variantStatus/EditVariantStatus.vue')
+export const editVariantStatus = () =>
+  import(/* webpackChunkName: "robot" */ '../views/robot/variantStatus/EditStatus.vue')
 // export const invoiceDownload = () =>
 //   import(/* webpackChunkName: "robot" */ '../views/robot/invoice/Download.vue')
 // export const digiCredentials = () =>

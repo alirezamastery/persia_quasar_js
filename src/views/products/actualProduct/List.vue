@@ -27,8 +27,8 @@ import urls from 'src/urls'
 
 const {t} = useI18n()
 const apiRoot = urls.actualProducts
-const editRoute = 'variantEdit'
-const addRoute = 'variantAdd'
+const editRoute = 'actualProductEdit'
+const addRoute = 'actualProductAdd'
 const columns = [
   {name: 'title', label: t('general.title'), field: 'title', align: 'left'},
   {name: 'brand', label: t('products.brand'), field: 'brand', align: 'left'},

@@ -5,9 +5,20 @@
     bordered
   >
     <q-list>
-      <q-item-label header>
-        Essential Links
-      </q-item-label>
+      <!--      <q-item-label header></q-item-label>-->
+      <q-item header class="q-px-md" clickable :to="{name: 'Profile'}">
+        <q-item-section avatar>
+          <q-avatar>
+            <img v-if="profile.avatar" :src="userAvatar" alt="">
+            <img v-else :src="require('src/assets/svg/user-blank.svg')" alt="">
+          </q-avatar>
+        </q-item-section>
+
+        <q-item-section>
+          <q-item-label>{{ user }}</q-item-label>
+          <q-item-label caption lines="1">{{ fullName }}</q-item-label>
+        </q-item-section>
+      </q-item>
 
       <!--      <q-scroll-area class="fit">-->
       <template
@@ -44,69 +55,42 @@
   </q-drawer>
 </template>
 
-<script>
-import {generalState} from './composables'
-import routesObj from 'src/router/routes'
+<script setup>
+import {ref, computed} from 'vue'
+import useGeneralStore from '../../stores/general'
+import useUserStore from '../../stores/user'
+import {axiosInstance} from '../../boot/axios'
+import urls from '../../urls'
+import {notifyErrors} from '../../composables/notif'
+import {useRouter} from 'vue-router'
+import {generalState, menuItems} from './composables'
 
+const userStore = useUserStore()
+const router = useRouter()
 
-function getRoute(route) {
-  return {
-    routeName: routesObj[route].name,
-    titleI18n: routesObj[route].meta?.titleI18n,
-    permission: routesObj[route].meta?.permission || [],
-    icon: routesObj[route].meta?.icon,
-  }
+const user = computed(() => userStore.user)
+const profile = computed(() => userStore.profile)
+const userAvatar = computed(() => userStore.profile.avatar)
+const fullName = computed(() => {
+  console.log('profile', profile)
+  const firstName = userStore.profile.first_name || ''
+  const lastName = userStore.profile.last_name || ''
+  return firstName + ' ' + lastName
+})
+
+if (userStore.isAuthenticated) {
+  axiosInstance.get(urls.userProfile)
+    .then(res => {
+      console.log('profile from server:', res)
+      userStore.SetProfile(res.data)
+    })
+    .catch(err => {
+      console.log(err)
+      notifyErrors(err.response.data)
+      router.push({name: 'Login'})
+    })
 }
 
-const menuItems = [
-  {
-    icon: 'mdi-warehouse',
-    order: 20,
-    titleI18n: 'general.routes.products',
-    collapsed: false,
-    children: [
-      getRoute('brandList'),
-      getRoute('productTypeList'),
-      getRoute('actualProductList'),
-      getRoute('productList'),
-      // getRoute('productTypeSelectorList'),
-      // getRoute('productTypeSelectorValueList'),
-      getRoute('variantList'),
-    ],
-  },
-  {
-    icon: 'industrial',
-    order: 30,
-    titleI18n: 'general.routes.robot',
-    collapsed: false,
-    children: [
-      // getRoute('editVariantStatus'),
-      // getRoute('invoiceDownload'),
-      // getRoute('digiCredentials'),
-    ],
-  },
-  {
-    icon: 'mdi-calculator',
-    order: 40,
-    titleI18n: 'acc.accounting',
-    collapsed: false,
-    children: [
-      getRoute('costTypeList'),
-      getRoute('costList'),
-      getRoute('incomeList'),
-      getRoute('productCostList'),
-    ],
-  },
-]
-export default {
-  name: 'Sidebar',
-  setup() {
-    return {
-      generalState,
-      menuItems,
-    }
-  },
-}
 </script>
 
 <style scoped>

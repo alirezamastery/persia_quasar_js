@@ -8,6 +8,7 @@
       type="button"
       color="red"
       class="q-ml-sm"
+      @click="$emit('delete')"
     />
     <q-space/>
     <q-btn
@@ -15,6 +16,7 @@
       :disable="saveDisabled"
       type="submit"
       color="primary"
+      @click="$emit('save')"
     />
   </div>
 </template>
@@ -36,12 +38,12 @@ export default {
       required: false,
     },
   },
-  setup(){
+  setup() {
     const q = useQuasar()
-    return{
-      q
+    return {
+      q,
     }
-  }
+  },
 }
 </script>
 

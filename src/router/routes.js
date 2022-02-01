@@ -4,16 +4,33 @@ const routesObj = {
   Home: {
     path: '/',
     name: 'Home',
-    component: views.home,
-    meta: { requiresAuth: true },
+    component: views.variantsList,
+    meta: {requiresAuth: true},
     // children: [{ path: '', component: () => import('pages/Index.vue') }],
   },
+  // #################### Auth ####################
   Login: {
     path: '/login',
     name: 'Login',
     component: views.login,
     meta: {
       guest: true,
+    },
+  },
+  Logout: {
+    path: '/logout',
+    name: 'Logout',
+    meta: {
+      requiresAuth: true,
+    },
+    component: views.logout,
+  },
+  Profile: {
+    path: '/user/profile',
+    name: 'Profile',
+    component: views.profile,
+    meta: {
+      requiresAuth: true,
     },
   },
 // #################### Products App ####################
@@ -161,17 +178,18 @@ const routesObj = {
     },
   },
 
-  // // #################### Robot ####################
-  // // ********** Variant Status **********
-  // editVariantStatus: {
-  //   path: '/robot/variant-status',
-  //   name: 'editVariantStatus',
-  //   component: views.editVariantStatus,
-  //   meta: {
-  //     titleI18n: 'general.routes.variantStatus',
-  //     requiresAuth: true,
-  //   },
-  // },
+  // #################### Robot ####################
+  // ********** Variant Status **********
+  editVariantStatus: {
+    path: '/robot/variant-status',
+    name: 'editVariantStatus',
+    component: views.editVariantStatus,
+    meta: {
+      titleI18n: 'general.routes.variantStatus',
+      icon: 'find_in_page',
+      requiresAuth: true,
+    },
+  },
   // // ********** Invoice Download **********
   // invoiceDownload: {
   //   path: '/robot/invoice-download',
@@ -273,7 +291,7 @@ const routesObj = {
   },
   incomeAdd: {
     path: '/accounting/income/add',
-    name:'incomeAdd',
+    name: 'incomeAdd',
     component: views.incomeAddEdit,
     meta: {
       requiresAuth: true,
@@ -281,7 +299,7 @@ const routesObj = {
   },
   incomeEdit: {
     path: '/accounting/income/edit/:id?',
-    name:'incomeEdit',
+    name: 'incomeEdit',
     component: views.incomeAddEdit,
     props: true,
     meta: {
@@ -291,7 +309,7 @@ const routesObj = {
   // ********** Product Cost **********
   productCostList: {
     path: '/accounting/product-cost',
-    name:'productCostList',
+    name: 'productCostList',
     component: views.productCostList,
     meta: {
       titleI18n: 'acc.productCosts',
@@ -301,7 +319,7 @@ const routesObj = {
   },
   productCostAdd: {
     path: '/accounting/product-cost/add',
-    name:'productCostAdd',
+    name: 'productCostAdd',
     component: views.productCostAddEdit,
     meta: {
       requiresAuth: true,
@@ -309,7 +327,7 @@ const routesObj = {
   },
   productCostEdit: {
     path: '/accounting/product-cost/edit/:id?',
-    name:'productCostEdit',
+    name: 'productCostEdit',
     component: views.productCostAddEdit,
     props: true,
     meta: {
@@ -328,16 +346,16 @@ const routes = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/Index.vue') }
-    ]
+      {path: '', component: () => import('pages/Index.vue')},
+    ],
   },
 
   // Always leave this as last one,
   // but you can also remove it
   {
     path: '/:catchAll(.*)*',
-    component: () => import('pages/Error404.vue')
-  }
+    component: () => import('pages/Error404.vue'),
+  },
 ]
 
 export default routesObj

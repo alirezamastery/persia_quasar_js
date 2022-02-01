@@ -63,7 +63,7 @@
   "reset": "ریست",
   "profile": "پروفایل",
   "avatar": "عکس آواتار",
-  "createANew": "ایجاد یک {0} جدید",
+  "createANew": "ایجاد یک {item} جدید",
   "product": "محصول",
   "digikalaId": "ای دی دیجیکالا",
   "download": "دانلود",
@@ -111,15 +111,15 @@
   "selectDate": "انتخاب تاریخ",
   "noItemsFound": "موردی پیدا نشد",
   "accounting": "حسابداری",
-  "alertDeleteSuccess": "مورد {0} با موفقیت حذف شد",
-  "itemDeleteQ": "آیا مطمئن به حذف {0} هستید؟",
+  "alertDeleteSuccess": "مورد {item} با موفقیت حذف شد",
+  "itemDeleteQ": "آیا مطمئن به حذف {item} هستید؟",
   "firstName": "نام",
   "lastName": "نام خانوادگی",
   "alert": {
-    "saveSuccess": "{0} \"{1}\" با موفقیت ثبت شد",
-    "saveSuccessGeneral": "{0} با موفقیت ثبت شد",
-    "updateSuccess": "تغییرات {0} \"{1}\" با موفقیت ثبت شد",
-    "deleteSuccess": "{0} \"{1}\" با موفقیت حذف شد",
+    "saveSuccess": "{type} \"{item}\" با موفقیت ثبت شد",
+    "saveSuccessGeneral": "{type} با موفقیت ثبت شد",
+    "updateSuccess": "تغییرات {type} \"{item}\" با موفقیت ثبت شد",
+    "deleteSuccess": "{type} \"{item}\" با موفقیت حذف شد",
     "operationSuccess": "عملیت موفق بود"
   },
   "snack": {
@@ -129,7 +129,8 @@
     "fileFormatError": "فرمت فایل مورد قبول نیست"
   },
   "Q": {
-    "deleteConfirm": "آیا مطمئن هستید که میخواهید {0} \"{1}\" را حذف کنید؟",
+    "deleteConfirm": "آیا مطمئن هستید که میخواهید {type} \"{item}\" را حذف کنید؟",
+    "itemDelete": "آیا مطمئن به حذف {item} هستید؟",
     "logout": "ناموسا میخوای بری؟"
   }
 }

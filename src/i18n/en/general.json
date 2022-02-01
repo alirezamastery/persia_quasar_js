@@ -60,7 +60,7 @@
   "reset": "reset",
   "profile": "profile",
   "avatar": "avatar",
-  "createANew": "create a new",
+  "createANew": "create a new {item}",
   "product": "product",
   "digikalaId": "digikala id",
   "download": "download",
@@ -108,15 +108,15 @@
   "selectDate": "select date",
   "noItemsFound": "no items found",
   "accounting": "accounting",
-  "alertDeleteSuccess": "item {0} was successfully removed",
-  "itemDeleteQ": "Are you sure you want to remove {0}",
+  "alertDeleteSuccess": "item {item} was successfully removed",
+  "itemDeleteQ": "Are you sure you want to remove {item}?",
   "firstName": "First Name",
   "lastName": "Last Name",
   "alert": {
-    "saveSuccess": "{0} \"{1}\" successfully saved",
-    "updateSuccess": "change of {0} \"{1}\" successfully saved",
-    "deleteSuccess": "{0} \"{1}\" successfully deleted",
-    "operationSuccess": "Operation was successfull"
+    "saveSuccess": "{type} \"{item}\" successfully saved",
+    "updateSuccess": "change of {type} \"{item}\" successfully saved",
+    "deleteSuccess": "{type} \"{item}\" successfully deleted",
+    "operationSuccess": "Operation was successful"
   },
   "snack": {
     "saveError": "Error in saving",
@@ -125,7 +125,7 @@
     "fileFormatError": "file format is not acceptable"
   },
   "Q": {
-    "deleteConfirm": "are you sure you want to remove {0} \"{1}\"",
+    "deleteConfirm": "are you sure you want to remove {type} \"{item}\"",
     "logout": "seriously, you want to leave?"
   }
 }

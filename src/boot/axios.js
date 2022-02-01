@@ -3,6 +3,8 @@ import axios from 'axios'
 import {useGeneralStore} from 'src/stores/general'
 import urls from 'src/urls'
 import {useQuasar} from 'quasar'
+import localDb from '../local-db'
+import {useRouter} from 'vue-router'
 
 function getCookie(name) {
   let cookieValue = null
@@ -23,6 +25,7 @@ function getCookie(name) {
 const csrfToken = getCookie('csrftoken')
 
 const baseURL = process.env.API_BASE
+console.log('baseURL',baseURL)
 
 // Be careful when using SSR for cross-request state pollution
 // due to creating a Singleton instance here;
@@ -34,8 +37,8 @@ const axiosInstance = axios.create({
   baseURL: baseURL,
   timeout: 0,
   headers: {
-    Authorization: localStorage.getItem('access_token')
-      ? `Bearer ${String(localStorage.getItem('access_token'))}`
+    Authorization: localDb.get('access_token')
+      ? `Bearer ${String(localDb.get('access_token'))}`
       : null,
     'Content-Type': 'application/json',
     accept: 'application/json',
@@ -61,6 +64,7 @@ axiosInstance.interceptors.response.use(
   },
   async function (error) {
     const generalStore = useGeneralStore()
+    const router = useRouter()
 
     generalStore.DecrementHttpRequestQueue()
 
@@ -107,7 +111,7 @@ axiosInstance.interceptors.response.use(
       //&& error.response.data.code === 'token_not_valid'
       //&& error.response.statusText === 'Unauthorized'
     ) {
-      const refreshToken = localStorage.getItem('refresh_token')
+      const refreshToken = localDb.get('refresh_token')
 
       if (refreshToken) {
         console.log(`response.status was ${error.response.status} so we will use refreshToken: `, refreshToken)
@@ -119,8 +123,8 @@ axiosInstance.interceptors.response.use(
           return axiosInstance
             .post(urls.refreshToken, {refresh: refreshToken})
             .then((response) => {
-              localStorage.setItem('access_token', response.data.access)
-              localStorage.setItem('refresh_token', response.data.refresh)
+              localDb.set('access_token', response.data.access)
+              localDb.set('refresh_token', response.data.refresh)
 
               axiosInstance.defaults.headers['Authorization'] = 'Bearer ' + response.data.access
               originalRequest.headers['Authorization'] = 'Bearer ' + response.data.access
@@ -134,11 +138,13 @@ axiosInstance.interceptors.response.use(
         } else {
           console.log('Refresh token is expired', tokenParts, now)
           // throw new Error('refresh_token_expired')
-          window.location.href = '/login/'
+          // window.location.href = '/login/'
+          await router.push({name: 'Login'})
         }
       } else {
         console.log('in axiosInstance: Refresh token not available. refreshToken is: ', refreshToken)
         // window.location.href = '/login/'
+        await router.push({name: 'Login'})
       }
     }
 

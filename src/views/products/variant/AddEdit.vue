@@ -10,7 +10,6 @@
             :obj-repr-field="'title'"
             :query-param="'search'"
             :api="urls.products"
-            :errors="errors.product[0] || null"
             :rules="[isRequired]"
           />
         </div>
@@ -24,7 +23,6 @@
             :query-param="'search'"
             :obj-repr-field="'title'"
             :api="urls.actualProducts"
-            :errors="errors.actual_product[0] || null"
             :rules="[isRequired]"
           />
         </div>
@@ -39,7 +37,6 @@
             :obj-repr-field="'value'"
             :api="urls.productTypeSelectorValues"
             select-multiple
-            :errors="errors.selector_values[0] || null"
             :rules="[isRequired]"
           />
         </div>
@@ -51,8 +48,7 @@
             v-model="form.dkpc"
             :label="$t('products.DKPC')"
             filled
-            :error-message="errors.dkpc ? errors.dkpc[0] : null"
-            :error="errors.dkpc?.length > 0"
+            :rules="[isRequired]"
           />
         </div>
       </div>
@@ -63,9 +59,9 @@
             v-model="form.price_min"
             :label="$t('general.priceMinToman')"
             filled
-            :error-message="errors.price_min ? errors.price_min[0] : null"
-            :error="errors.price_min?.length > 0"
+            :rules="[isRequired]"
           />
+          <!-- SAMPLE ERROR FOR FUTURE: error-message="errors.price_min ? errors.price_min[0] : null"-->
         </div>
       </div>
 
@@ -95,8 +91,9 @@ import {formatIntNumber, removeCommas} from 'src/composables/number-tools'
 import AutoComplete from 'src/components/AutoComplete.vue'
 import FormActions from 'src/components/addEdit/FormActions'
 import urls from 'src/urls'
-import {isRequired, notifyErrors} from 'src/composables/form-validation'
-
+import {isRequired} from 'src/composables/form-validation'
+import {notifyErrors} from 'src/composables/notif'
+import {useAddEdit} from '../../../composables/add-edit'
 
 const router = useRouter()
 const route = useRoute()
@@ -123,62 +120,70 @@ const errors = ref({
   actual_product: [],
 })
 
-const editingItemId = computed(() => route.params.id)
-const formTitle = computed(() => {
-  if (editingItemId.value)
-    return `${t('general.change')} ${t(itemTypeTranslate)}`
-  return t('general.createANew').replace('{0}', t(itemTypeTranslate))
-})
-const itemRepr = computed(() => form.value.dkpc.toString())
+const {formTitle, initialize, saveItem, editingItemId} = useAddEdit(
+  route.params.id,
+  form,
+  apiRoot,
+  listViewRoute,
+  ()
+)
 
-function formInit(resData) {
-  const date = cloneDeep(resData)
-  form.value = date // very important to clone the response !!!
-  form.value.price_min = formatIntNumber(form.value.price_min.toString())
-  form.value.selector_values = date.selector_values.map(itm => itm.id)
-}
+// const editingItemId = computed(() => route.params.id)
+// const formTitle = computed(() => {
+//   if (editingItemId.value)
+//     return `${t('general.change')} ${t(itemTypeTranslate)}`
+//   return t('general.createANew').replace('{0}', t(itemTypeTranslate))
+// })
+// const itemRepr = computed(() => form.value.dkpc.toString())
 
-function getRequestData() {
-  return {
-    product: form.value.product.id,
-    dkpc: form.value.dkpc,
-    has_competition: form.value.has_competition,
-    is_active: form.value.is_active,
-    price_min: parseInt(removeCommas(form.value.price_min)),
-    selector_values: form.value.selector_values,
-    actual_product: form.value.actual_product.id,
-  }
-}
+// function formInit(resData) {
+//   const date = cloneDeep(resData)
+//   form.value = date // very important to clone the response !!!
+//   form.value.price_min = formatIntNumber(form.value.price_min.toString())
+//   form.value.selector_values = date.selector_values.map(itm => itm.id)
+// }
 
-function saveItem() {
-  console.log('form', form.value)
-  const data = getRequestData()
-  console.log('save payload', data)
-
-  let url = apiRoot
-  if (editingItemId.value) url += `${editingItemId.value}/`
-  let method = editingItemId.value ? 'patch' : 'post'
-  axiosInstance.request({url, data, method})
-    .then(res => {
-      console.log('save success', res.data)
-      addBanner('success')
-      router.push({name: listViewRoute})
-    })
-    .catch(err => {
-      console.log('request error', err)
-      // errors.value = err.response.data
-      notifyErrors(err.response.data)
-    })
-}
-
-if (editingItemId.value) {
-  axiosInstance.get(apiRoot + editingItemId.value + '/')
-    .then(res => {
-      console.log('item details', res.data)
-      formInit(res.data) // handle ManyToMany relations data in "formInit" method
-    })
-  console.log('no details, getting the item details from server')
-}
+// function getRequestData() {
+//   return {
+//     product: form.value.product.id,
+//     dkpc: form.value.dkpc,
+//     has_competition: form.value.has_competition,
+//     is_active: form.value.is_active,
+//     price_min: parseInt(removeCommas(form.value.price_min)),
+//     selector_values: form.value.selector_values,
+//     actual_product: form.value.actual_product.id,
+//   }
+// }
+//
+// function saveItem() {
+//   console.log('form', form.value)
+//   const data = getRequestData()
+//   console.log('save payload', data)
+//
+//   let url = apiRoot
+//   if (editingItemId.value) url += `${editingItemId.value}/`
+//   let method = editingItemId.value ? 'patch' : 'post'
+//   axiosInstance.request({url, data, method})
+//     .then(res => {
+//       console.log('save success', res.data)
+//       addBanner('success')
+//       router.push({name: listViewRoute})
+//     })
+//     .catch(err => {
+//       console.log('request error', err)
+//       // errors.value = err.response.data
+//       notifyErrors(err.response.data)
+//     })
+// }
+//
+// if (editingItemId.value) {
+//   axiosInstance.get(apiRoot + editingItemId.value + '/')
+//     .then(res => {
+//       console.log('item details', res.data)
+//       formInit(res.data) // handle ManyToMany relations data in "formInit" method
+//     })
+//   console.log('no details, getting the item details from server')
+// }
 
 
 </script>

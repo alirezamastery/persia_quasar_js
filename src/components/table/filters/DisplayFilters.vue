@@ -1,7 +1,8 @@
 <template>
-  <div
-    class="col-xs-12 col-md-3 col-lg-3 col-xl-2 q-mx-sm bordered"
+  <q-card
+    class="col-xs-12 col-md-3 col-lg-3 col-xl-2 q-mx-sm"
     style="height: fit-content"
+    bordered
   >
     <div
       class="flex row justify-between q-pa-sm bg-soft"
@@ -31,7 +32,7 @@
       />
       <q-separator v-if="index < filters.length - 1"/>
     </template>
-  </div>
+  </q-card>
 </template>
 
 <script setup>

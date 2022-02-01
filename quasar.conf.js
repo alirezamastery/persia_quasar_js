@@ -26,6 +26,7 @@ module.exports = configure(function (ctx) {
       'axios',
       'pinia',
       'filters',
+      // 'global-components',
     ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
@@ -76,6 +77,9 @@ module.exports = configure(function (ctx) {
       },
 
       env: {
+        SERVER_BASE_URL: ctx.dev
+          ? 'http://localhost:8000'
+          : 'https://persia-atlas.com',
         API_BASE: ctx.dev
           ? 'http://localhost:8000/api/'
           : 'https://persia-atlas.com/api/',

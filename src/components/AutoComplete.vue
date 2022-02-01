@@ -85,7 +85,7 @@ const selectedValue = ref(null)
 
 
 function handleSearchInput(val, update, abort) {
-  console.log('handleSearchInput', val, update)
+  // console.log('handleSearchInput', val, update)
   update(
     () => {
       loading.value = true
@@ -114,10 +114,10 @@ function handleSearchInput(val, update, abort) {
  * its title (or whatever the __repr__ is) to the user
  */
 watch(() => props.modelValue, (newVal, oldVal) => {
-  console.log('watch modelValue', newVal)
+  // console.log('watch modelValue', newVal)
   if (newVal === null || newVal === undefined) return
   if (Array.isArray(newVal)) {
-    console.log('newVal.length', newVal.length, 'isEqual', isEqual(newVal, oldVal))
+    // console.log('newVal.length', newVal.length, 'isEqual', isEqual(newVal, oldVal))
     if (newVal.length > 0 && !isEqual(newVal, oldVal))
       getInitialData(newVal)
   } else if (newVal !== oldVal) {
@@ -130,7 +130,7 @@ function getInitialData(modelVal) {
   if (typeof modelVal === 'string' || typeof modelVal === 'number') {
     axiosInstance.get(props.api + modelVal)
       .then(res => {
-        console.log('initial model value', res)
+        // console.log('initial model value', res)
         selectedValue.value = res.data
       })
   } else {
@@ -139,10 +139,10 @@ function getInitialData(modelVal) {
       query += `&${props.listQueryParam}=${id}`
     }
     const url = props.api + props.listApi + query
-    console.log('url:', url)
+    // console.log('url:', url)
     axiosInstance.get(url)
       .then(res => {
-        console.log('initial data to populate', res)
+        // console.log('initial data to populate', res)
         selectedValue.value = res.data
       })
   }
@@ -155,7 +155,7 @@ function getInitialData(modelVal) {
 watch(selectedValue, (newValue) => {
   if (Array.isArray(selectedValue.value)) {
     const data = newValue.map(item => item[props.objUniqueId])
-    console.log('emit payload', data)
+    // console.log('emit payload', data)
     emits('update:modelValue', data)
   } else if (newValue !== null && typeof newValue === 'object')
     emits('update:modelValue', newValue[props.objUniqueId])
@@ -163,7 +163,7 @@ watch(selectedValue, (newValue) => {
     emits('update:modelValue', newValue)
 })
 
-console.log('initial modelValue', props.modelValue)
+// console.log('initial modelValue', props.modelValue)
 
 axiosInstance.get(props.api)
   .then(res => {

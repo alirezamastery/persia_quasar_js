@@ -10,6 +10,8 @@ export default {
   productTypeSelectors: 'products/product-type-selectors/',
   productTypeSelectorValues: 'products/product-type-selector-values/',
   variants: 'products/variants/',
+  brandsAll: 'products/brands-all/',
+  actualProductByBrand: 'products/actual-product-by-brand/',
 
   invoices: 'products/invoices/',
   invoiceItems: 'products/invoice-items/',

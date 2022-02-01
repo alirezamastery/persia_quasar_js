@@ -1,34 +1,100 @@
 <template>
-  <q-input
-    v-model="dkpc"
-    :label="$t('products.DKPC')"
-    filled
-  />
-  <span>{{ dkpcError }}</span>
-  <q-input
-    v-model="price"
-    :label="$t('products.DKPC')"
-    filled
-  />
-  <span>{{ priceError }}</span>
+  <div class="fit q-pa-sm">
 
+    <div class="text-h6 q-ma-md">{{ formTitle }}</div>
+
+    <q-form @submit.prevent="saveItem">
+
+      <div class="row q-ma-sm">
+        <div class="col col-xs-12 col-md-6 col-lg-4 col-xl-3">
+          <q-input
+            v-model="form.title"
+            :label="$t('general.title')"
+            filled
+            :rules="[isRequired]"
+          />
+        </div>
+      </div>
+
+      <div class="row q-ma-sm">
+        <div class="col col-xs-12 col-md-6 col-lg-4 col-xl-3">
+          <AutoComplete
+            v-model="form.selectors"
+            :label="$t('products.productTypeSelector')"
+            :query-param="'search'"
+            :obj-repr-field="'title'"
+            :api="urls.productTypeSelectors"
+            select-multiple
+            :rules="[isRequired]"
+          />
+        </div>
+      </div>
+
+      <FormActions
+        :show-delete="!!editingItemId"
+        @delete="deleteDialog = true"
+      />
+
+    </q-form>
+
+    <Delete
+      v-if="editingItemId"
+      v-model="deleteDialog"
+      :item-repr="itemRepr"
+      @delete="handleDeleteItem"
+    />
+
+  </div>
 </template>
 
-<script setup>
-import {defineRule, useField, useForm} from 'vee-validate'
-import {required, email, min} from '@vee-validate/rules'
-import * as yup from 'yup'
+<script>
+import {cloneDeep} from 'lodash'
+import {dataToolsMixin} from 'src/mixins/data-tools'
+import {addEditViewMixin} from 'src/mixins/add-edit'
+import AutoComplete from 'src/components/AutoComplete.vue'
+import FormActions from 'src/components/addEdit/FormActions.vue'
+import Delete from 'src/components/addEdit/Delete.vue'
+import urls from 'src/urls'
 
-defineRule('required', required)
-
-const schema = yup.object({
-  dkpc: yup.string().required(),
-  price: yup.number().required(),
-})
-
-useForm({
-  validationSchema: schema,
-})
-const {value: dkpc, errorMessage: dkpcError} = useField('dkpc')
-const {value: price, errorMessage: priceError} = useField('price')
+export default {
+  name: 'AddEdit',
+  components: {
+    Delete,
+    AutoComplete,
+    FormActions,
+  },
+  mixins: [dataToolsMixin, addEditViewMixin],
+  data() {
+    return {
+      urls: urls,
+      apiRoot: urls.productTypes,
+      listViewRoute: 'productTypeList',
+      itemType: 'products.productType',
+      form: {
+        title: '',
+        selectors: [],
+      },
+    }
+  },
+  computed: {
+    itemRepr() {
+      return this.form.title
+    },
+  },
+  methods: {
+    formInit(resData) {
+      this.form = cloneDeep(resData)
+    },
+    getRequestData() {
+      return {
+        title: this.form.title,
+        selectors: this.form.selectors,
+      }
+    },
+  },
+}
 </script>
+
+<style scoped>
+
+</style>

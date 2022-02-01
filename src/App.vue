@@ -34,6 +34,7 @@ import Header from 'src/components/layout/Header.vue'
 import Sidebar from 'src/components/layout/Sidebar.vue'
 import Banners from 'src/components/layout/Banners.vue'
 import urls from 'src/urls'
+import {notifyErrors} from './composables/notif'
 
 const leftDrawerOpen = ref(false)
 const userStore = useUserStore()
@@ -45,20 +46,12 @@ const route = useRoute()
 const hasHttpRequestWaiting = computed(() => generalStore.hasHttpRequestWaiting)
 
 const isAuthenticated = computed(() => userStore.isAuthenticated)
-if (!isAuthenticated.value) {
-  axiosInstance.get(urls.userProfile).then(res => {
-    console.log('res', res)
-    userStore.Login(true)
-    userStore.SetProfile(res.data)
-  }).catch(err => {
-    console.log(err)
-    void router.push({name: 'Login'})
-  })
-}
 
 const showAppLayout = computed(() => {
   const noAuthRoutes = ['404', 'Login', 'justRain']
   return isAuthenticated.value && !noAuthRoutes.includes(String(route.name))
 })
+
+// TODO: QAjaxBar plugin
 
 </script>

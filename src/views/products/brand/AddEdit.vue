@@ -1,10 +1,79 @@
 <template>
-<div>add edit</div>
+  <div class="fit q-pa-sm">
+
+    <div class="text-h6 q-ma-md">{{ formTitle }}</div>
+
+    <q-form @submit.prevent="saveItem">
+      <div class="row q-ma-sm">
+        <div class="col col-xs-12 col-md-6 col-lg-4 col-xl-3">
+          <q-input
+            v-model="form.title"
+            :label="$t('general.title')"
+            filled
+            :rules="[isRequired]"
+          />
+        </div>
+      </div>
+
+      <FormActions
+        :show-delete="!!editingItemId"
+        @delete="deleteDialog = true"
+      />
+
+    </q-form>
+
+    <Delete
+      v-if="editingItemId"
+      v-model="deleteDialog"
+      :item-repr="itemRepr"
+      @delete="handleDeleteItem"
+    />
+
+  </div>
 </template>
 
 <script>
+import {cloneDeep} from 'lodash'
+import {dataToolsMixin} from 'src/mixins/data-tools'
+import {addEditViewMixin} from 'src/mixins/add-edit'
+import FormActions from 'src/components/addEdit/FormActions.vue'
+import Delete from 'src/components/addEdit/Delete.vue'
+import urls from 'src/urls'
+
 export default {
-  name: 'AddEdit'
+  name: 'AddEdit',
+  components: {
+    Delete,
+    FormActions,
+  },
+  mixins: [dataToolsMixin, addEditViewMixin],
+  data() {
+    return {
+      urls: urls,
+      apiRoot: urls.brands,
+      listViewRoute: 'brandList',
+      itemType: 'products.brand',
+      form: {
+        title: null,
+        brand: {id: null},
+      },
+    }
+  },
+  computed: {
+    itemRepr() {
+      return this.form.title
+    },
+  },
+  methods: {
+    formInit(resData) {
+      this.form = cloneDeep(resData)
+    },
+    getRequestData() {
+      return {
+        title: this.form.title,
+      }
+    },
+  },
 }
 </script>
 

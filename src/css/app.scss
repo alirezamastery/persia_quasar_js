@@ -1,5 +1,6 @@
 // app global css in SCSS form
 @import "font_family";
+@import "pages/all";
 
 *, ::after, ::before {
   box-sizing: border-box;
@@ -37,7 +38,7 @@ body.body--dark {
     border: 1px solid rgba(255, 255, 255, 0.28);
   }
 
-  .bg-soft{
+  .bg-soft {
     background-color: #272727;
   }
 }
@@ -47,7 +48,20 @@ body.body--light {
     border: 1px solid rgba(0, 0, 0, 0.12);
   }
 
-  .bg-soft{
+  .bg-soft {
     background-color: #fff;
   }
 }
+
+//.q-field--with-bottom {
+//  padding-bottom: unset !important;
+//}
+//
+//.q-field__bottom {
+//  min-height: 0 !important;
+//  padding: 0 !important;
+//
+//  .q-field__messages{
+//    margin: 10px;
+//  }
+//}

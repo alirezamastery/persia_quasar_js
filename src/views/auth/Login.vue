@@ -11,9 +11,10 @@
           type="text"
           :label="$t('general.mobile')"
           filled
+          :rules="[isRequired]"
         >
           <template v-slot:prepend>
-            <q-icon name="phone" />
+            <q-icon name="phone"/>
           </template>
         </q-input>
         <q-input
@@ -23,13 +24,13 @@
           :label="$t('general.password')"
         >
           <template v-slot:prepend>
-            <q-icon name="key" />
+            <q-icon name="key"/>
           </template>
           <template v-slot:append>
             <q-icon
               :name="showPassword ? 'visibility_off' : 'visibility'"
               class="cursor-pointer"
-              @click="showPassword = !showPassword"
+              @click="handleShowPassword"
             />
           </template>
         </q-input>
@@ -46,62 +47,58 @@
   </div>
 </template>
 
-<script >
-// import { useQuasar } from 'quasar'
-import { ref, reactive } from 'vue'
-import { useRouter } from 'vue-router'
-import { axiosInstance } from 'src/boot/axios'
-import { useUserStore } from 'src/stores/user'
+<script setup>
+import {useQuasar} from 'quasar'
+import {ref, reactive} from 'vue'
+import {useRouter} from 'vue-router'
+import {axiosInstance} from 'src/boot/axios'
+import useUserStore from 'src/stores/user'
+import {isRequired} from 'src/composables/form-validation'
+import {notifyErrors} from 'src/composables/notif'
 import urls from 'src/urls'
+import localDb from '../../local-db'
 
-export default {
-  name: 'Login',
-  setup() {
-    // const q = useQuasar()
-    const userStore = useUserStore()
-    const router = useRouter()
-    // const mobile= ref('')
-    // const password= ref('')
-    const showPassword = ref(false)
-    const form = reactive({
-      mobile: '',
-      password: '',
+
+const q = useQuasar()
+const userStore = useUserStore()
+const router = useRouter()
+const showPassword = ref(false)
+const form = reactive({
+  mobile: '',
+  password: '',
+})
+
+function handleSubmit() {
+  axiosInstance.post(urls.token, form)
+    .then(res => {
+      console.log('Login', res)
+      localDb.set('access_token', res.data.access)
+      localDb.set('refresh_token', res.data.refresh)
+      axiosInstance.defaults.headers['Authorization'] = 'Bearer ' + localDb.get('access_token')
+      userStore.Login(form.mobile)
+      router.push({name: 'Home'})
+      // getUserData()
     })
-
-    function handleSubmit() {
-      // if (!(this.mobile && this.password)) return
-      axiosInstance.post(urls.token, form).then(res => {
-        console.log('Login', res)
-        localStorage.setItem('access_token', res.data.access)
-        localStorage.setItem('refresh_token', res.data.refresh)
-        axiosInstance.defaults.headers['Authorization'] = 'Bearer ' + localStorage.getItem('access_token')
-        userStore.Login(form.mobile)
-        void router.push({ name: 'Home' })
-        // getUserData()
-      }).catch(err => {
-        console.log('axios error:', err)
-      })
-    }
-
-    function getUserData() {
-      axiosInstance.get(urls.userProfile)
-        .then(res => {
-          console.log('getUserData', res)
-        })
-        .catch(err => {
-          console.log('getUserData error', err)
-        })
-    }
-
-    return {
-      // mobile,
-      // password,
-      showPassword,
-      handleSubmit,
-      form,
-    }
-  },
+    .catch(err => {
+      console.log('axios error:', err)
+      notifyErrors(err.response.data)
+    })
 }
+
+function getUserData() {
+  axiosInstance.get(urls.userProfile)
+    .then(res => {
+      console.log('getUserData', res)
+    })
+    .catch(err => {
+      console.log('getUserData error', err)
+    })
+}
+
+function handleShowPassword() {
+  showPassword.value = !showPassword.value
+}
+
 </script>
 
 <style scoped lang="scss">
