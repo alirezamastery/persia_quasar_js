@@ -1,7 +1,22 @@
 <template>
-  <div class="col-xs-12 col-md-4 col-lg-3 col-xl-2 q-ma-sm rounded-borders">
-    <div class="flex row justify-between q-pa-sm">
+  <div
+    class="col-xs-12 col-md-4 col-lg-3 col-xl-2 q-mx-sm bordered"
+    style="height: fit-content"
+  >
+    <div
+      class="flex row justify-between q-pa-sm bg-soft"
+      style="min-height: 40px"
+    >
       <span>{{ $t('general.filters') }}</span>
+      <q-space/>
+      <q-btn
+        v-if="Object.keys(filterValues).length > 0 && showReset"
+        icon="refresh"
+        class="bg-yellow text-black"
+        size="xs"
+        round
+        @click="resetFilters"
+      />
     </div>
     <q-separator/>
     <template
@@ -22,12 +37,18 @@
 <script setup>
 import {ref, watch} from 'vue'
 import FilterTypes from './FilterTypes.vue'
+import useGeneralStore from '../../../stores/general'
+import {useQuasar} from 'quasar'
 
 const emits = defineEmits(['filter-change'])
 
 const props = defineProps({
   filters: {type: Array, required: true},
 })
+
+const generalStore = useGeneralStore()
+
+const q = useQuasar()
 
 const filterValues = ref({})
 const justForResetSignal = ref(0)
@@ -44,7 +65,12 @@ watch(filterValues, (val) => {
       finalQuery += `&${key}=${value}`
   }
   showReset.value = nullCount !== Object.keys(val).length
-  console.log('finalQuery:', finalQuery)
   emits('filter-change', finalQuery)
 }, {deep: true})
+
+
+function resetFilters() {
+  filterValues.value = {}
+  generalStore.ResetTableFilter()
+}
 </script>

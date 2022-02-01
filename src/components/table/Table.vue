@@ -1,10 +1,18 @@
 <template>
-  <q-card class="q-pa-md q-ma-sm">
+  <div class="q-ma-md">
+
+    <Header
+      :title="title"
+      :add-route="addRoute"
+    />
+
     <div class="row no-wrap-md">
 
       <div class="col">
+
+        <TableHeader api-root=""/>
+
         <q-table
-          :title="title"
           :rows="data.items"
           :columns="columns"
           :row-key="itemKey"
@@ -12,9 +20,9 @@
           :no-data-label="$t('general.noItemsFound')"
           :pagination="pagination"
           :filter="filter"
-          @request="handleRequest"
           hide-bottom
           flat
+          @request="handleRequest"
         >
           <template v-slot:body="props">
             <q-tr :props="props">
@@ -34,27 +42,31 @@
             </q-tr>
           </template>
         </q-table>
+
+        <q-separator/>
+
+        <Pagination
+          :page="page"
+          :page-size="pageSize"
+          :page-size-options="pageSizeOptions"
+          :page-count="data.page_count"
+          :total-count="data.count"
+          :table-loading="loading"
+          @page-select="handlePageSelect"
+          @page-size-select="pageSize = $event"
+        />
+
+        <q-separator/>
       </div>
 
       <DisplayFilters
         v-if="filters.length > 0"
         :filters="filters"
-        :filter-change="handleFilterChange"
+        @filter-change="handleFilterChange"
       />
 
     </div>
-
-    <Pagination
-      :page="page"
-      :page-size="pageSize"
-      :page-size-options="pageSizeOptions"
-      :page-count="data.page_count"
-      :total-count="data.count"
-      :table-loading="loading"
-      @page-select="handlePageSelect"
-      @page-size-select="pageSize = $event"
-    />
-  </q-card>
+  </div>
 </template>
 
 
@@ -63,6 +75,8 @@ import {ref, reactive, defineEmits, defineProps, watch} from 'vue'
 import {axiosInstance} from 'src/boot/axios'
 import Pagination from './Pagination.vue'
 import DisplayFilters from './filters/DisplayFilters.vue'
+import Header from './Header.vue'
+import TableHeader from './TableHeader.vue'
 
 const props = defineProps({
   title: {type: String, required: true},
@@ -80,7 +94,7 @@ const props = defineProps({
 const emit = defineEmits(['change', 'delete'])
 
 const loading = ref(false)
-const pageSize = ref(10)
+const pageSize = ref(20)
 const pageSizeOptions = ref([10, 20, 50, 100])
 const page = ref(1)
 const queries = ref('')
@@ -104,12 +118,6 @@ watch(pageSize, () => {
   page.value = 1
   fetchData()
 })
-// function handlePageSize(event) {
-//   console.log('page size', event)
-//   pageSize.value = event
-//   page.value = 1
-//   fetchData()
-// }
 
 function constructQuery() {
   let query = `?${queries.value}&page_size=${pageSize.value}`
@@ -121,10 +129,6 @@ function constructQuery() {
     query += sideFilterQuery.value
   console.log('constructQuery', query)
   return query
-}
-
-function handleUpdate() {
-  console.log('handleUpdate')
 }
 
 function handlePageSelect(event) {
@@ -158,6 +162,10 @@ function handleRequest(props) {
 
 function handleFilterChange(event) {
   console.log('handleFilterChange', event)
+  if (event === undefined) return
+  sideFilterQuery.value = event
+  page.value = 1
+  fetchData()
 }
 
 fetchData()

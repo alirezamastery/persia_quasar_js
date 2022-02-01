@@ -14,7 +14,7 @@ export const useGeneralStore = defineStore({
     snackbar: null,
     locale: 'fa',
     vuetifyRTL: true,
-    tableFilterResetSignal: 0,
+    tableFilterResetSignal: false,
   }),
   getters: {
     hasHttpRequestWaiting() {
@@ -49,6 +49,10 @@ export const useGeneralStore = defineStore({
     },
     ClearBanners() {
       this.banners = []
+    },
+    ResetTableFilter() {
+      this.tableFilterResetSignal = !this.tableFilterResetSignal
+      console.log('this.tableFilterResetSignal' ,this.tableFilterResetSignal)
     },
   },
 })

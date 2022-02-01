@@ -8,7 +8,6 @@
   text-rendering: optimizeLegibility;
 }
 
-
 html, body {
   font-family: Samim, Roboto-Regular, Sahel, sans-serif !important;
 }
@@ -26,9 +25,29 @@ html, body {
   overflow: auto !important;
 }
 
-#q-app{
+#q-app {
   width: 100%;
   height: 100%;
   margin: 0;
   padding: 0;
+}
+
+body.body--dark {
+  .bordered {
+    border: 1px solid rgba(255, 255, 255, 0.28);
+  }
+
+  .bg-soft{
+    background-color: #272727;
+  }
+}
+
+body.body--light {
+  .bordered {
+    border: 1px solid rgba(0, 0, 0, 0.12);
+  }
+
+  .bg-soft{
+    background-color: #fff;
+  }
 }

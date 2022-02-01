@@ -66,11 +66,6 @@ const filters = [
     queryParam: 'has_competition',
     label: 'general.hasCompetition',
   },
-  {
-    type: 'date',
-    queryParam: 'date_gte',
-    label:'general.fromDate'
-  },
 ]
 
 </script>
