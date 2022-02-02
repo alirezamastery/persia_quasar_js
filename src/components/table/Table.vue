@@ -48,7 +48,7 @@
               <q-td v-if="!hideEdit" :props="props" key="edit">
                 <q-btn
                   :to="{name: editRoute, params: {id: props.row.id}}"
-                  icon="mdi-pencil"
+                  icon="edit"
                   size="sm"
                   flat
                   round

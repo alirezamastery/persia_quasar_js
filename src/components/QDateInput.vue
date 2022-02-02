@@ -37,6 +37,7 @@ import {isRequired} from 'src/composables/form-validation'
 import moment from 'moment-jalaali'
 import {useQuasar} from 'quasar'
 import {useI18n} from 'vue-i18n'
+import {cloneDeep} from 'lodash'
 
 
 const q = useQuasar()
@@ -51,26 +52,31 @@ const props = defineProps({
 
 
 const date = ref(null)
-watch(() => props.modelValue, (newVal, oldVal) => {
-  console.log('first val', newVal, oldVal)
-  let n = newVal
-  if (newVal && q.lang.isoName === 'fa') {
-    n = moment(newVal, 'jYYYY/jMM/jDD').format('YYYY-MM-DD')
-  }
-  console.log('nnn' , n)
-  if (n !== oldVal)
-    date.value = n
-})
+// watch(() => props.modelValue, (newVal, oldVal) => {
+//   console.log('first val  ', newVal, oldVal)
+//   let n = newVal
+//   // if (newVal && q.lang.isoName === 'fa') {
+//   //   n = moment(newVal, 'jYYYY/jMM/jDD').format('YYYY-MM-DD')
+//   // }
+//   // console.log('nnn' , n)
+//   if (n !== oldVal)
+//     date.value = n
+// })
 watch(date, (val) => {
-    let payload = val
-    if (!val)
-      payload = null
-    if (val && q.lang.isoName === 'fa') {
-      payload = moment(val, 'jYYYY/jMM/jDD').format('YYYY-MM-DD')
-    }
-    console.log('emit the date', payload)
-    emits('update:modelValue', payload)
-  },
-)
+  console.log('before emit', val)
+  let payload = val
+  if (!val)
+    payload = null
+  if (val && q.lang.isoName === 'fa') {
+    payload = moment(val, 'jYYYY/jMM/jDD').format('YYYY-MM-DD')
+  }
+  console.log('emit date  ', payload)
+  emits('update:modelValue', payload)
+})
+
+if (q.lang.isoName === 'fa') {
+  date.value = moment(props.modelValue, 'YYYY/MM/DD').format('jYYYY/jMM/jDD')
+} else
+  date.value = cloneDeep(props.modelValue)
 
 </script>

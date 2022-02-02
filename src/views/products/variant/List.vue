@@ -6,10 +6,11 @@
     :edit-route="editRoute"
     :add-route="addRoute"
     :filters="filters"
+    hide-edit
   >
 
     <template v-slot:col-product="{ props }">
-      <q-btn :to="{name: editRoute, params: {id: props.row.id}}" dense flat>
+      <q-btn :to="{name: editRoute, params: {id: props.row.id}}" color="light-blue" dense flat>
         {{ props.row.product.title }}
       </q-btn>
     </template>

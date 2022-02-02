@@ -5,6 +5,7 @@ import urls from 'src/urls'
 import {useQuasar} from 'quasar'
 import localDb from '../local-db'
 import {useRouter} from 'vue-router'
+import {notifyErrors} from '../composables/notif'
 
 function getCookie(name) {
   let cookieValue = null
@@ -25,7 +26,7 @@ function getCookie(name) {
 const csrfToken = getCookie('csrftoken')
 
 const baseURL = process.env.API_BASE
-console.log('baseURL',baseURL)
+console.log('baseURL', baseURL)
 
 // Be careful when using SSR for cross-request state pollution
 // due to creating a Singleton instance here;
@@ -73,15 +74,7 @@ axiosInstance.interceptors.response.use(
 
     if (typeof error.response === 'undefined') {
       console.log('axios error.response is undefined', error)
-      const q = useQuasar()
-      q.notify({
-        type: 'negative',
-        message: 'Network Error',
-        position: 'top',
-        actions: [
-          {label: '', icon: 'close'},
-        ],
-      })
+      notifyErrors({error: 'Network Error'})
       return Promise.reject(error)
     }
 

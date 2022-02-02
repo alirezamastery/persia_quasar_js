@@ -59,7 +59,6 @@
 import {ref, watch, reactive} from 'vue'
 import {axiosInstance} from '../boot/axios'
 import {isEqual} from 'lodash'
-import {isRequired} from 'src/composables/form-validation'
 
 const props = defineProps({
   modelValue: {type: [Number, Array, String]},
@@ -93,11 +92,11 @@ function handleSearchInput(val, update, abort) {
       console.log('url', url)
       axiosInstance.get(url)
         .then(res => {
-          console.log('handleSearchInput response:', res)
+          console.log('AutoComplete | handleSearchInput response:', res)
           items.value = res.data.items
         })
         .catch(err => {
-          console.log('handleSearchInput error:', err)
+          console.log('AutoComplete | handleSearchInput error:', err)
         })
         .finally(() => loading.value = false)
     },
@@ -114,7 +113,7 @@ function handleSearchInput(val, update, abort) {
  * its title (or whatever the __repr__ is) to the user
  */
 watch(() => props.modelValue, (newVal, oldVal) => {
-  // console.log('watch modelValue', newVal)
+  console.log('AutoComplete | watch modelValue', newVal)
   if (newVal === null || newVal === undefined) return
   if (Array.isArray(newVal)) {
     // console.log('newVal.length', newVal.length, 'isEqual', isEqual(newVal, oldVal))
@@ -130,7 +129,7 @@ function getInitialData(modelVal) {
   if (typeof modelVal === 'string' || typeof modelVal === 'number') {
     axiosInstance.get(props.api + modelVal)
       .then(res => {
-        // console.log('initial model value', res)
+        console.log('AutoComplete | initial model value', res)
         selectedValue.value = res.data
       })
   } else {
@@ -142,7 +141,7 @@ function getInitialData(modelVal) {
     // console.log('url:', url)
     axiosInstance.get(url)
       .then(res => {
-        // console.log('initial data to populate', res)
+        console.log('AutoComplete | initial data to populate', res)
         selectedValue.value = res.data
       })
   }
@@ -163,7 +162,8 @@ watch(selectedValue, (newValue) => {
     emits('update:modelValue', newValue)
 })
 
-// console.log('initial modelValue', props.modelValue)
+console.log('AutoComplete | auto complete initial modelValue:', props.modelValue)
+getInitialData(props.modelValue)
 
 axiosInstance.get(props.api)
   .then(res => {

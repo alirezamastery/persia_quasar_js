@@ -60,15 +60,14 @@ const resetSignal = computed(() => generalStore.tableFilterResetSignal)
 
 
 watch(date, (val) => {
-    let payload = val
-    if (!val)
-      payload = null
-    if (val && q.lang.isoName === 'fa') {
-      payload = moment(val, 'jYYYY/jMM/jDD').format('YYYY-MM-DD')
-    }
-    emits('date-change', payload)
-  },
-)
+  let payload = val
+  if (!val)
+    payload = null
+  if (val && q.lang.isoName === 'fa') {
+    payload = moment(val, 'jYYYY/jMM/jDD').format('YYYY-MM-DD')
+  }
+  emits('date-change', payload)
+})
 watch(() => resetSignal.value, () => date.value = null)
 
 function updateProxy() {
