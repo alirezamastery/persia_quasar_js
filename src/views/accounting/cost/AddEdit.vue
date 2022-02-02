@@ -1,5 +1,5 @@
 <template>
-  <div class="fit q-pa-sm">
+  <q-card class="q-pa-lg q-ma-lg">
 
     <div class="text-h6 q-ma-md">{{ formTitle }}</div>
 
@@ -63,7 +63,7 @@
       @delete="handleDeleteItem"
     />
 
-  </div>
+  </q-card>
 </template>
 
 <script>

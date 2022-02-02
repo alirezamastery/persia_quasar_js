@@ -8,7 +8,7 @@
 
     <div class="row no-wrap-md">
 
-      <div class="col">
+      <q-card class="col-xs-12 col-md-9 col-lg-9 col-xl-10">
 
         <TableHeader
           :api-root="apiRoot"
@@ -65,6 +65,8 @@
 
         </q-table>
 
+        <q-separator/>
+
         <Pagination
           :page="page"
           :page-size="pageSize"
@@ -75,8 +77,7 @@
           @page-select="handlePageSelect"
           @page-size-select="pageSize = $event"
         />
-        <q-separator class="q-mb-sm"/>
-      </div>
+      </q-card>
 
       <DisplayFilters
         v-if="filters.length > 0"

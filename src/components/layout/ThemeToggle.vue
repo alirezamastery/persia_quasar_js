@@ -1,21 +1,19 @@
 <template>
   <q-btn
     v-if="q.dark.isActive"
-    round
-    flat
     text-color="amber"
     icon="light_mode"
-    class="q-mx-sm bg-transparent"
+    class="bg-transparent"
     @click="q.dark.toggle"
+    flat
   />
   <q-btn
     v-else
-    round
-    flat
     text-color="black"
     icon="dark_mode"
-    class="q-mx-sm bg-transparent"
+    class="bg-transparent"
     @click="q.dark.toggle"
+    flat
   />
 </template>
 

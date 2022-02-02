@@ -1,6 +1,10 @@
 <template>
   <q-header
-    :class="q.dark.isActive ? 'bg-grey-10 text-white' : 'bg-grey-3 text-black'"
+    :class="q.dark.isActive ? 'bg-grey-10 text-white' : 'bg-white text-black'"
+    elevated
+    :height-hint="56"
+    style="height: 56px"
+    class="flex items-center"
   >
     <q-toolbar>
       <q-btn
@@ -16,15 +20,18 @@
         {{ $t('general.siteHeader') }}
       </q-toolbar-title>
 
-      <ThemeToggle/>
+      <q-btn-group rounded unelevated>
+        <ThemeToggle/>
+        <q-btn
+          v-if="isAuthenticated"
+          color="red"
+          @click="handleLogout"
+          icon="power_settings_new"
+          flat
+        >
+        </q-btn>
+      </q-btn-group>
 
-      <q-btn
-        v-if="isAuthenticated"
-        color="red"
-        @click="handleLogout"
-      >
-        {{ $t('general.routes.logout') }}
-      </q-btn>
     </q-toolbar>
   </q-header>
 </template>

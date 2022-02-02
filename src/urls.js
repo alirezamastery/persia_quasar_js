@@ -5,6 +5,7 @@ export default {
 
   brands: 'products/brands/',
   actualProducts: 'products/actual-products/',
+  variantDigiData:'products/variant-digi-date/',
   products: 'products/products/',
   productTypes: 'products/products-types/',
   productTypeSelectors: 'products/product-type-selectors/',

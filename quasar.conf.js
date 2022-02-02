@@ -104,6 +104,8 @@ module.exports = configure(function (ctx) {
       iconSet: 'material-icons', // Quasar icon set
       lang: 'fa', // Quasar language pack
 
+      cssAddon: true,
+
       // For special cases outside of where the auto-import strategy can have an impact
       // (like functional components as one of the examples),
       // you can manually specify Quasar components/directives to be available everywhere:

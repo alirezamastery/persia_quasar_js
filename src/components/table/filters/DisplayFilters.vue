@@ -1,6 +1,6 @@
 <template>
   <q-card
-    class="col-xs-12 col-md-3 col-lg-3 col-xl-2 q-mx-sm"
+    class="col-xs-12 col-md-3 col-lg-3 col-xl-2 q-my-xs-md q-my-md-none q-mx-md-sm"
     style="height: fit-content"
     bordered
   >

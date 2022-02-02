@@ -3,6 +3,7 @@
     v-model="generalState.sideOpen"
     show-if-above
     bordered
+    elevated
   >
     <q-list>
       <!--      <q-item-label header></q-item-label>-->
@@ -29,8 +30,10 @@
           expand-separator
           :icon="item.icon"
           :label="$t(item.titleI18n)"
+          dense-toggle
           default-opened
           :header-style="{ fontSize: '1.1rem' }"
+          :header-class="$q.dark.isActive ? 'bg-grey-10 text-grey-5' : 'bg-grey-1 text-grey-9'"
         >
           <q-item
             v-for="(subItem, j) in item.children"
@@ -39,6 +42,7 @@
             :inset-level="0.5"
             clickable
             v-ripple
+            :class="$q.dark.isActive ? 'bg-grey-10' : 'bg-grey-2'"
           >
             <q-item-section v-if="subItem.icon" avatar>
               <q-icon :name="subItem.icon"/>

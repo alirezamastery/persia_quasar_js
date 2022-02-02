@@ -33,6 +33,12 @@ html, body {
   padding: 0;
 }
 
+body.body--light {
+  #q-app {
+    background-color: #f5f6fa;
+  }
+}
+
 body.body--dark {
   .bordered {
     border: 1px solid rgba(255, 255, 255, 0.28);
