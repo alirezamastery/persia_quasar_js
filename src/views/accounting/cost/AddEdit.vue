@@ -3,8 +3,8 @@
 
     <div class="text-h6 q-ma-md">{{ formTitle }}</div>
 
-    <q-form @submit.prevent="saveItem">
-      <div class="row q-ma-sm">
+    <q-form v-if="showForm" @submit.prevent="saveItem" class="q-gutter-sm">
+      <div class="row">
         <div class="col col-xs-12 col-md-6 col-lg-4 col-xl-3">
           <AutoComplete
             v-model="form.type.id"
@@ -17,7 +17,7 @@
         </div>
       </div>
 
-      <div class="row q-ma-sm">
+      <div class="row">
         <div class="col col-xs-12 col-md-6 col-lg-4 col-xl-3">
           <q-input
             v-model="form.amount"
@@ -28,42 +28,17 @@
         </div>
       </div>
 
-      <div class="row q-ma-sm">
+      <div class="row">
         <div class="col col-xs-12 col-md-6 col-lg-4 col-xl-3">
-          <QDateInput v-model="form.date" required :label="$t('general.date')"/>
-<!--          <q-input-->
-<!--            v-model="form.date"-->
-<!--            :label="$t('general.date')"-->
-<!--            mask="date"-->
-<!--            filled-->
-<!--            :rules="[isRequired]"-->
-<!--          >-->
-<!--            <template v-slot:append>-->
-<!--              <q-icon name="event" class="cursor-pointer">-->
-<!--                <q-popup-proxy ref="qDateProxy" cover transition-show="scale" transition-hide="scale">-->
-<!--                  <q-date-->
-<!--                    v-model="form.date"-->
-<!--                    @update:model-value="() => $refs.qDateProxy.hide()"-->
-<!--                    calendar="persian"-->
-<!--                    today-btn-->
-<!--                  >-->
-<!--                    <div class="row items-center justify-end">-->
-<!--                      <q-btn-->
-<!--                        v-close-popup-->
-<!--                        :label="$t('general.cancel')"-->
-<!--                        color="primary"-->
-<!--                        flat-->
-<!--                      />-->
-<!--                    </div>-->
-<!--                  </q-date>-->
-<!--                </q-popup-proxy>-->
-<!--              </q-icon>-->
-<!--            </template>-->
-<!--          </q-input>-->
+          <QDateInput
+            v-model="form.date"
+            :label="$t('general.date')"
+            required
+          />
         </div>
       </div>
 
-      <div class="row q-ma-sm">
+      <div class="row">
         <div class="col col-xs-12 col-md-6 col-lg-4 col-xl-3">
           <q-input
             v-model="form.description"
@@ -100,7 +75,6 @@ import FormActions from 'src/components/addEdit/FormActions.vue'
 import Delete from 'src/components/addEdit/Delete.vue'
 import QDateInput from 'src/components/QDateInput.vue'
 import urls from 'src/urls'
-import moment from 'moment-jalaali'
 
 export default {
   name: 'AddEdit',
@@ -108,7 +82,7 @@ export default {
     Delete,
     AutoComplete,
     FormActions,
-    QDateInput
+    QDateInput,
   },
   mixins: [dataToolsMixin, addEditViewMixin],
   data() {
@@ -123,7 +97,6 @@ export default {
         date: '',
         description: '',
       },
-      persianDate: '',
     }
   },
   computed: {
@@ -135,23 +108,17 @@ export default {
     'form.amount': function (newVal) {
       this.form.amount = this.formatIntNumber(newVal)
     },
-    // 'form.date': function (newVal) {
-    //   this.persianDate = moment(newVal,'YYYY/MM/DD').format('jYYYY/jMM/jDD')
-    // },
   },
   methods: {
     formInit(resData) {
       this.form = cloneDeep(resData)
       this.form.amount = this.formatIntNumber(this.form.amount.toString())
-      const m = moment(this.form.date, 'YYYY/MM/DD')
-      this.persianDate = m.format('jYYYY/jMM/jDD')
-      this.form.date = m.format('jYYYY/jMM/jDD')
     },
     getRequestData() {
       return {
         type: this.form.type.id,
         amount: this.numberWithCommaToInt(this.form.amount),
-        date: moment(this.form.date, 'jYYYY/jMM/jDD').format('YYYY-MM-DD'),
+        date: this.form.date,
         description: this.form.description,
       }
     },
