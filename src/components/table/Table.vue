@@ -17,7 +17,7 @@
 
         <q-table
           :rows="data.items"
-          :columns="columns"
+          :columns="finalColumns"
           :row-key="itemKey"
           :dense="denseRows"
           :no-data-label="$t('general.noItemsFound')"
@@ -27,6 +27,7 @@
           flat
           @request="handleRequest"
         >
+
           <template v-slot:body="props">
             <q-tr :props="props">
               <q-td
@@ -42,8 +43,26 @@
                   {{ props.row[column.field] }}
                 </slot>
               </q-td>
+
+              <!-- key should be set for the cell to show -->
+              <q-td v-if="!hideEdit" :props="props" key="edit">
+                <q-btn
+                  :to="{name: editRoute, params: {id: props.row.id}}"
+                  icon="mdi-pencil"
+                  size="sm"
+                  flat
+                  round
+                >
+                </q-btn>
+              </q-td>
+
             </q-tr>
           </template>
+
+          <template v-slot:no-data>
+            {{ $t('general.noItemsFound') }}
+          </template>
+
         </q-table>
 
         <Pagination
@@ -71,12 +90,16 @@
 
 
 <script setup>
-import {ref, reactive, watch} from 'vue'
+import {ref, reactive, watch, computed} from 'vue'
 import {axiosInstance} from 'src/boot/axios'
 import Pagination from './Pagination.vue'
 import DisplayFilters from './filters/DisplayFilters.vue'
 import Header from './Header.vue'
 import TableHeader from './TableHeader.vue'
+import {useI18n} from 'vue-i18n'
+import {cloneDeep} from 'lodash'
+
+const {t} = useI18n()
 
 const props = defineProps({
   title: {type: String, required: true},
@@ -89,6 +112,7 @@ const props = defineProps({
   denseRows: {type: Boolean, required: false, default: true},
   hideSearch: {type: Boolean, required: false, default: false},
   filters: {type: Array, required: false, default: () => ([])},
+  hideEdit: {type: Boolean, required: false, default: false},
 })
 
 const emit = defineEmits(['change', 'delete'])
@@ -113,6 +137,14 @@ const data = ref({
 })
 const searchPhrase = ref('')
 const sideFilterQuery = ref('')
+
+const finalColumns = computed(() => {
+  const columns = cloneDeep(props.columns)
+  if (!props.hideEdit) {
+    columns.push({name: 'edit', label: t('general.tools'), field: 'id', align: 'left'})
+  }
+  return columns
+})
 
 watch(pageSize, () => {
   page.value = 1
