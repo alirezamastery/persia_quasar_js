@@ -33,7 +33,7 @@
           dense-toggle
           default-opened
           :header-style="{ fontSize: '1.1rem' }"
-          :header-class="$q.dark.isActive ? 'bg-grey-10 text-grey-5' : 'bg-grey-1 text-grey-9'"
+          :header-class="$q.dark.isActive ? 'bg-grey-10 text-grey-5' : 'bg-grey-2 text-grey-9'"
         >
           <q-item
             v-for="(subItem, j) in item.children"
