@@ -20,7 +20,7 @@
           :columns="columns"
           :row-key="itemKey"
           :dense="denseRows"
-          :pagination="pagination"
+          v-model:pagination="pagination"
           :filter="filter"
           hide-bottom
           flat
@@ -125,11 +125,7 @@ const queries = ref('')
 const totalPaginationVisible = ref(7)
 const filter = ref('')
 const pagination = ref({
-  sortBy: 'desc',
-  descending: false,
-  page: 1,
-  rowsPerPage: 3,
-  rowsNumber: 10
+  rowsNumber: 10,
 })
 const data = ref({
   items: [],
@@ -195,8 +191,14 @@ function fetchData() {
 function handleRequest(props) {
   console.log('handleRequest', props)
   const {page: tablePage, rowsPerPage, sortBy, descending} = props.pagination
-  const order = descending ? '-' : ''
-  queries.value = 'o=' + order + sortBy
+  console.log(tablePage, rowsPerPage, sortBy, descending)
+  if (sortBy === null) {
+    queries.value = ''
+  } else {
+    const order = descending ? '-' : ''
+    queries.value = 'o=' + order + sortBy
+  }
+
   pagination.value.page = tablePage
   pagination.value.rowsPerPage = rowsPerPage
   pagination.value.sortBy = sortBy
