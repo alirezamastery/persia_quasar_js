@@ -1,13 +1,34 @@
 <template>
-  logout
+  <div class="row flex-center" style="min-height: inherit">
+    <q-card class="q-pa-sm q-ma-md" style="max-width: 400px">
+      <q-card-section>
+        <div class="text-h5">{{ $t('general.Q.logout') }}</div>
+      </q-card-section>
+      <q-card-section>
+        <div class="row">
+          <q-btn color="red" @click="logout">{{ $t('general.yes') }}</q-btn>
+          <q-space/>
+          <q-btn color="primary" @click="goBack">{{ $t('general.no') }}</q-btn>
+        </div>
+      </q-card-section>
+    </q-card>
+  </div>
+
 </template>
 
-<script>
-export default {
-  name: 'Logout',
+<script setup>
+import {useRouter} from 'vue-router'
+import useUserStore from '../../stores/user'
+
+const router = useRouter()
+const userStore = useUserStore()
+
+function goBack() {
+  router.go(-1)
+}
+
+function logout(){
+  userStore.Logout()
+  // broadcast.sendBroadcastMessage('LOGOUT', {})  // TODO
 }
 </script>
-
-<style scoped>
-
-</style>

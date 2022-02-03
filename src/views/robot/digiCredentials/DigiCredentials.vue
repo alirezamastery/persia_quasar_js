@@ -1,5 +1,5 @@
 <template>
-  <q-card>
+  <div class="q-pa-md q-ma-md">
     <q-card-section>
       <div class="text-h5">{{ $t('general.routes.digiPassword') }}</div>
     </q-card-section>
@@ -57,7 +57,7 @@
         </q-btn>
       </q-form>
     </q-card-section>
-  </q-card>
+  </div>
 </template>
 
 <script setup>

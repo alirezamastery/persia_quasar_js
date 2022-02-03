@@ -33,7 +33,7 @@
           dense-toggle
           default-opened
           :header-style="{ fontSize: '1.1rem' }"
-          :header-class="$q.dark.isActive ? 'bg-grey-10 text-grey-5' : 'bg-grey-2 text-grey-9'"
+          :header-class="$q.dark.isActive ? 'bg-grey-10 text-light-blue-14' : 'bg-grey-2 text-blue'"
         >
           <q-item
             v-for="(subItem, j) in item.children"
@@ -42,7 +42,7 @@
             :inset-level="0.5"
             clickable
             v-ripple
-            :class="$q.dark.isActive ? 'bg-grey-10' : 'bg-grey-2'"
+            :active-class="$q.dark.isActive ? 'bg-blue-grey-10 text-blue' : 'bg-blue-1 text-blue'"
           >
             <q-item-section v-if="subItem.icon" avatar>
               <q-icon :name="subItem.icon"/>

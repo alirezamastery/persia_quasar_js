@@ -4,7 +4,7 @@ const routesObj = {
   Home: {
     path: '/',
     name: 'Home',
-    component: views.variantsList,
+    redirect: {name: 'editVariantStatus'},
     meta: {requiresAuth: true},
     // children: [{ path: '', component: () => import('pages/Index.vue') }],
   },
@@ -98,7 +98,7 @@ const routesObj = {
     name: 'productList',
     meta: {
       titleI18n: 'general.routes.products',
-      icon: 'widgets',
+      icon: 'fas fa-cubes',
       requiresAuth: true,
     },
   },
@@ -197,7 +197,7 @@ const routesObj = {
     component: views.invoiceDownload,
     meta: {
       titleI18n: 'general.routes.invoices',
-      icon:'receipt_long',
+      icon: 'receipt_long',
       requiresAuth: true,
     },
   },
@@ -208,20 +208,21 @@ const routesObj = {
     component: views.digiCredentials,
     meta: {
       titleI18n: 'general.routes.digiPassword',
-      icon:'pin',
+      icon: 'pin',
       requiresAuth: true,
     },
   },
-  // // ********** Scrape Invoice **********
-  // scrapeInvoice: {
-  //   path: '/robot/scrape-invoice',
-  // name:'',
-  //   component: views.scrapeInvoice,
-  //   meta: {
-  //     titleI18n: 'general.routes.digiPassword',
-  //     requiresAuth: true,
-  //   },
-  // },
+  // ********** Scrape Invoice **********
+  scrapeInvoice: {
+    path: '/robot/scrape-invoice',
+    name: 'scrapeInvoice',
+    component: views.scrapeInvoice,
+    meta: {
+      titleI18n: 'general.routes.scrapeInvoice',
+      icon: 'engineering',
+      requiresAuth: true,
+    },
+  },
 
   // #################### Accounting ####################
   // ********** Cost **********
@@ -335,6 +336,14 @@ const routesObj = {
     meta: {
       requiresAuth: true,
     },
+  },
+
+  // #################### Other ####################
+  // ********** Matrix Rain **********
+  justRain: {
+    path: '/just-rain',
+    component: views.justRain,
+    name: 'justRain',
   },
 
   '404': {

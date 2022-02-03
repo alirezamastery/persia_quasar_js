@@ -36,7 +36,6 @@ import Banners from 'src/components/layout/Banners.vue'
 import urls from 'src/urls'
 import {notifyErrors} from './composables/notif'
 
-const leftDrawerOpen = ref(false)
 const userStore = useUserStore()
 const generalStore = useGeneralStore()
 

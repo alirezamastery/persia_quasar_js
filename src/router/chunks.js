@@ -6,6 +6,8 @@ export const logout = () =>
   import(/* webpackChunkName: "general" */ '../views/auth/Logout.vue')
 export const profile = () =>
   import(/* webpackChunkName: "general" */ '../views/dashboard/Profile.vue')
+export const justRain = () =>
+    import(/* webpackChunkName: "general" */ '../views/JustRain.vue')
 
 export const actualProductsList = () =>
   import(/* webpackChunkName: "products" */ '../views/products/actualProduct/List.vue')
@@ -49,8 +51,8 @@ export const invoiceDownload = () =>
   import(/* webpackChunkName: "robot" */ '../views/robot/invoice/Download.vue')
 export const digiCredentials = () =>
   import(/* webpackChunkName: "robot" */ '../views/robot/digiCredentials/DigiCredentials.vue')
-// export const scrapeInvoice = () =>
-//   import(/* webpackChunkName: "robot" */ '../views/robot/scrapeInvoice/scrape.vue')
+export const scrapeInvoice = () =>
+  import(/* webpackChunkName: "robot" */ '../views/robot/scrapeInvoice/scrape.vue')
 
 export const costList  = () =>
   import(/* webpackChunkName: "accounting" */ '../views/accounting/cost/List.vue')

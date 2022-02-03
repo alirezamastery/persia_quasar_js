@@ -33,7 +33,7 @@ export const menuItems = [
     ],
   },
   {
-    icon: 'precision_manufacturing',
+    icon: 'fab fa-android',
     order: 30,
     titleI18n: 'general.routes.robot',
     collapsed: false,
@@ -41,6 +41,7 @@ export const menuItems = [
       getRoute('editVariantStatus'),
       getRoute('invoiceDownload'),
       getRoute('digiCredentials'),
+      getRoute('scrapeInvoice'),
     ],
   },
   {

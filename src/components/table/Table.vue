@@ -1,5 +1,5 @@
 <template>
-  <div class="q-ma-md">
+  <div class="q-ma-lg">
 
     <Header
       :title="title"
@@ -17,10 +17,9 @@
 
         <q-table
           :rows="data.items"
-          :columns="finalColumns"
+          :columns="columns"
           :row-key="itemKey"
           :dense="denseRows"
-          :no-data-label="$t('general.noItemsFound')"
           :pagination="pagination"
           :filter="filter"
           hide-bottom
@@ -126,8 +125,11 @@ const queries = ref('')
 const totalPaginationVisible = ref(7)
 const filter = ref('')
 const pagination = ref({
+  sortBy: 'desc',
+  descending: false,
   page: 1,
-  rowsNumber: 10,
+  rowsPerPage: 3,
+  rowsNumber: 10
 })
 const data = ref({
   items: [],
@@ -192,17 +194,21 @@ function fetchData() {
 
 function handleRequest(props) {
   console.log('handleRequest', props)
-  const {page, rowsPerPage, sortBy, descending} = props.pagination
-  const filter = props.filter
+  const {page: tablePage, rowsPerPage, sortBy, descending} = props.pagination
   const order = descending ? '-' : ''
-  queries.value = order + sortBy
+  queries.value = 'o=' + order + sortBy
+  pagination.value.page = tablePage
+  pagination.value.rowsPerPage = rowsPerPage
+  pagination.value.sortBy = sortBy
+  pagination.value.descending = descending
+
   page.value = 1
   fetchData()
 }
 
 function handleFilterChange(event) {
   console.log('handleFilterChange', event)
-  if (event === undefined) return
+  if (!event) return
   sideFilterQuery.value = event
   page.value = 1
   fetchData()

@@ -1,31 +1,26 @@
 <template>
-  <q-car>
+  <div class="q-pa-md q-ma-md">
     <q-card-section>
-      <div class="text-h5">{{ $t('general.routes.invoice') }}</div>
+      <div class="text-h5">{{ $t('general.routes.invoices') }}</div>
     </q-card-section>
     <q-card-section>
       <q-btn color="primary" @click="getReport">{{ $t('robot.getReport') }}</q-btn>
     </q-card-section>
-    <a :href="downloadPath" id="downloadLink" style="display: none"/>
-  </q-car>
+  </div>
 </template>
 
 <script setup>
 import {ref} from 'vue'
 import urls from 'src/urls'
 import {notifyMessage, notifyErrors} from 'src/composables/notif'
-import {axiosInstance} from '../../../boot/axios'
-
-const downloadPath = ref(null)
+import {axiosInstance} from 'src/boot/axios'
 
 function getReport() {
   axiosInstance.get(urls.invoiceExcel)
     .then(res => {
       console.log('invoice', res)
-      downloadPath.value = process.env.VUE_APP_SERVER_BASE_URL + '/' + res.data.path
-      console.log('path', downloadPath.value)
-      const link = document.getElementById('downloadLink')
-      link.href = downloadPath.value
+      const link = document.createElement('a')
+      link.href = process.env.SERVER_BASE_URL + '/' + res.data.path
       link.click()
     })
     .catch(err => {

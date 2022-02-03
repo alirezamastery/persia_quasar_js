@@ -25,7 +25,7 @@
         <q-btn
           v-if="isAuthenticated"
           color="red"
-          @click="handleLogout"
+          @click="$router.push({name: 'Logout'})"
           icon="power_settings_new"
           flat
         >

@@ -1,7 +1,9 @@
 <template>
   <div class="custom-login-container">
 
-    <q-card bordered class="q-pa-md">
+    <MatrixRain/>
+
+    <q-card bordered class="q-pa-md" style="z-index: 10000">
       <q-form
         @submit.prevent="handleSubmit"
         class="q-gutter-md"
@@ -53,6 +55,7 @@ import {ref, reactive} from 'vue'
 import {useRouter} from 'vue-router'
 import {axiosInstance} from 'src/boot/axios'
 import useUserStore from 'src/stores/user'
+import MatrixRain from 'src/components/MatrixRain.vue'
 import {isRequired} from 'src/composables/form-validation'
 import {notifyErrors} from 'src/composables/notif'
 import urls from 'src/urls'
