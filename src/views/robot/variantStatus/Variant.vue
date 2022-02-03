@@ -2,14 +2,14 @@
   <q-card bordered>
     <q-card-section>
       <!--  First Row START -->
-      <div class="row items-center">
+      <div class="row items-center q-col-gutter-sm">
         <div class="col-xs-12 col-sm-12 col-lg-3 text-h6">
           {{ variant.product.title }}
         </div>
-        <div class="col-xs-12 col-sm-12 col-lg-3 text-body1">
+        <div class="col-xs-12 col-sm-6 col-lg-3 text-body1">
           {{ variant.selector_values[0].value }}
         </div>
-        <div class="col-xs-12 col-sm-12 col-lg-3 text-body1">
+        <div class="col-xs-12 col-sm-6 col-lg-3 text-body1">
           {{ variant.dkpc }}
         </div>
         <div class="col-xs-12 col-sm-12 col-lg-3">
@@ -32,8 +32,8 @@
 
     <q-card-section>
       <!--  Second Row START -->
-      <div class="row items-center">
-        <div class="col-xs-12 col-md-4">
+      <div class="row items-center q-col-gutter-sm">
+        <div class="col-xs-12 col-md-6 col-lg-4">
           <div class="row items-center justify-between">
             <div class="col-6">
               <q-btn
@@ -54,7 +54,7 @@
           </div>
         </div>
         <!--  Digi data Inputs -->
-        <div class="col-xs-12 col-sm-6 col-md-4">
+        <div class="col-xs-12 col-md-8 col-lg-4">
           <div class="row q-col-gutter-sm">
             <div class="col-xs-12 col-sm-6">
               <q-input
@@ -75,7 +75,10 @@
           </div>
         </div>
         <!--  Digi data Buttons -->
-        <div v-show="showBtnDigi" class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
+        <div
+          v-show="showBtnDigi"
+          class="col-xs-12 col-sm-12 col-md-4 col-lg-2"
+        >
           <div v-if="loadingDigiData" class="row justify-center">
             <q-circular-progress
               indeterminate
@@ -83,27 +86,21 @@
               size="md"
             />
           </div>
-          <div v-else class="row q-col-gutter-sm justify-around">
-            <div class="col-xs-6 col-sm-3 col-lg-2">
-              <q-btn
-                color="green"
-                class="q-mx-sm"
-                icon="done"
-                no-wrap
-                @click="handleDigiDataUpdate"
-              >
-              </q-btn>
-            </div>
-            <div class="col-xs-6 col-sm-3 col-lg-2">
-              <q-btn
-                color="red"
-                class="q-mx-sm"
-                icon="block"
-                no-wrap
-                @click="revertDigiChange"
-              >
-              </q-btn>
-            </div>
+          <div v-else class="row justify-center">
+            <q-btn
+              color="green"
+              class="q-mx-sm"
+              icon="done"
+              @click="handleDigiDataUpdate"
+            >
+            </q-btn>
+            <q-btn
+              color="red"
+              class="q-mx-sm"
+              icon="block"
+              @click="revertDigiChange"
+            >
+            </q-btn>
           </div>
         </div>
       </div>
@@ -114,7 +111,7 @@
 
     <q-card-section>
       <!--  Third Row START -->
-      <div class="row items-center">
+      <div class="row items-center q-col-gutter-sm">
         <!--  Robot Status -->
         <div class="col-xs-12 col-sm-12 col-md-4">
           <q-toggle
@@ -131,37 +128,49 @@
           </q-toggle>
         </div>
         <!--  Persia Atlas Data Input -->
-        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
-          <q-input
-            v-model="newPriceMin"
-            :label="$t('general.priceMinToman')"
-            filled
-          />
+        <div class="col-xs-12 col-md-8 col-lg-4">
+          <div class="row q-col-gutter-sm">
+            <div class="col-xs-12 col-sm-6">
+              <q-input
+                v-model="newPriceMin"
+                :label="$t('general.priceMinToman')"
+                filled
+              />
+            </div>
+            <div class="col-xs-12 col-sm-6">
+
+              <q-input
+                v-model="newStopLoss"
+                :label="$t('acc.stopLoss')"
+                filled
+              />
+            </div>
+          </div>
         </div>
         <!--  Persia Atlas Data Buttons -->
-        <div v-show="showBtnAtlas" class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
-          <q-circular-progress
-            v-if="loadingRobotStatus"
-            indeterminate
-            color="red"
-          />
-          <div v-else class="row q-col-gutter-sm justify-around">
-            <div class="col-xs-6 col-sm-3 col-lg-2">
-              <q-btn
-                color="green"
-                icon="done"
-                class="q-mx-sm"
-                @click="handleAtlasUpdate"
-              />
-            </div>
-            <div class="col-xs-6 col-sm-3 col-lg-2">
-              <q-btn
-                color="red"
-                icon="block"
-                class="q-mx-sm"
-                @click="revertAtlasDataChange"
-              />
-            </div>
+        <div
+          v-show="showBtnAtlas"
+          class="col-xs-12 col-sm-6 col-md-4 col-lg-2"
+        >
+          <div v-if="loadingRobotStatus" class="row justify-center">
+            <q-circular-progress
+              indeterminate
+              color="red"
+            />
+          </div>
+          <div v-else class="row justify-center">
+            <q-btn
+              color="green"
+              icon="done"
+              class="q-mx-sm"
+              @click="handleAtlasUpdate"
+            />
+            <q-btn
+              color="red"
+              icon="block"
+              class="q-mx-sm"
+              @click="revertAtlasDataChange"
+            />
           </div>
         </div>
       </div>
@@ -178,6 +187,7 @@ import urls from 'src/urls'
 import {notifyErrors, notifyMessage} from '../../../composables/notif'
 import {useI18n} from 'vue-i18n'
 
+
 const {t} = useI18n()
 
 const props = defineProps({
@@ -188,8 +198,10 @@ const initialPriceMin = ref(props.variant['price_min'].toString())
 const newPriceMin = ref(formatIntNumber(props.variant['price_min'].toString()))
 const initialPrice = ref(props.variant['price'].toString())
 const initialStock = ref(props.variant['our_stock'].toString())
+const initialStopLoss = ref(props.variant['stop_loss'].toString())
 const newPrice = ref(formatIntNumber(props.variant['price'].toString()))
 const newStock = ref(props.variant['our_stock'].toString())
+const newStopLoss = ref(formatIntNumber(props.variant['stop_loss'].toString()))
 
 const robotStatus = ref(props.variant['is_active'])
 const digiStatus = ref(props.variant['is_digi_active'])
@@ -200,16 +212,18 @@ const loadingRobotStatus = ref(false)
 const loadingAtlasData = ref(false)
 
 const showBtnDigi = computed(() => {
-  const commaRemovedNewPrice = removeCommas(newPrice.value)
-  return initialPrice.value !== commaRemovedNewPrice || initialStock.value !== newStock.value
+  const price = removeCommas(newPrice.value)
+  return initialPrice.value !== price || initialStock.value !== newStock.value
 })
 const showBtnAtlas = computed(() => {
-  const commaRemovedNewPriceMin = removeCommas(newPriceMin.value)
-  return initialPriceMin.value !== commaRemovedNewPriceMin
+  const priceMin = removeCommas(newPriceMin.value)
+  const stopLoss = removeCommas(newStopLoss.value)
+  return initialPriceMin.value !== priceMin || initialStopLoss.value !== stopLoss
 })
 
-watch(newPriceMin, (newVal) => newPriceMin.value = formatIntNumber(newVal))
 watch(newPrice, (newVal) => newPrice.value = formatIntNumber(newVal))
+watch(newPriceMin, (newVal) => newPriceMin.value = formatIntNumber(newVal))
+watch(newStopLoss, (newVal) => newStopLoss.value = formatIntNumber(newVal))
 
 
 function revertDigiChange() {
@@ -219,6 +233,7 @@ function revertDigiChange() {
 
 function revertAtlasDataChange() {
   newPriceMin.value = initialPriceMin.value
+  newStopLoss.value = initialStopLoss.value
 }
 
 function handleDigiStatusUpdate(event) {
@@ -293,12 +308,15 @@ function handleAtlasUpdate() {
   const data = {
     'dkpc': props.variant.dkpc,
     'price_min': parseInt(removeCommas(newPriceMin.value)),
+    'stop_loss': parseInt(removeCommas(newStopLoss.value)),
   }
   axiosInstance.patch(`${urls.variants}${props.variant.id}/`, data)
     .then(res => {
       console.log('handleAtlasUpdate | res', res)
       initialPriceMin.value = res.data.price_min.toString()
-      newPriceMin.value = res.data.price_min.toString()
+      newPriceMin.value = initialPriceMin.value
+      initialStopLoss.value = res.data.stop_loss.toString()
+      newStopLoss.value =  initialStopLoss.value
       notifyMessage('positive', t('general.snack.saveSuccess'))
     })
     .catch(err => {
