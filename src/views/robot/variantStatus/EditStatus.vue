@@ -17,11 +17,10 @@
           {{ brand.title }}
         </q-btn>
       </div>
-
     </div>
 
     <template v-if="actualProducts.length > 0">
-      <q-separator class="q-my-lg" inset/>
+      <q-separator class="q-my-lg" inset id="actual-product"/>
       <div class="text-h5 q-mb-sm">{{ $t('products.actualProducts') }}</div>
       <div class="row q-col-gutter-sm">
         <div
@@ -38,12 +37,11 @@
             {{ actual.title }}
           </q-btn>
         </div>
-
       </div>
     </template>
 
     <template v-if="variants.length > 0">
-      <q-separator class="q-my-md" inset/>
+      <q-separator class="q-my-md" inset id="variants"/>
       <div class="text-h5 q-mb-sm">{{ $t('products.variants') }}</div>
       <div class="row q-col-gutter-sm">
         <div
@@ -63,7 +61,7 @@
     </template>
 
     <template v-if="variant">
-      <q-separator class="q-my-lg" inset/>
+      <q-separator class="q-my-lg" inset id="variant"/>
       <Variant :variant="variant"/>
     </template>
 
@@ -71,12 +69,15 @@
 </template>
 
 <script setup>
-import {ref} from 'vue'
+import {ref, nextTick} from 'vue'
 import urls from 'src/urls'
 import Variant from './Variant.vue'
-
 import {axiosInstance} from 'src/boot/axios'
 import {notifyErrors} from 'src/composables/notif'
+import {scroll} from 'quasar'
+
+const {getScrollTarget, setVerticalScrollPosition} = scroll
+
 
 const brands = ref(null)
 const actualProducts = ref([])
@@ -89,24 +90,35 @@ axiosInstance.get(urls.brandsAll)
     brands.value = res.data
   })
 
+function scrollToElement(el) {
+  const target = getScrollTarget(el)
+  el.scrollIntoView({behavior: 'smooth', block: 'start', inline: 'nearest'})
+}
+
 function handleBrandSelect(brandId) {
   const url = urls.actualProductByBrand + `?brand_id=${brandId}`
   axiosInstance.get(url)
-    .then(res => {
+    .then(async (res) => {
       console.log('actuala', res.data)
       actualProducts.value = res.data
       variants.value = []
       variant.value = null
+      await nextTick()
+      const el = document.getElementById('actual-product')
+      el.scrollIntoView({behavior: 'smooth', block: 'start', inline: 'nearest'})
     })
 }
 
 function handleActualProductSelect(id) {
   const url = urls.actualProducts + id + '/'
   axiosInstance.get(url)
-    .then(res => {
+    .then(async (res) => {
       console.log('handleActualProductSelect', res.data)
       variants.value = res.data.variants
       variant.value = null
+      await nextTick()
+      const el = document.getElementById('variants')
+      el.scrollIntoView({behavior: 'smooth', block: 'start', inline: 'nearest'})
     })
 }
 
@@ -114,9 +126,12 @@ function handleActualProductSelect(id) {
 function handleVariantSelect(id) {
   const url = urls.variantDigiData + id + '/'
   axiosInstance.get(url)
-    .then(res => {
+    .then(async (res) => {
       console.log('handleVariantSelect')
       variant.value = res.data
+      await nextTick()
+      const el = document.getElementById('variant')
+      el.scrollIntoView({behavior: 'smooth', block: 'start', inline: 'nearest'})
     })
     .catch(err => {
       notifyErrors(err.response.data)
