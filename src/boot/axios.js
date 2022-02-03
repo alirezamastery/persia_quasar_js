@@ -83,6 +83,11 @@ axiosInstance.interceptors.response.use(
       console.log('in axiosInstance | BEGINNING | error.response.status: ', error.response.status)
     }
 
+    if (error.response.status === 500) {
+      notifyErrors({error:'Server Error'})
+      return Promise.reject({})
+    }
+
     if (
       error.response.status === 401 &&
       originalRequest.url === baseURL + 'token/'

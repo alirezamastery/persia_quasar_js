@@ -41,7 +41,7 @@ const routesObj = {
     name: 'actualProductList',
     meta: {
       titleI18n: 'general.routes.actualProducts',
-      icon: 'qr_code_2',
+      icon: 'view_in_ar',
       requiresAuth: true,
     },
   },
@@ -190,26 +190,28 @@ const routesObj = {
       requiresAuth: true,
     },
   },
-  // // ********** Invoice Download **********
-  // invoiceDownload: {
-  //   path: '/robot/invoice-download',
-  //   name: 'invoiceDownload',
-  //   component: views.invoiceDownload,
-  //   meta: {
-  //     titleI18n: 'general.routes.invoices',
-  //     requiresAuth: true,
-  //   },
-  // },
-  // // ********** Digi Credentials **********
-  // digiCredentials: {
-  //   path: '/robot/digi-creds',
-  //   name: 'digiCredentials',
-  //   component: views.digiCredentials,
-  //   meta: {
-  //     titleI18n: 'general.routes.digiPassword',
-  //     requiresAuth: true,
-  //   },
-  // },
+  // ********** Invoice Download **********
+  invoiceDownload: {
+    path: '/robot/invoice-download',
+    name: 'invoiceDownload',
+    component: views.invoiceDownload,
+    meta: {
+      titleI18n: 'general.routes.invoices',
+      icon:'receipt_long',
+      requiresAuth: true,
+    },
+  },
+  // ********** Digi Credentials **********
+  digiCredentials: {
+    path: '/robot/digi-creds',
+    name: 'digiCredentials',
+    component: views.digiCredentials,
+    meta: {
+      titleI18n: 'general.routes.digiPassword',
+      icon:'pin',
+      requiresAuth: true,
+    },
+  },
   // // ********** Scrape Invoice **********
   // scrapeInvoice: {
   //   path: '/robot/scrape-invoice',
