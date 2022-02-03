@@ -3,7 +3,8 @@ export const addCommaForIntNumber = (x) => {
 }
 
 export const removeCommas = (val) => {
-  return val.replace(/,/g, '')
+  const str = val || ''
+  return str.replace(/,/g, '')
 }
 
 export const formatIntNumber = (val) => {
