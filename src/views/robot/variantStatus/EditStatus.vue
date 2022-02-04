@@ -52,8 +52,7 @@
           <q-btn
             flat
             rounded
-            style="color: black"
-            :style="{'background-color': selector['extra_info']}"
+            :style="selectorStyles(selector)"
             @click="handleRelatedSelectorSelect(selector.id)"
           >
             {{ selector.value }}
@@ -182,6 +181,14 @@ function handleVariantSelect(id) {
     })
 }
 
+function selectorStyles(selector) {
+  if (selector.selector.title === 'color')
+    return {
+      'background-color': selector['extra_info'],
+      'color': 'black',
+    }
+  return {}
+}
 </script>
 
 <style scoped>

@@ -19,7 +19,7 @@
         در صورت عدم موفقیت مجدد بزنید.
       </li>
       <li>
-        اونقدر بزن تا بالاخره درست شه. چون لاجیکش درسته ولی safety زیاد نذاشتم براش.
+        اونقدر بزن تا بالاخره اوکی شه. چون لاجیکش درسته ولی safety زیاد نذاشتم براش.
       </li>
       <li>
         در ضمن کار کردن ربات به باز بودن این صفحه ربطی نداره.بعد از زدن دکمه میتونید این صفحه رو ببندید
@@ -35,19 +35,15 @@
       >
         {{ $t('general.start') }}
       </q-btn>
-      <q-circular-progress
+      <q-spinner-gears
         v-else-if="taskId && !taskDone"
         color="amber"
-        class="q-ma-sm"
-        indeterminate
+        size="xl"
       />
-      <q-btn
-        v-if="taskState === 'FAILURE'"
-        color="negative"
-        class="q-ma-sm"
-      >
-        {{ $t('general.error.operationFailed') }}
-      </q-btn>
+      <div v-if="taskState === 'FAILURE' && taskDone">
+        <span class="text-negative">{{ $t('general.error.operationFailed') }}</span> &nbsp;
+        <q-icon name="cancel" color="negative" size="lg"/>
+      </div>
     </div>
   </div>
 </template>
@@ -56,7 +52,7 @@
 import {ref, computed, onBeforeUnmount} from 'vue'
 import {axiosInstance} from 'src/boot/axios'
 import urls from 'src/urls'
-import {notifyErrors, notifyMessage} from '../../../composables/notif'
+import {notifyErrors, notifyMessage} from 'src/composables/notif'
 import {useRouter} from 'vue-router'
 import {useI18n} from 'vue-i18n'
 
@@ -79,12 +75,12 @@ const taskColor = computed(() => taskColors[taskState.value] || 'black')
 onBeforeUnmount(() => stopChecking())
 
 function stopChecking() {
-  window.clearInterval(stateInterval)
+  window.clearInterval(stateInterval.value)
 }
 
 function handleScrape() {
   taskDone.value = false
-  axiosInstance.post(urls.celeryTest)
+  axiosInstance.post(urls.scrapeInvoice)
     .then(res => {
       console.log('scrape task res', res)
       taskId.value = res.data.task_id
@@ -98,7 +94,8 @@ function handleScrape() {
 
 function handleTaskId() {
   stateInterval.value = window.setInterval(() => {
-    const url = urls.taskState.replace('{0}', taskId)
+    const url = urls.taskState.replace('{0}', taskId.value)
+    console.log('status url', url)
     axiosInstance.get(url)
       .then(res => {
         console.log('task state response:', res)
@@ -119,7 +116,7 @@ function handleTaskId() {
         notifyErrors(err.response.data)
         stopChecking()
       })
-  }, 2000)
+  }, 5000)
 
 }
 </script>
