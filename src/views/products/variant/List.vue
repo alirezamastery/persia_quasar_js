@@ -20,7 +20,7 @@
     </template>
 
     <template v-slot:col-selector="{ props }">
-      {{ props.row.selector_values[0].value }}
+      {{ props.row.selector.value }}
     </template>
 
     <template v-slot:col-is_active="{ props }">

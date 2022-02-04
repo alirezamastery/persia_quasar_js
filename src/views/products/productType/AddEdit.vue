@@ -3,7 +3,7 @@
 
     <div class="text-h6 q-ma-md">{{ formTitle }}</div>
 
-    <q-form @submit.prevent="saveItem">
+    <q-form @submit.prevent="saveItem" v-if="showForm">
 
       <div class="row q-ma-sm">
         <div class="col col-xs-12 col-md-6 col-lg-4 col-xl-3">
@@ -19,12 +19,11 @@
       <div class="row q-ma-sm">
         <div class="col col-xs-12 col-md-6 col-lg-4 col-xl-3">
           <AutoComplete
-            v-model="form.selectors"
+            v-model="form.selector.id"
             :label="$t('products.productTypeSelector')"
             :query-param="'search'"
             :obj-repr-field="'title'"
             :api="urls.productTypeSelectors"
-            select-multiple
             :rules="[isRequired]"
           />
         </div>
@@ -72,7 +71,7 @@ export default {
       itemType: 'products.productType',
       form: {
         title: '',
-        selectors: [],
+        selector: {id: null},
       },
     }
   },
@@ -88,7 +87,7 @@ export default {
     getRequestData() {
       return {
         title: this.form.title,
-        selectors: this.form.selectors,
+        selectors: this.form.selector.id,
       }
     },
   },

@@ -125,6 +125,7 @@ watch(() => props.modelValue, (newVal, oldVal) => {
 })
 
 function getInitialData(modelVal) {
+  console.log('AutoComplete | modelVal', modelVal)
   if (!modelVal) return
   if (typeof modelVal === 'string' || typeof modelVal === 'number') {
     axiosInstance.get(props.api + modelVal)
@@ -163,7 +164,8 @@ watch(selectedValue, (newValue) => {
 })
 
 console.log('AutoComplete | auto complete initial modelValue:', props.modelValue)
-getInitialData(props.modelValue)
+if (props.modelValue)
+  getInitialData(props.modelValue)
 
 axiosInstance.get(props.api)
   .then(res => {

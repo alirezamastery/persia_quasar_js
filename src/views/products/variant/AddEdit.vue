@@ -31,12 +31,11 @@
       <div class="row q-ma-sm">
         <div class="col col-xs-12 col-md-6 col-lg-4 col-xl-3">
           <AutoComplete
-            v-model="form.selector_values"
+            v-model="form.selector.id"
             :label="$t('products.selectorValues')"
             :query-param="'search'"
             :obj-repr-field="'value'"
             :api="urls.productTypeSelectorValues"
-            select-multiple
             :rules="[isRequired]"
           />
         </div>
@@ -107,7 +106,7 @@ const form = ref({
   dkpc: '',
   price_min: null,
   is_active: true,
-  selector_values: [],
+  selector: {},
   actual_product: {},
 })
 
@@ -116,7 +115,7 @@ const errors = ref({
   dkpc: [],
   price_min: [],
   is_active: [],
-  selector_values: [],
+  selector: [],
   actual_product: [],
 })
 
