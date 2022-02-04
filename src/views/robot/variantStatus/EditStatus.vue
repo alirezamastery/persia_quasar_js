@@ -9,8 +9,8 @@
         class="col-xs-12 col-sm-6 col-md-4 col-lg-2 col-xl-1"
       >
         <q-btn
-          color="green"
           size="xl"
+          color="green"
           class="full-width"
           @click="handleBrandSelect(brand.id)"
         >
@@ -40,6 +40,28 @@
       </div>
     </template>
 
+    <template v-if="relatedSelectors.length > 0">
+      <q-separator class="q-my-md" inset id="selectors"/>
+      <div class="text-h5 q-mb-sm">{{ $t('products.selectors') }}</div>
+      <div class="row q-col-gutter-sm">
+        <div
+          v-for="selector in relatedSelectors"
+          :key="selector.id"
+          class="col-xs-12 col-sm-6 col-md-2 col-lg-1"
+        >
+          <q-btn
+            flat
+            rounded
+            style="color: black"
+            :style="{'background-color': selector['extra_info']}"
+            @click="handleRelatedSelectorSelect(selector.id)"
+          >
+            {{ selector.value }}
+          </q-btn>
+        </div>
+      </div>
+    </template>
+
     <template v-if="variants.length > 0">
       <q-separator class="q-my-md" inset id="variants"/>
       <div class="text-h5 q-mb-sm">{{ $t('products.variants') }}</div>
@@ -51,7 +73,6 @@
         >
           <q-btn
             color="primary"
-            flat
             @click="handleVariantSelect(variant.id)"
           >
             {{ `${variant.product.title} ${variant.selector_values[0].value}` }}
@@ -79,8 +100,11 @@ import {scroll} from 'quasar'
 const {getScrollTarget, setVerticalScrollPosition} = scroll
 
 
-const brands = ref(null)
+const brands = ref([])
+const selectedBrandId = ref(null)
 const actualProducts = ref([])
+const selectedActualProductId = ref(null)
+const relatedSelectors = ref([])
 const variants = ref([])
 const variant = ref(null)
 
@@ -96,11 +120,14 @@ function scrollToElement(el) {
 }
 
 function handleBrandSelect(brandId) {
-  const url = urls.actualProductByBrand + `?brand_id=${brandId}`
+  selectedBrandId.value = brandId
+  // const url = urls.actualProductByBrand + `?brand_id=${brandId}`
+  const url = urls.actualProductByBrand.replace('{0}', brandId)
   axiosInstance.get(url)
     .then(async (res) => {
       console.log('actuala', res.data)
       actualProducts.value = res.data
+      relatedSelectors.value = []
       variants.value = []
       variant.value = null
       await nextTick()
@@ -109,12 +136,30 @@ function handleBrandSelect(brandId) {
     })
 }
 
+
 function handleActualProductSelect(id) {
-  const url = urls.actualProducts + id + '/'
+  // const url = urls.actualProductByBrand.replace('{0}' , brandId)
+  const url = urls.actualProducts + `${id}/related_selectors/`
+  selectedActualProductId.value = id
   axiosInstance.get(url)
     .then(async (res) => {
       console.log('handleActualProductSelect', res.data)
-      variants.value = res.data.variants
+      // variants.value = res.data.variants
+      relatedSelectors.value = res.data
+      variants.value = []
+      variant.value = null
+      await nextTick()
+      const el = document.getElementById('selectors')
+      el.scrollIntoView({behavior: 'smooth', block: 'start', inline: 'nearest'})
+    })
+}
+
+function handleRelatedSelectorSelect(selectorId) {
+  const url = urls.robotVariantsFilter + `?actual_product_id=${selectedActualProductId.value}&selector_id=${selectorId}`
+  axiosInstance.get(url)
+    .then(async (res) => {
+      console.log('variants:', res.data)
+      variants.value = res.data
       variant.value = null
       await nextTick()
       const el = document.getElementById('variants')
@@ -122,12 +167,11 @@ function handleActualProductSelect(id) {
     })
 }
 
-
 function handleVariantSelect(id) {
   const url = urls.variantDigiData + id + '/'
   axiosInstance.get(url)
     .then(async (res) => {
-      console.log('handleVariantSelect')
+      console.log('handleVariantSelect', res.data)
       variant.value = res.data
       await nextTick()
       const el = document.getElementById('variant')

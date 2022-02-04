@@ -21,8 +21,8 @@
               v-model="editUsername"
               color="red"
               unchecked-icon="verified_user"
-              checked-icon="warning"
-              size="lg"
+              checked-icon="fas fa-radiation"
+              size="xl"
             />
           </div>
         </div>
@@ -42,8 +42,8 @@
               v-model="editPassword"
               color="red"
               unchecked-icon="verified_user"
-              checked-icon="warning"
-              size="lg"
+              checked-icon="fas fa-radiation"
+              size="xl"
             />
           </div>
         </div>
