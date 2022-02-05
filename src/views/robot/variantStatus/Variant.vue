@@ -3,16 +3,19 @@
     <q-card-section>
       <!--  First Row START -->
       <div class="row items-center q-col-gutter-sm">
-        <div class="col-xs-12 col-sm-12 col-lg-3 text-h6">
+        <div class="col-xs-12 col-sm-6 col-md-1 col-lg-1 text-h6 flex flex-center">
+          <img :src="variant['image_src']" alt="" style="max-width: 60px;max-height: 60px"/>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 text-h6">
           {{ variant.product.title }}
         </div>
-        <div class="col-xs-12 col-sm-6 col-lg-3 text-body1">
+        <div class="col-xs-12 col-sm-6 col-md-1 col-lg-1 text-body1">
           {{ variant.selector_values[0].value }}
         </div>
-        <div class="col-xs-12 col-sm-6 col-lg-3 text-body1">
+        <div class="col-xs-12 col-sm-6 col-md-1 col-lg-1 text-body1">
           {{ variant.dkpc }}
         </div>
-        <div class="col-xs-12 col-sm-12 col-lg-3">
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-3 offset-lg-3">
           <q-toggle
             v-model="digiStatus"
             :label="$t('products.activeInDigi')"
