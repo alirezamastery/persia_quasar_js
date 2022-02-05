@@ -190,14 +190,23 @@ const routesObj = {
       requiresAuth: true,
     },
   },
-  // ********** Invoice Download **********
+  // ********** Invoice List **********
   invoiceDownload: {
-    path: '/robot/invoice-download',
+    path: '/robot/invoices',
     name: 'invoiceDownload',
     component: views.invoiceDownload,
     meta: {
       titleI18n: 'general.routes.invoices',
       icon: 'receipt_long',
+      requiresAuth: true,
+    },
+  },
+  // ********** Invoice Details **********
+  invoiceDetails: {
+    path: '/robot/invoice/:id',
+    name: 'invoiceDetails',
+    component: views.invoiceDetails,
+    meta: {
       requiresAuth: true,
     },
   },
@@ -332,6 +341,15 @@ const routesObj = {
     path: '/accounting/product-cost/edit/:id?',
     name: 'productCostEdit',
     component: views.productCostAddEdit,
+    props: true,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  test: {
+    path: '/test',
+    name: 'productCostEdit',
+    component: views.test,
     props: true,
     meta: {
       requiresAuth: true,

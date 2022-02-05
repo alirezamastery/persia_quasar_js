@@ -41,6 +41,7 @@
   "ok": "ردیفه",
   "create": "ایجاد",
   "change": "تغییر",
+  "number": "شماره",
   "brands": "برندها",
   "value": "مقدار",
   "dkp": "dkp",
@@ -57,6 +58,7 @@
   "priceMinToman": "قیمت کف (تومان)",
   "hasCompetition": "دارای رقیب",
   "isActive": "فعال",
+  "count": "تعداد",
   "totalCount": "تعداد کل",
   "tools": "ابزارها",
   "start": "شروع",
@@ -115,6 +117,7 @@
   "itemDeleteQ": "آیا مطمئن به حذف {item} هستید؟",
   "firstName": "نام",
   "lastName": "نام خانوادگی",
+  "quantity": "تعداد",
   "alert": {
     "saveSuccess": "{type} \"{item}\" با موفقیت ثبت شد",
     "saveSuccessGeneral": "{type} با موفقیت ثبت شد",

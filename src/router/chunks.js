@@ -50,7 +50,9 @@ export const variantAddEdit = () =>
 export const editVariantStatus = () =>
   import(/* webpackChunkName: "robot" */ '../views/robot/variantStatus/EditStatus.vue')
 export const invoiceDownload = () =>
-  import(/* webpackChunkName: "robot" */ '../views/robot/invoice/Download.vue')
+  import(/* webpackChunkName: "robot" */ '../views/robot/invoice/List.vue')
+export const invoiceDetails = () =>
+  import(/* webpackChunkName: "robot" */ '../views/robot/invoice/Details.vue')
 export const digiCredentials = () =>
   import(/* webpackChunkName: "robot" */ '../views/robot/digiCredentials/DigiCredentials.vue')
 export const scrapeInvoice = () =>
