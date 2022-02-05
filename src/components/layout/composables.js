@@ -39,6 +39,7 @@ export const menuItems = [
     collapsed: false,
     children: [
       getRoute('editVariantStatus'),
+      getRoute('inactiveVariants'),
       getRoute('invoiceDownload'),
       getRoute('digiCredentials'),
       getRoute('scrapeInvoice'),

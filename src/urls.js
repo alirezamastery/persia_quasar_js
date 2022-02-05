@@ -17,6 +17,7 @@ export const urls = {
   brandsAll: 'products/brands-all/',
   actualProductByBrand: 'products/actual-product-by-brand/{0}/',
   robotVariantsFilter: 'products/robot-variants/',
+  inactiveVariants: 'products/inactive-variants/',
 
   invoices: 'products/invoices/',
   invoiceItems: 'products/invoice-items/',

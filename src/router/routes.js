@@ -232,6 +232,17 @@ const routesObj = {
       requiresAuth: true,
     },
   },
+  // ********** Inactive Variants **********
+  inactiveVariants: {
+    path: '/robot/inactive-variants',
+    name: 'inactiveVariants',
+    component: views.inactiveVariants,
+    meta: {
+      titleI18n: 'general.routes.inactiveVariants',
+      icon: 'power_off',
+      requiresAuth: true,
+    },
+  },
 
   // #################### Accounting ####################
   // ********** Cost **********

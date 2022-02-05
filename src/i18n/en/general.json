@@ -28,6 +28,7 @@
     "digiPassword": "Digi Password",
     "scrapeInvoice": "Extract Invoice",
     "variantStatus": "Variant Status",
+    "inactiveVariants": "Inactive variants",
     "profile": "Profile"
   },
   "siteHeader": "Persia Atlas",
