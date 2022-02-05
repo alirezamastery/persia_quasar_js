@@ -8,6 +8,8 @@ export const profile = () =>
   import(/* webpackChunkName: "general" */ '../views/dashboard/Profile.vue')
 export const justRain = () =>
     import(/* webpackChunkName: "general" */ '../views/JustRain.vue')
+export const test = () =>
+  import(/* webpackChunkName: "general" */ '../views/robot/test.vue')
 
 export const actualProductsList = () =>
   import(/* webpackChunkName: "products" */ '../views/products/actualProduct/List.vue')
@@ -32,17 +34,17 @@ export const productTypeAddEdit = () =>
 // export const productTypeSelectorsList = () =>
 //   import(/* webpackChunkName: "products" */ '../views/products/productTypeSelector/List.vue')
 // export const productTypeSelectorAddEdit = () =>
-//   import(/* webpackChunkName: "products" */ '../views/products/productTypeSelector/AddEdit.vue')
+//   import(/* webpackChunkName: "products" */ '../views/products/productTypeSelector/AddEdit_Composition.vue')
 //
 // export const productTypeSelectorValuesList = () =>
 //   import(/* webpackChunkName: "products" */ '../views/products/productTypeSelectorValues/List.vue')
 // export const productTypeSelectorValueAddEdit = () =>
-//   import(/* webpackChunkName: "products" */ '../views/products/productTypeSelectorValues/AddEdit.vue')
+//   import(/* webpackChunkName: "products" */ '../views/products/productTypeSelectorValues/AddEdit_Composition.vue')
 
 export const variantsList = () =>
   import(/* webpackChunkName: "products" */ '../views/products/variant/List.vue')
 export const variantAddEdit = () =>
-  import(/* webpackChunkName: "products" */ '../views/products/variant/AddEdit_Options.vue')
+  import(/* webpackChunkName: "products" */ '../views/products/variant/AddEdit.vue')
 
 
 export const editVariantStatus = () =>

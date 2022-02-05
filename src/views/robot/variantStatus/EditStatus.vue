@@ -109,7 +109,7 @@ const variant = ref(null)
 
 axiosInstance.get(urls.brandsAll)
   .then(res => {
-    console.log('brands', res.data)
+    console.log('brands:', res.data)
     brands.value = res.data
   })
 
@@ -124,7 +124,7 @@ function handleBrandSelect(brandId) {
   const url = urls.actualProductByBrand.replace('{0}', brandId)
   axiosInstance.get(url)
     .then(async (res) => {
-      console.log('actuala', res.data)
+      console.log('actual products:', res.data)
       actualProducts.value = res.data
       relatedSelectors.value = []
       variants.value = []
@@ -139,11 +139,11 @@ function handleBrandSelect(brandId) {
 function handleActualProductSelect(id) {
   // const url = urls.actualProductByBrand.replace('{0}' , brandId)
   const url = urls.actualProducts + `${id}/related_selectors/`
+  console.log('url:', url)
   selectedActualProductId.value = id
   axiosInstance.get(url)
     .then(async (res) => {
-      console.log('handleActualProductSelect', res.data)
-      // variants.value = res.data.variants
+      console.log('related selectors:', res.data)
       relatedSelectors.value = res.data
       variants.value = []
       variant.value = null

@@ -70,7 +70,7 @@ export const addEditViewMixin = {
       this.$axios.delete(this.apiRoot + this.editingItemId + '/')
         .then(res => {
           console.log('res delete', res.data)
-          const txt = this.$('general.alert.deleteSuccess', {
+          const txt = this.$t('general.alert.deleteSuccess', {
             type: this.$t(this.itemType),
             item: this.itemRepr,
           })
