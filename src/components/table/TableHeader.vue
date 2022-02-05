@@ -1,7 +1,9 @@
 <template>
-  <div class="row q-pa-sm bg-soft">
+  <div
+    v-if="!hideSearch"
+    class="row q-pa-sm bg-soft"
+  >
     <q-input
-      v-if="!hideSearch"
       v-model="searchPhrase"
       :label="$t('general.search')"
       debounce="300"

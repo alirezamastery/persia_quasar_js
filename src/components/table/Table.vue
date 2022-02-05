@@ -4,14 +4,16 @@
     <Header
       :title="title"
       :add-route="addRoute"
+      :hide-create-btn="hideCreateBtn"
     />
 
     <div class="row no-wrap-md">
 
-      <q-card class="col-xs-12 col-md-9 col-lg-9 col-xl-10">
+      <q-card class="col-sm-12 col-md">
 
         <TableHeader
           :api-root="apiRoot"
+          :hide-search="hideSearch"
           @search-input="searchPhrase = $event"
         />
 
@@ -105,14 +107,16 @@ const props = defineProps({
   title: {type: String, required: true},
   apiRoot: {type: String, required: true},
   columns: {type: Array, required: true},
-  editRoute: {type: String, required: true},
-  addRoute: {type: String, required: true},
+  editRoute: {type: String, required: false, default: ''},
+  addRoute: {type: String, required: false, default: ''},
   itemKey: {type: String, required: false, default: 'id'},
   showActions: {type: Boolean, required: false, default: true},
   denseRows: {type: Boolean, required: false, default: true},
-  hideSearch: {type: Boolean, required: false, default: false},
   filters: {type: Array, required: false, default: () => ([])},
+  hideSearch: {type: Boolean, required: false, default: false},
   hideEdit: {type: Boolean, required: false, default: false},
+  hideCreateBtn: {type: Boolean, required: false, default: false},
+  searchWord: {type: String, required: false, default: 'search'},
 })
 
 const emit = defineEmits(['change', 'delete'])
@@ -158,7 +162,7 @@ watch(searchPhrase, () => {
 function constructQuery() {
   let query = `?${queries.value}&page_size=${pageSize.value}`
   if (searchPhrase.value)
-    query += `&search=${searchPhrase.value}`
+    query += `&${props.searchWord}=${searchPhrase.value}`
   if (page.value)
     query += `&page=${page.value}`
   if (sideFilterQuery.value)
@@ -210,7 +214,7 @@ function handleRequest(props) {
 
 function handleFilterChange(event) {
   console.log('handleFilterChange', event)
-  if (!event) return
+  // if (!event) return
   sideFilterQuery.value = event
   page.value = 1
   fetchData()

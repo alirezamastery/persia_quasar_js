@@ -1,6 +1,6 @@
 <template>
   <div class="row items-center justify-between q-pa-sm">
-    <div class="col-12 col-lg-1 text-no-wrap">
+    <div class="col-12 col-md-1 col-lg-1 text-no-wrap">
       {{ countDisplay }}
     </div>
     <div class="col-12 col-md-6 col-lg-8 col-xl-9 flex justify-center">
