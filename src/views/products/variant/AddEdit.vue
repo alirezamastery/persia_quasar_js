@@ -1,6 +1,8 @@
 <template>
   <div class="fit q-pa-sm">
+
     <div class="text-h6 q-ma-md">{{ formTitle }}</div>
+
     <q-form @submit.prevent="saveItem">
       <div class="row q-ma-sm">
         <div class="col col-xs-12 col-md-6 col-lg-4 col-xl-3">
@@ -60,7 +62,6 @@
             filled
             :rules="[isRequired]"
           />
-          <!-- SAMPLE ERROR FOR FUTURE: error-message="errors.price_min ? errors.price_min[0] : null"-->
         </div>
       </div>
 
@@ -73,118 +74,87 @@
         </div>
       </div>
 
-      <FormActions/>
+      <FormActions
+        :show-delete="!!editingItemId"
+        @delete="deleteDialog = true"
+      />
 
     </q-form>
+
+    <Delete
+      v-if="editingItemId"
+      v-model="deleteDialog"
+      :item-repr="itemRepr"
+      @delete="handleDeleteItem"
+    />
+
   </div>
 </template>
 
-<script setup>
-import {computed, ref} from 'vue'
-import {useRoute, useRouter} from 'vue-router'
-import {useI18n} from 'vue-i18n'
-import {axiosInstance} from 'src/boot/axios'
+<script>
 import {cloneDeep} from 'lodash'
-import {addBanner} from 'src/composables/notif'
-import {formatIntNumber, removeCommas} from 'src/composables/number-tools'
+import {dataToolsMixin} from 'src/mixins/data-tools'
+import {addEditViewMixin} from 'src/mixins/add-edit'
 import AutoComplete from 'src/components/AutoComplete.vue'
-import FormActions from 'src/components/addEdit/FormActions'
+import FormActions from 'src/components/addEdit/FormActions.vue'
+import Delete from 'src/components/addEdit/Delete.vue'
 import urls from 'src/urls'
-import {isRequired} from 'src/composables/form-validation'
-import {notifyErrors} from 'src/composables/notif'
-import {useAddEdit} from '../../../composables/add-edit'
 
-const router = useRouter()
-const route = useRoute()
-const {t} = useI18n()
-
-const apiRoot = urls.variants
-const listViewRoute = 'variantList'
-const itemTypeTranslate = 'products.variant'
-const form = ref({
-  product: {id: null},
-  dkpc: '',
-  price_min: null,
-  is_active: true,
-  selector: {},
-  actual_product: {},
-})
-
-const errors = ref({
-  product: [],
-  dkpc: [],
-  price_min: [],
-  is_active: [],
-  selector: [],
-  actual_product: [],
-})
-
-const {formTitle, initialize, saveItem, editingItemId} = useAddEdit(
-  route.params.id,
-  form,
-  apiRoot,
-  listViewRoute,
-  ()
-)
-
-// const editingItemId = computed(() => route.params.id)
-// const formTitle = computed(() => {
-//   if (editingItemId.value)
-//     return `${t('general.change')} ${t(itemTypeTranslate)}`
-//   return t('general.createANew').replace('{0}', t(itemTypeTranslate))
-// })
-// const itemRepr = computed(() => form.value.dkpc.toString())
-
-// function formInit(resData) {
-//   const date = cloneDeep(resData)
-//   form.value = date // very important to clone the response !!!
-//   form.value.price_min = formatIntNumber(form.value.price_min.toString())
-//   form.value.selector_values = date.selector_values.map(itm => itm.id)
-// }
-
-// function getRequestData() {
-//   return {
-//     product: form.value.product.id,
-//     dkpc: form.value.dkpc,
-//     has_competition: form.value.has_competition,
-//     is_active: form.value.is_active,
-//     price_min: parseInt(removeCommas(form.value.price_min)),
-//     selector_values: form.value.selector_values,
-//     actual_product: form.value.actual_product.id,
-//   }
-// }
-//
-// function saveItem() {
-//   console.log('form', form.value)
-//   const data = getRequestData()
-//   console.log('save payload', data)
-//
-//   let url = apiRoot
-//   if (editingItemId.value) url += `${editingItemId.value}/`
-//   let method = editingItemId.value ? 'patch' : 'post'
-//   axiosInstance.request({url, data, method})
-//     .then(res => {
-//       console.log('save success', res.data)
-//       addBanner('success')
-//       router.push({name: listViewRoute})
-//     })
-//     .catch(err => {
-//       console.log('request error', err)
-//       // errors.value = err.response.data
-//       notifyErrors(err.response.data)
-//     })
-// }
-//
-// if (editingItemId.value) {
-//   axiosInstance.get(apiRoot + editingItemId.value + '/')
-//     .then(res => {
-//       console.log('item details', res.data)
-//       formInit(res.data) // handle ManyToMany relations data in "formInit" method
-//     })
-//   console.log('no details, getting the item details from server')
-// }
-
-
+export default {
+  name: 'AddEdit',
+  components: {
+    Delete,
+    AutoComplete,
+    FormActions,
+  },
+  mixins: [dataToolsMixin, addEditViewMixin],
+  data() {
+    return {
+      urls: urls,
+      apiRoot: urls.variants,
+      listViewRoute: 'variantList',
+      itemType: 'products.variant',
+      form: {
+        product: {id: null},
+        dkpc: '',
+        price_min: null,
+        is_active: true,
+        // selector_values: [],
+        selector: {},
+        actual_product: {},
+      },
+    }
+  },
+  computed: {
+    itemRepr() {
+      return this.form.dkpc.toString()
+    },
+  },
+  watch: {
+    'form.price_min': function (newVal) {
+      this.form.price_min = this.formatIntNumber(newVal)
+    },
+  },
+  methods: {
+    formInit(resData) {
+      this.form = cloneDeep(resData)
+      this.form.price_min = this.formatIntNumber(this.form.price_min.toString())
+      // this.form.selector_values = resData.selector_values.map(itm => itm.id)
+    },
+    getRequestData() {
+      return {
+        product: this.form.product.id,
+        dkpc: this.form.dkpc,
+        has_competition: this.form.has_competition,
+        is_active: this.form.is_active,
+        price_min: parseInt(this.removeCommas(this.form.price_min)),
+        // selector_values: this.form.selector_values,
+        selector: this.form.selector.id,
+        actual_product: this.form.actual_product.id,
+      }
+    },
+  },
+}
 </script>
 
 <style scoped>
