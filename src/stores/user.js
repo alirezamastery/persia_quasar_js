@@ -3,6 +3,7 @@ import {useRouter} from 'vue-router'
 import {routerInstance} from 'src/router'
 import {axiosInstance} from 'src/boot/axios'
 import localDb from 'src/local-db'
+import {broadcastInstance} from '../boot/broadcast'
 
 const storeID = 'user'
 
@@ -32,6 +33,7 @@ export const useUserStore = defineStore({
       localDb.clearAll()
       axiosInstance.defaults.headers['Authorization'] = ''
       routerInstance.push({name: 'Login'})
+      broadcastInstance.sendBroadcastMessage('LOGOUT', {})
     },
     SetProfile(payload) {
       this.profile = payload

@@ -35,6 +35,7 @@ import Sidebar from 'src/components/layout/Sidebar.vue'
 import Banners from 'src/components/layout/Banners.vue'
 import urls from 'src/urls'
 import {notifyErrors} from './composables/notif'
+import {broadcastInstance} from './boot/broadcast'
 
 const userStore = useUserStore()
 const generalStore = useGeneralStore()
@@ -49,6 +50,10 @@ const isAuthenticated = computed(() => userStore.isAuthenticated)
 const showAppLayout = computed(() => {
   const noAuthRoutes = ['404', 'Login', 'justRain']
   return isAuthenticated.value && !noAuthRoutes.includes(String(route.name))
+})
+
+broadcastInstance.addBroadcastCallback('LOGOUT', () => {
+  userStore.Logout()
 })
 
 // TODO: QAjaxBar plugin
