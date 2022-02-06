@@ -79,3 +79,6 @@ export const productCostList  = () =>
   import(/* webpackChunkName: "accounting" */ '../views/accounting/productCost/List.vue')
 export const productCostAddEdit  = () =>
   import(/* webpackChunkName: "accounting" */ '../views/accounting/productCost/AddEdit.vue')
+
+export const profitByDate  = () =>
+  import(/* webpackChunkName: "accounting" */ '../views/accounting/profit/ProfitByDate.vue')

@@ -1,4 +1,5 @@
 import * as views from './chunks'
+import {profitByDate} from './chunks'
 
 const routesObj = {
   Home: {
@@ -363,6 +364,18 @@ const routesObj = {
     component: views.test,
     props: true,
     meta: {
+      requiresAuth: true,
+    },
+  },
+  // ********** Profit **********
+  profitByDate: {
+    path: '/profit-by-date',
+    name: 'profitByDate',
+    component: views.profitByDate,
+    props: true,
+    meta: {
+      titleI18n: 'acc.profit',
+      icon: 'shopping_cart',
       requiresAuth: true,
     },
   },

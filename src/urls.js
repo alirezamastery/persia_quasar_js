@@ -38,6 +38,7 @@ export const urls = {
   costTypes: 'accounting/cost-types/',
   incomes: 'accounting/incomes/',
   productCosts: 'accounting/product-costs/',
+  profit: 'accounting/profit/',
 }
 
 // const urls = {}
