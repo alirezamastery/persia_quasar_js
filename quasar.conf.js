@@ -26,6 +26,7 @@ module.exports = configure(function (ctx) {
       'axios',
       'pinia',
       'filters',
+      'broadcast'
       // 'global-components',
     ],
 
