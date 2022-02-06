@@ -20,6 +20,7 @@
               :options="month"
               :label="$t('general.month')"
               :rules="[isRequired]"
+              filled
             />
           </div>
         </div>

@@ -375,7 +375,7 @@ const routesObj = {
     props: true,
     meta: {
       titleI18n: 'acc.profit',
-      icon: 'shopping_cart',
+      icon: 'fas fa-money-check-alt',
       requiresAuth: true,
     },
   },
