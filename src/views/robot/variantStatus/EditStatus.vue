@@ -129,6 +129,9 @@ function scrollToElement(el) {
 
 function handleBrandSelect(brandId) {
   selectedIds.value.brand = brandId
+  selectedIds.value.actualProduct = null
+  selectedIds.value.selector = null
+  selectedIds.value.variant = null
   const url = urls.actualProductByBrand.replace('{0}', brandId)
   axiosInstance.get(url)
     .then(async (res) => {
@@ -145,9 +148,11 @@ function handleBrandSelect(brandId) {
 
 
 function handleActualProductSelect(id) {
+  selectedIds.value.actualProduct = id
+  selectedIds.value.selector = null
+  selectedIds.value.variant = null
   const url = urls.actualProducts + `${id}/related_selectors/`
   console.log('url:', url)
-  selectedIds.value.actualProduct = id
   axiosInstance.get(url)
     .then(async (res) => {
       console.log('related selectors:', res.data)
@@ -161,8 +166,9 @@ function handleActualProductSelect(id) {
 }
 
 function handleRelatedSelectorSelect(selectorId) {
-  const url = urls.robotVariantsFilter + `?actual_product_id=${selectedIds.value.actualProduct}&selector_id=${selectorId}`
   selectedIds.value.selector = selectorId
+  selectedIds.value.variant = null
+  const url = urls.robotVariantsFilter + `?actual_product_id=${selectedIds.value.actualProduct}&selector_id=${selectorId}`
   axiosInstance.get(url)
     .then(async (res) => {
       console.log('variants:', res.data)
@@ -175,11 +181,12 @@ function handleRelatedSelectorSelect(selectorId) {
 }
 
 function handleVariantSelect(id) {
-  const url = urls.variantDigiData + id + '/'
   selectedIds.value.variant = id
+  const url = urls.variantDigiData + id + '/'
   axiosInstance.get(url)
     .then(async (res) => {
       console.log('handleVariantSelect', res.data)
+      variant.value = null
       variant.value = res.data
       await nextTick()
       const el = document.getElementById('variant')
