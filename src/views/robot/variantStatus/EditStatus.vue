@@ -9,9 +9,9 @@
         class="col-xs-12 col-sm-6 col-md-4 col-lg-2 col-xl-1"
       >
         <q-btn
-          size="xl"
-          color="green"
+          size="lg"
           class="full-width"
+          :class="selectedBtnClass(brand.id === selectedIds.brand, $q.dark.isActive)"
           @click="handleBrandSelect(brand.id)"
         >
           {{ brand.title }}
@@ -21,7 +21,7 @@
 
     <template v-if="actualProducts.length > 0">
       <q-separator class="q-my-lg" inset id="actual-product"/>
-      <div class="text-h5 q-mb-sm">{{ $t('products.actualProducts') }}</div>
+      <div class="text-h6 q-mb-sm">{{ $t('products.actualProducts') }}</div>
       <div class="row q-col-gutter-sm">
         <div
           v-for="actual in actualProducts"
@@ -30,8 +30,9 @@
         >
           <q-btn
             color="primary"
-            size="lg"
+            size="md"
             class="full-width full-height"
+            :class="selectedBtnClass(actual.id === selectedIds.actualProduct, $q.dark.isActive)"
             @click="handleActualProductSelect(actual.id)"
           >
             {{ actual.title }}
@@ -42,7 +43,7 @@
 
     <template v-if="relatedSelectors.length > 0">
       <q-separator class="q-my-md" inset id="selectors"/>
-      <div class="text-h5 q-mb-sm">{{ $t('products.selectors') }}</div>
+      <div class="text-h6 q-mb-sm">{{ $t('products.selectors') }}</div>
       <div class="row q-col-gutter-sm">
         <div
           v-for="selector in relatedSelectors"
@@ -55,7 +56,10 @@
             :style="selectorStyles(selector)"
             @click="handleRelatedSelectorSelect(selector.id)"
           >
-            {{ selector.value }}
+            <div class="no-wrap row">
+              <q-icon v-if="selector.id === selectedIds.selector" name="check_circle" class="q-mx-sm"/>
+              <span>{{ selector.value }}</span>
+            </div>
           </q-btn>
         </div>
       </div>
@@ -63,7 +67,7 @@
 
     <template v-if="variants.length > 0">
       <q-separator class="q-my-md" inset id="variants"/>
-      <div class="text-h5 q-mb-sm">{{ $t('products.variants') }}</div>
+      <div class="text-h6 q-mb-sm">{{ $t('products.variants') }}</div>
       <div class="row q-col-gutter-sm">
         <div
           v-for="variant in variants"
@@ -73,6 +77,7 @@
           <q-btn
             color="primary"
             @click="handleVariantSelect(variant.id)"
+            :class="selectedBtnClass(variant.id === selectedIds.variant,$q.dark.isActive)"
           >
             {{ `${variant.product.title} ${variant.selector_values[0].value}` }}
           </q-btn>
@@ -100,12 +105,16 @@ const {getScrollTarget, setVerticalScrollPosition} = scroll
 
 
 const brands = ref([])
-const selectedBrandId = ref(null)
 const actualProducts = ref([])
-const selectedActualProductId = ref(null)
 const relatedSelectors = ref([])
 const variants = ref([])
 const variant = ref(null)
+const selectedIds = ref({
+  brand: null,
+  actualProduct: null,
+  selector: null,
+  variant: null,
+})
 
 axiosInstance.get(urls.brandsAll)
   .then(res => {
@@ -119,8 +128,7 @@ function scrollToElement(el) {
 }
 
 function handleBrandSelect(brandId) {
-  selectedBrandId.value = brandId
-  // const url = urls.actualProductByBrand + `?brand_id=${brandId}`
+  selectedIds.value.brand = brandId
   const url = urls.actualProductByBrand.replace('{0}', brandId)
   axiosInstance.get(url)
     .then(async (res) => {
@@ -137,10 +145,9 @@ function handleBrandSelect(brandId) {
 
 
 function handleActualProductSelect(id) {
-  // const url = urls.actualProductByBrand.replace('{0}' , brandId)
   const url = urls.actualProducts + `${id}/related_selectors/`
   console.log('url:', url)
-  selectedActualProductId.value = id
+  selectedIds.value.actualProduct = id
   axiosInstance.get(url)
     .then(async (res) => {
       console.log('related selectors:', res.data)
@@ -154,7 +161,8 @@ function handleActualProductSelect(id) {
 }
 
 function handleRelatedSelectorSelect(selectorId) {
-  const url = urls.robotVariantsFilter + `?actual_product_id=${selectedActualProductId.value}&selector_id=${selectorId}`
+  const url = urls.robotVariantsFilter + `?actual_product_id=${selectedIds.value.actualProduct}&selector_id=${selectorId}`
+  selectedIds.value.selector = selectorId
   axiosInstance.get(url)
     .then(async (res) => {
       console.log('variants:', res.data)
@@ -168,6 +176,7 @@ function handleRelatedSelectorSelect(selectorId) {
 
 function handleVariantSelect(id) {
   const url = urls.variantDigiData + id + '/'
+  selectedIds.value.variant = id
   axiosInstance.get(url)
     .then(async (res) => {
       console.log('handleVariantSelect', res.data)
@@ -189,8 +198,14 @@ function selectorStyles(selector) {
     }
   return {}
 }
+
+function selectedBtnClass(isSelected, isDark) {
+  if (isSelected) {
+    return 'bg-green text-white'
+  } else if (isDark) {
+    return 'bg-grey-4 text-grey-10'
+  } else {
+    return 'bg-grey-14 text-white'
+  }
+}
 </script>
-
-<style scoped>
-
-</style>
