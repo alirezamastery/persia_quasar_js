@@ -5,7 +5,7 @@ import urls from 'src/urls'
 import {useQuasar} from 'quasar'
 import localDb from '../local-db'
 import {useRouter} from 'vue-router'
-import {notifyErrors} from '../composables/notif'
+import {notifyErrors, notifyAxiosError} from '../composables/notif'
 
 function getCookie(name) {
   let cookieValue = null
@@ -71,6 +71,8 @@ axiosInstance.interceptors.response.use(
 
     const originalRequest = error.config
     console.log('in axiosInstance | BEGINNING | error: ', error)
+
+    notifyAxiosError(error)
 
     if (typeof error.response === 'undefined') {
       console.log('axios error.response is undefined', error)
