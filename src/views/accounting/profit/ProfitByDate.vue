@@ -38,19 +38,19 @@
         <tbody>
         <tr>
           <td class="text-left">{{ $t('acc.costs') }}</td>
-          <td class="text-right">{{ $filters.price(data.costs) }}</td>
+          <td class="">{{ $filters.price(data.costs) }}</td>
         </tr>
         <tr>
           <td class="text-left">{{ $t('acc.productCosts') }}</td>
-          <td class="text-right">{{ $filters.price(data['product_costs']) }}</td>
+          <td class="">{{ $filters.price(data['product_costs']) }}</td>
         </tr>
         <tr>
           <td class="text-left">{{ $t('acc.incomes') }}</td>
-          <td class="text-right">{{ $filters.price(data.incomes) }}</td>
+          <td class="">{{ $filters.price(data.incomes) }}</td>
         </tr>
         <tr>
           <td class="text-left">{{ $t('acc.profit') }}</td>
-          <td class="text-right">{{ $filters.price(data.profit) }}</td>
+          <td class="">{{ $filters.price(data.profit) }}</td>
         </tr>
         </tbody>
       </q-markup-table>
