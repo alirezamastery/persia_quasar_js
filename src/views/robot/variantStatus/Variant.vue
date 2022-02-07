@@ -12,9 +12,14 @@
         <div class="col-xs-12 col-sm-6 col-md-3 col-lg-1 text-body1">
           {{ variant.selector_values[0].value }}
         </div>
-        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-1 text-body1">
+        <q-btn
+          type="a"
+          target="_blank"
+          class="col-xs-12 col-sm-6 col-md-3 col-lg-1 text-body1"
+          :href="`https://www.digikala.com/product/dkp-${variant.product.dkp}`"
+        >
           {{ variant.dkpc }}
-        </div>
+        </q-btn>
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3 offset-lg-3">
           <q-toggle
             v-model="digiStatus"
@@ -116,7 +121,7 @@
       <!--  Third Row START -->
       <div class="row items-center q-col-gutter-sm">
         <!--  Robot Status -->
-        <div class="col-xs-12 col-sm-12 col-md-6">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
           <q-toggle
             v-model="robotStatus"
             :label="$t('products.robotActive')"
@@ -319,7 +324,7 @@ function handleAtlasUpdate() {
       initialPriceMin.value = res.data.price_min.toString()
       newPriceMin.value = initialPriceMin.value
       initialStopLoss.value = res.data.stop_loss.toString()
-      newStopLoss.value =  initialStopLoss.value
+      newStopLoss.value = initialStopLoss.value
       notifyMessage('positive', t('general.snack.saveSuccess'))
     })
     .catch(err => {
