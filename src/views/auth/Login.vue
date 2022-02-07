@@ -84,7 +84,7 @@ function handleSubmit() {
     })
     .catch(err => {
       console.log('axios error:', err)
-      notifyAxiosError(err)
+      // notifyAxiosError(err)
     })
 }
 

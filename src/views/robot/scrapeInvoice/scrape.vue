@@ -88,7 +88,7 @@ function handleScrape() {
     })
     .catch(err => {
       console.log('task test error', err)
-      notifyAxiosError(err)
+      // notifyAxiosError(err)
     })
 }
 
@@ -113,7 +113,7 @@ function handleTaskId() {
       })
       .catch(err => {
         console.log('task state error', err)
-        notifyAxiosError(err)
+        // notifyAxiosError(err)
         stopChecking()
       })
   }, 5000)

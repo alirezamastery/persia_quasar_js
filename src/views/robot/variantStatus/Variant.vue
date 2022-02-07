@@ -276,7 +276,7 @@ function handleDigiStatusUpdate(event) {
     .catch(err => {
       console.log('handleDigiStatusUpdate | error', err.response?.data)
       digiStatus.value = !event
-      notifyAxiosError(err)
+      // notifyAxiosError(err)
     })
     .finally(() => loadingDigiStatus.value = false)
 }
@@ -300,7 +300,7 @@ function handleDigiDataUpdate() {
     })
     .catch(err => {
       console.log('handleDigiDataUpdate | error', err)
-      notifyAxiosError(err)
+      // notifyAxiosError(err)
     })
     .finally(() => loadingDigiData.value = false)
 }
@@ -322,7 +322,7 @@ function handleRobotStatusUpdate(event) {
     .catch(err => {
       console.log('handleRobotStatusUpdate | error', err)
       robotStatus.value = !event
-      notifyAxiosError(err)
+      // notifyAxiosError(err)
     })
     .finally(() => loadingRobotStatus.value = false)
 }
@@ -345,7 +345,7 @@ function handleAtlasUpdate() {
     })
     .catch(err => {
       console.log('handleAtlasUpdate | error', err)
-      notifyAxiosError(err)
+      // notifyAxiosError(err)
     })
     .finally(() => loadingAtlasData.value = false)
 }

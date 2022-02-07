@@ -97,7 +97,7 @@ function handleSubmit() {
       notifyMessage('positive', t('general.snack.saveSuccess'))
     })
     .catch(err => {
-      notifyAxiosError(err)
+      // notifyAxiosError(err)
     })
 }
 

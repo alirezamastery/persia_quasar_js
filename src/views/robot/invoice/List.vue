@@ -65,7 +65,7 @@ function getReport() {
       link.click()
     })
     .catch(err => {
-      notifyAxiosError(err)
+      // notifyAxiosError(err)
     })
 }
 </script>

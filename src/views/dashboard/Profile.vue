@@ -183,7 +183,7 @@ function handleFormSubmit() {
         userStore.SetProfile(res.data)
       }).catch(err => {
         console.log('file upload error', err)
-        notifyAxiosError(err)
+        // notifyAxiosError(err)
       })
     })
   } else {
@@ -199,7 +199,7 @@ function handleFormSubmit() {
       })
       .catch(err => {
         console.log('simple patch error', err)
-        notifyAxiosError(err)
+        // notifyAxiosError(err)
       })
   }
 }

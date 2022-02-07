@@ -90,7 +90,7 @@ if (userStore.isAuthenticated) {
     })
     .catch(err => {
       console.log(err)
-      notifyAxiosError(err)
+      // notifyAxiosError(err)
       router.push({name: 'Login'})
     })
 }

@@ -83,7 +83,7 @@ function getProfit() {
     console.log('res:', res)
     data.value = res.data
   }).catch(err => {
-    notifyAxiosError(err)
+    // notifyAxiosError(err)
   })
 }
 

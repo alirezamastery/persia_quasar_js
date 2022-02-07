@@ -49,7 +49,7 @@ export const addEditViewMixin = {
         })
         .catch(err => {
           console.log('request error', err)
-          notifyAxiosError(err)
+          // notifyAxiosError(err)
         })
     },
 
@@ -79,7 +79,7 @@ export const addEditViewMixin = {
         })
         .catch(err => {
           console.log('delete error ', err)
-          notifyAxiosError(err)
+          // notifyAxiosError(err)
         })
     },
 

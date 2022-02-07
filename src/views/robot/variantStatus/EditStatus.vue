@@ -193,7 +193,7 @@ function handleVariantSelect(id) {
       el.scrollIntoView({behavior: 'smooth', block: 'start', inline: 'nearest'})
     })
     .catch(err => {
-      notifyAxiosError(err)
+      // notifyAxiosError(err)
     })
 }
 
