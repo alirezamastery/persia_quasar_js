@@ -89,8 +89,8 @@
 </template>
 
 <script setup>
-import 'vue-advanced-cropper/dist/style.css'
-import 'vue-advanced-cropper/dist/theme.classic.css'
+// import 'vue-advanced-cropper/dist/style.css'
+// import 'vue-advanced-cropper/dist/theme.classic.css'
 
 import {ref, computed, watch} from 'vue'
 import {Cropper, CircleStencil} from 'vue-advanced-cropper'
@@ -218,5 +218,292 @@ axiosInstance.get(urls.userProfile)
 </script>
 
 <style scoped>
+.vue-advanced-cropper {
+  text-align: center /* rtl:ignore */;
+  position: relative /* rtl:ignore */;
+  user-select: none /* rtl:ignore */;
+  max-height: 100% /* rtl:ignore */;
+  max-width: 100% /* rtl:ignore */;
+  direction: ltr /* rtl:ignore */;
+}
+.vue-advanced-cropper__stretcher {
+  pointer-events: none /* rtl:ignore */;
+  position: relative /* rtl:ignore */;
+  max-width: 100% /* rtl:ignore */;
+  max-height: 100% /* rtl:ignore */;
+}
+.vue-advanced-cropper__image {
+  user-select: none /* rtl:ignore */;
+  position: absolute /* rtl:ignore */;
+  transform-origin: center /* rtl:ignore */;
+  max-width: none !important /* rtl:ignore */;
+}
+.vue-advanced-cropper__background, .vue-advanced-cropper__foreground {
+  opacity: 1 /* rtl:ignore */;
+  background: black /* rtl:ignore */;
+  transform: translate(-50%, -50%) /* rtl:ignore */;
+  position: absolute /* rtl:ignore */;
+  top: 50% /* rtl:ignore */;
+  left: 50% /* rtl:ignore */;
+}
+.vue-advanced-cropper__foreground {
+  opacity: 0.5 /* rtl:ignore */;
+}
+.vue-advanced-cropper__boundaries {
+  opacity: 1 /* rtl:ignore */;
+  transform: translate(-50%, -50%) /* rtl:ignore */;
+  position: absolute /* rtl:ignore */;
+  left: 50% /* rtl:ignore */;
+  top: 50% /* rtl:ignore */;
+}
+.vue-advanced-cropper__cropper-wrapper {
+  width: 100% /* rtl:ignore */;
+  height: 100% /* rtl:ignore */;
+}
+.vue-advanced-cropper__image-wrapper {
+  overflow: hidden /* rtl:ignore */;
+  position: absolute /* rtl:ignore */;
+  width: 100% /* rtl:ignore */;
+  height: 100% /* rtl:ignore */;
+}
+.vue-advanced-cropper__stencil-wrapper {
+  position: absolute /* rtl:ignore */;
+}
 
+.vue-draggable-area {
+  position: relative /* rtl:ignore */;
+}
+
+.vue-line-wrapper {
+  background: none /* rtl:ignore */;
+  position: absolute /* rtl:ignore */;
+  display: flex /* rtl:ignore */;
+  align-items: center /* rtl:ignore */;
+  justify-content: center /* rtl:ignore */;
+}
+.vue-line-wrapper--north, .vue-line-wrapper--south {
+  height: 12px /* rtl:ignore */;
+  width: 100% /* rtl:ignore */;
+  left: 0 /* rtl:ignore */;
+  transform: translateY(-50%) /* rtl:ignore */;
+}
+.vue-line-wrapper--north {
+  top: 0 /* rtl:ignore */;
+  cursor: n-resize /* rtl:ignore */;
+}
+.vue-line-wrapper--south {
+  top: 100% /* rtl:ignore */;
+  cursor: s-resize /* rtl:ignore */;
+}
+.vue-line-wrapper--east, .vue-line-wrapper--west {
+  width: 12px /* rtl:ignore */;
+  height: 100% /* rtl:ignore */;
+  transform: translateX(-50%) /* rtl:ignore */;
+  top: 0 /* rtl:ignore */;
+}
+.vue-line-wrapper--east {
+  left: 100% /* rtl:ignore */;
+  cursor: e-resize /* rtl:ignore */;
+}
+.vue-line-wrapper--west {
+  left: 0 /* rtl:ignore */;
+  cursor: w-resize /* rtl:ignore */;
+}
+.vue-line-wrapper--disabled {
+  cursor: auto /* rtl:ignore */;
+}
+
+.vue-handler-wrapper {
+  position: absolute /* rtl:ignore */;
+  transform: translate(-50%, -50%) /* rtl:ignore */;
+  width: 30px /* rtl:ignore */;
+  height: 30px /* rtl:ignore */;
+}
+.vue-handler-wrapper__draggable {
+  width: 100% /* rtl:ignore */;
+  height: 100% /* rtl:ignore */;
+  display: flex /* rtl:ignore */;
+  align-items: center /* rtl:ignore */;
+  justify-content: center /* rtl:ignore */;
+}
+.vue-handler-wrapper--west-north {
+  cursor: nw-resize /* rtl:ignore */;
+}
+.vue-handler-wrapper--north {
+  cursor: n-resize /* rtl:ignore */;
+}
+.vue-handler-wrapper--east-north {
+  cursor: ne-resize /* rtl:ignore */;
+}
+.vue-handler-wrapper--east {
+  cursor: e-resize /* rtl:ignore */;
+}
+.vue-handler-wrapper--east-south {
+  cursor: se-resize /* rtl:ignore */;
+}
+.vue-handler-wrapper--south {
+  cursor: s-resize /* rtl:ignore */;
+}
+.vue-handler-wrapper--west-south {
+  cursor: sw-resize /* rtl:ignore */;
+}
+.vue-handler-wrapper--west {
+  cursor: w-resize /* rtl:ignore */;
+}
+.vue-handler-wrapper--disabled {
+  cursor: auto /* rtl:ignore */;
+}
+
+.vue-simple-handler {
+  display: block /* rtl:ignore */;
+  background: white /* rtl:ignore */;
+  height: 10px /* rtl:ignore */;
+  width: 10px /* rtl:ignore */;
+}
+
+.vue-simple-line {
+  background: none /* rtl:ignore */;
+  transition: border 0.5s /* rtl:ignore */;
+  border-color: rgba(255, 255, 255, 0.3) /* rtl:ignore */;
+  border-width: 0 /* rtl:ignore */;
+  border-style: solid /* rtl:ignore */;
+}
+.vue-simple-line--south, .vue-simple-line--north {
+  height: 0 /* rtl:ignore */;
+  width: 100% /* rtl:ignore */;
+}
+.vue-simple-line--east, .vue-simple-line--west {
+  height: 100% /* rtl:ignore */;
+  width: 0 /* rtl:ignore */;
+}
+.vue-simple-line--east {
+  border-right-width: 1px /* rtl:ignore */;
+}
+.vue-simple-line--west {
+  border-left-width: 1px /* rtl:ignore */;
+}
+.vue-simple-line--south {
+  border-bottom-width: 1px /* rtl:ignore */;
+}
+.vue-simple-line--north {
+  border-top-width: 1px /* rtl:ignore */;
+}
+.vue-simple-line--hover {
+  opacity: 1 /* rtl:ignore */;
+  border-color: white /* rtl:ignore */;
+}
+
+.vue-bounding-box {
+  position: relative /* rtl:ignore */;
+  height: 100% /* rtl:ignore */;
+  width: 100% /* rtl:ignore */;
+}
+.vue-bounding-box__handler {
+  position: absolute /* rtl:ignore */;
+}
+.vue-bounding-box__handler--west-north {
+  left: 0 /* rtl:ignore */;
+  top: 0 /* rtl:ignore */;
+}
+.vue-bounding-box__handler--north {
+  left: 50% /* rtl:ignore */;
+  top: 0 /* rtl:ignore */;
+}
+.vue-bounding-box__handler--east-north {
+  left: 100% /* rtl:ignore */;
+  top: 0 /* rtl:ignore */;
+}
+.vue-bounding-box__handler--east {
+  left: 100% /* rtl:ignore */;
+  top: 50% /* rtl:ignore */;
+}
+.vue-bounding-box__handler--east-south {
+  left: 100% /* rtl:ignore */;
+  top: 100% /* rtl:ignore */;
+}
+.vue-bounding-box__handler--south {
+  left: 50% /* rtl:ignore */;
+  top: 100% /* rtl:ignore */;
+}
+.vue-bounding-box__handler--west-south {
+  left: 0 /* rtl:ignore */;
+  top: 100% /* rtl:ignore */;
+}
+.vue-bounding-box__handler--west {
+  left: 0 /* rtl:ignore */;
+  top: 50% /* rtl:ignore */;
+}
+
+.vue-rectangle-stencil {
+  position: absolute /* rtl:ignore */;
+  height: 100% /* rtl:ignore */;
+  width: 100% /* rtl:ignore */;
+  box-sizing: border-box /* rtl:ignore */;
+}
+.vue-rectangle-stencil__preview {
+  position: absolute /* rtl:ignore */;
+  width: 100% /* rtl:ignore */;
+  height: 100% /* rtl:ignore */;
+}
+.vue-rectangle-stencil--movable {
+  cursor: move /* rtl:ignore */;
+}
+
+.vue-preview-result {
+  overflow: hidden /* rtl:ignore */;
+  box-sizing: border-box /* rtl:ignore */;
+  position: absolute /* rtl:ignore */;
+  height: 100% /* rtl:ignore */;
+  width: 100% /* rtl:ignore */;
+}
+.vue-preview-result__wrapper {
+  position: absolute /* rtl:ignore */;
+}
+.vue-preview-result__image {
+  pointer-events: none /* rtl:ignore */;
+  position: relative /* rtl:ignore */;
+  user-select: none /* rtl:ignore */;
+  transform-origin: center /* rtl:ignore */;
+  max-width: none !important /* rtl:ignore */;
+}
+
+.vue-circle-stencil {
+  position: absolute /* rtl:ignore */;
+  height: 100% /* rtl:ignore */;
+  width: 100% /* rtl:ignore */;
+  box-sizing: content-box /* rtl:ignore */;
+  cursor: move /* rtl:ignore */;
+}
+.vue-circle-stencil__preview {
+  border-radius: 50% /* rtl:ignore */;
+  position: absolute /* rtl:ignore */;
+  width: 100% /* rtl:ignore */;
+  height: 100% /* rtl:ignore */;
+}
+.vue-circle-stencil--movable {
+  cursor: move /* rtl:ignore */;
+}
+
+.vue-preview {
+  overflow: hidden /* rtl:ignore */;
+  box-sizing: border-box /* rtl:ignore */;
+  position: relative /* rtl:ignore */;
+}
+.vue-preview--fill {
+  width: 100% /* rtl:ignore */;
+  height: 100% /* rtl:ignore */;
+  position: absolute /* rtl:ignore */;
+}
+.vue-preview__wrapper {
+  position: absolute /* rtl:ignore */;
+  height: 100% /* rtl:ignore */;
+  width: 100% /* rtl:ignore */;
+}
+.vue-preview__image {
+  pointer-events: none /* rtl:ignore */;
+  position: absolute /* rtl:ignore */;
+  user-select: none /* rtl:ignore */;
+  transform-origin: center /* rtl:ignore */;
+  max-width: none !important /* rtl:ignore */;
+}
 </style>
