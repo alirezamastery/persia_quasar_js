@@ -7,7 +7,7 @@
     </div>
     <q-space/>
     <q-btn
-      v-if="!hideCreateBtn"
+      v-if="addRoute"
       color="primary"
       class="q-mr-sm"
       @click="$router.push({name: addRoute})"
@@ -27,12 +27,8 @@ export default {
     },
     addRoute: {
       type: String,
-      required: true,
-    },
-    hideCreateBtn: {
-      type: Boolean,
-      default: false,
       required: false,
+      default: null,
     },
   },
 }

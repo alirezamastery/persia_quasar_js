@@ -12,10 +12,7 @@
       :title="$t('robot.invoices')"
       :columns="columns"
       :api-root="apiRoot"
-      :add-route="addRoute"
       :filters="filters"
-      hide-edit
-      hide-create-btn
       hide-search
     >
 

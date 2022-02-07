@@ -1,6 +1,5 @@
 <template>
   <div
-    v-if="!hideSearch"
     class="row q-pa-sm bg-soft"
   >
     <q-input
@@ -24,22 +23,6 @@
 <script>
 export default {
   name: 'TableHeader',
-  props: {
-    apiRoot: {
-      type: String,
-      required: true,
-    },
-    queryParam: {
-      type: String,
-      default: 'search',
-      required: false,
-    },
-    hideSearch: {
-      type: Boolean,
-      default: false,
-      required: false,
-    },
-  },
   data() {
     return {
       searchPhrase: '',

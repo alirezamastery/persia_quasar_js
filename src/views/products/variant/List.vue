@@ -3,10 +3,8 @@
     :title="$t('products.variants')"
     :columns="columns"
     :api-root="apiRoot"
-    :edit-route="editRoute"
     :add-route="addRoute"
     :filters="filters"
-    hide-edit
   >
 
     <template v-slot:col-product="{ props }">
