@@ -52,7 +52,7 @@
 import {ref, computed, onBeforeUnmount} from 'vue'
 import {axiosInstance} from 'src/boot/axios'
 import urls from 'src/urls'
-import {notifyErrors, notifyMessage} from 'src/composables/notif'
+import {notifyAxiosError, notifyErrors, notifyMessage} from 'src/composables/notif'
 import {useRouter} from 'vue-router'
 import {useI18n} from 'vue-i18n'
 
@@ -88,7 +88,7 @@ function handleScrape() {
     })
     .catch(err => {
       console.log('task test error', err)
-      notifyErrors(err.response.data)
+      notifyAxiosError(err)
     })
 }
 
@@ -113,7 +113,7 @@ function handleTaskId() {
       })
       .catch(err => {
         console.log('task state error', err)
-        notifyErrors(err.response.data)
+        notifyAxiosError(err)
         stopChecking()
       })
   }, 5000)

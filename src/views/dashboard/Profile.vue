@@ -100,7 +100,7 @@ import useUserStore from '../../stores/user'
 import {useRouter} from 'vue-router'
 import {axiosInstance} from '../../boot/axios'
 import urls from 'src/urls'
-import {notifyErrors, notifyMessage} from 'src/composables/notif'
+import {notifyAxiosError, notifyErrors, notifyMessage} from 'src/composables/notif'
 
 const {t} = useI18n()
 const q = useQuasar()
@@ -183,7 +183,7 @@ function handleFormSubmit() {
         userStore.SetProfile(res.data)
       }).catch(err => {
         console.log('file upload error', err)
-        notifyErrors(err.response.data)
+        notifyAxiosError(err)
       })
     })
   } else {
@@ -199,7 +199,7 @@ function handleFormSubmit() {
       })
       .catch(err => {
         console.log('simple patch error', err)
-        notifyErrors(err.response.data)
+        notifyAxiosError(err)
       })
   }
 }

@@ -192,7 +192,7 @@ import {ref, computed, watch} from 'vue'
 import {formatIntNumber, removeCommas} from 'src/composables/number-tools'
 import {axiosInstance} from 'src/boot/axios'
 import urls from 'src/urls'
-import {notifyErrors, notifyMessage} from '../../../composables/notif'
+import {notifyAxiosError, notifyErrors, notifyMessage} from '../../../composables/notif'
 import {useI18n} from 'vue-i18n'
 
 
@@ -255,12 +255,12 @@ function handleDigiStatusUpdate(event) {
     .then(res => {
       console.log('handleDigiStatusUpdate | res', res)
       console.log('handleDigiStatusUpdate | digiStatus', digiStatus.value)
-      notifyMessage('positive', t('general.snack.saveSuccess'))
+      notifyMessage('info', t('general.snack.saveSuccess'))
     })
     .catch(err => {
       console.log('handleDigiStatusUpdate | error', err.response?.data)
       digiStatus.value = !event
-      notifyErrors(err.response.data)
+      notifyAxiosError(err)
     })
     .finally(() => loadingDigiStatus.value = false)
 }
@@ -280,11 +280,11 @@ function handleDigiDataUpdate() {
       initialStock.value = data['marketplace_seller_stock_latin'].toString()
       newPrice.value = initialPrice.value
       newStock.value = initialStock.value
-      notifyMessage('positive', t('general.snack.saveSuccess'))
+      notifyMessage('info', t('general.snack.saveSuccess'))
     })
     .catch(err => {
       console.log('handleDigiDataUpdate | error', err)
-      notifyErrors(err.response.data)
+      notifyAxiosError(err)
     })
     .finally(() => loadingDigiData.value = false)
 }
@@ -301,12 +301,12 @@ function handleRobotStatusUpdate(event) {
     .then(res => {
       console.log('handleRobotStatusUpdate | res', res)
       robotStatus.value = res.data.is_active
-      notifyMessage('positive', t('general.snack.saveSuccess'))
+      notifyMessage('info', t('general.snack.saveSuccess'))
     })
     .catch(err => {
       console.log('handleRobotStatusUpdate | error', err)
       robotStatus.value = !event
-      notifyErrors(err.response.data)
+      notifyAxiosError(err)
     })
     .finally(() => loadingRobotStatus.value = false)
 }
@@ -325,11 +325,11 @@ function handleAtlasUpdate() {
       newPriceMin.value = initialPriceMin.value
       initialStopLoss.value = res.data.stop_loss.toString()
       newStopLoss.value = initialStopLoss.value
-      notifyMessage('positive', t('general.snack.saveSuccess'))
+      notifyMessage('info', t('general.snack.saveSuccess'))
     })
     .catch(err => {
       console.log('handleAtlasUpdate | error', err)
-      notifyErrors(err.response.data)
+      notifyAxiosError(err)
     })
     .finally(() => loadingAtlasData.value = false)
 }

@@ -24,7 +24,9 @@ export function notifyAxiosError(error, log = false) {
     actions: errorActions,
   }
   if (error.response === undefined) {
-    return // has been handled in axios interceptor
+    options.message = 'Network Error'
+  } else if (error.response.status === 500) {
+    options.message = 'Server Error'
   } else if (error.response.status === 404) {
     options.message = '404 Not Found'
   } else {

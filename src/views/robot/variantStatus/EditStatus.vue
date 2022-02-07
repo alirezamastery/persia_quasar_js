@@ -98,7 +98,7 @@ import {ref, nextTick} from 'vue'
 import urls from 'src/urls'
 import Variant from './Variant.vue'
 import {axiosInstance} from 'src/boot/axios'
-import {notifyErrors} from 'src/composables/notif'
+import {notifyAxiosError, notifyErrors} from 'src/composables/notif'
 import {scroll} from 'quasar'
 
 const {getScrollTarget, setVerticalScrollPosition} = scroll
@@ -186,7 +186,7 @@ function handleVariantSelect(id) {
       el.scrollIntoView({behavior: 'smooth', block: 'start', inline: 'nearest'})
     })
     .catch(err => {
-      notifyErrors(err.response.data)
+      notifyAxiosError(err)
     })
 }
 

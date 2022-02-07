@@ -1,4 +1,4 @@
-import {notifyErrors, addBanner, notifyMessage} from '../composables/notif'
+import {notifyErrors, addBanner, notifyMessage, notifyAxiosError} from '../composables/notif'
 
 export const addEditViewMixin = {
   data() {
@@ -49,7 +49,7 @@ export const addEditViewMixin = {
         })
         .catch(err => {
           console.log('request error', err)
-          notifyErrors(err.response.data)
+          notifyAxiosError(err)
         })
     },
 
@@ -79,7 +79,7 @@ export const addEditViewMixin = {
         })
         .catch(err => {
           console.log('delete error ', err)
-          notifyErrors(err.response.data)
+          notifyAxiosError(err)
         })
     },
 

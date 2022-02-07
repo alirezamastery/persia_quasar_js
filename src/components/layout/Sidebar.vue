@@ -65,7 +65,7 @@ import useGeneralStore from '../../stores/general'
 import useUserStore from '../../stores/user'
 import {axiosInstance} from '../../boot/axios'
 import urls from '../../urls'
-import {notifyErrors} from '../../composables/notif'
+import {notifyAxiosError, notifyErrors} from '../../composables/notif'
 import {useRouter} from 'vue-router'
 import {generalState, menuItems} from './composables'
 
@@ -90,7 +90,7 @@ if (userStore.isAuthenticated) {
     })
     .catch(err => {
       console.log(err)
-      notifyErrors(err.response.data)
+      notifyAxiosError(err)
       router.push({name: 'Login'})
     })
 }

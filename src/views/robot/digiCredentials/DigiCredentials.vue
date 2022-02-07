@@ -62,7 +62,7 @@
 
 <script setup>
 import {ref, computed} from 'vue'
-import {notifyErrors, notifyMessage} from 'src/composables/notif'
+import {notifyAxiosError, notifyErrors, notifyMessage} from 'src/composables/notif'
 import {useI18n} from 'vue-i18n'
 import {axiosInstance} from 'src/boot/axios'
 import urls from 'src/urls'
@@ -97,7 +97,7 @@ function handleSubmit() {
       notifyMessage('positive', t('general.snack.saveSuccess'))
     })
     .catch(err => {
-      notifyErrors(err.response.data)
+      notifyAxiosError(err)
     })
 }
 

@@ -57,7 +57,7 @@ import {axiosInstance} from 'src/boot/axios'
 import useUserStore from 'src/stores/user'
 import MatrixRain from 'src/components/MatrixRain.vue'
 import {isRequired} from 'src/composables/form-validation'
-import {notifyErrors} from 'src/composables/notif'
+import {notifyAxiosError, notifyErrors} from 'src/composables/notif'
 import urls from 'src/urls'
 import localDb from '../../local-db'
 
@@ -84,7 +84,7 @@ function handleSubmit() {
     })
     .catch(err => {
       console.log('axios error:', err)
-      notifyErrors(err.response.data)
+      notifyAxiosError(err)
     })
 }
 

@@ -29,7 +29,7 @@
 <script setup>
 import {ref} from 'vue'
 import urls from 'src/urls'
-import {notifyMessage, notifyErrors} from 'src/composables/notif'
+import {notifyMessage, notifyErrors, notifyAxiosError} from 'src/composables/notif'
 import {axiosInstance} from 'src/boot/axios'
 import Table from 'src/components/table/Table.vue'
 import {useI18n} from 'vue-i18n'
@@ -65,7 +65,7 @@ function getReport() {
       link.click()
     })
     .catch(err => {
-      notifyErrors(err.response.data)
+      notifyAxiosError(err)
     })
 }
 </script>
