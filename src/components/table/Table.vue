@@ -8,7 +8,7 @@
 
     <div class="row no-wrap-md">
 
-      <q-card class="col-sm-12 col-md">
+      <q-card class="col-xs-12 col-md">
 
         <TableHeader
           v-if="!hideSearch"
