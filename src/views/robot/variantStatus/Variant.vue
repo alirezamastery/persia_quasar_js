@@ -232,7 +232,16 @@ const showBtnAtlas = computed(() => {
 watch(newPrice, (newVal) => newPrice.value = formatIntNumber(newVal))
 watch(newPriceMin, (newVal) => newPriceMin.value = formatIntNumber(newVal))
 watch(newStopLoss, (newVal) => newStopLoss.value = formatIntNumber(newVal))
-
+watch(() => props.variant, () => {
+  initialPriceMin.value = props.variant['price_min'].toString()
+  newPriceMin.value = formatIntNumber(props.variant['price_min'].toString())
+  initialPrice.value = props.variant['price'].toString()
+  initialStock.value = props.variant['our_stock'].toString()
+  initialStopLoss.value = props.variant['stop_loss'].toString()
+  newPrice.value = formatIntNumber(props.variant['price'].toString())
+  newStock.value = props.variant['our_stock'].toString()
+  newStopLoss.value = formatIntNumber(props.variant['stop_loss'].toString())
+})
 
 function revertDigiChange() {
   newPrice.value = initialPrice.value
