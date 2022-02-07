@@ -192,7 +192,7 @@ import {ref, computed, watch} from 'vue'
 import {formatIntNumber, removeCommas} from 'src/composables/number-tools'
 import {axiosInstance} from 'src/boot/axios'
 import urls from 'src/urls'
-import {notifyAxiosError, notifyErrors, notifyMessage} from '../../../composables/notif'
+import {notifyAxiosError, notifyMessage} from 'src/composables/notif'
 import {useI18n} from 'vue-i18n'
 
 
@@ -202,17 +202,16 @@ const props = defineProps({
   variant: Object,
 })
 
-const initialPriceMin = ref(props.variant['price_min'].toString())
-const newPriceMin = ref(formatIntNumber(props.variant['price_min'].toString()))
-const initialPrice = ref(props.variant['price'].toString())
-const initialStock = ref(props.variant['our_stock'].toString())
-const initialStopLoss = ref(props.variant['stop_loss'].toString())
-const newPrice = ref(formatIntNumber(props.variant['price'].toString()))
-const newStock = ref(props.variant['our_stock'].toString())
-const newStopLoss = ref(formatIntNumber(props.variant['stop_loss'].toString()))
-
-const robotStatus = ref(props.variant['is_active'])
-const digiStatus = ref(props.variant['is_digi_active'])
+const initialPriceMin = ref(null)
+const newPriceMin = ref(null)
+const initialPrice = ref(null)
+const initialStock = ref(null)
+const initialStopLoss = ref(null)
+const newPrice = ref(null)
+const newStock = ref(null)
+const newStopLoss = ref(null)
+const robotStatus = ref(null)
+const digiStatus = ref(null)
 
 const loadingDigiStatus = ref(false)
 const loadingDigiData = ref(false)
@@ -233,6 +232,12 @@ watch(newPrice, (newVal) => newPrice.value = formatIntNumber(newVal))
 watch(newPriceMin, (newVal) => newPriceMin.value = formatIntNumber(newVal))
 watch(newStopLoss, (newVal) => newStopLoss.value = formatIntNumber(newVal))
 watch(() => props.variant, () => {
+  setInitialValues()
+})
+
+setInitialValues()
+
+function setInitialValues() {
   initialPriceMin.value = props.variant['price_min'].toString()
   newPriceMin.value = formatIntNumber(props.variant['price_min'].toString())
   initialPrice.value = props.variant['price'].toString()
@@ -241,7 +246,9 @@ watch(() => props.variant, () => {
   newPrice.value = formatIntNumber(props.variant['price'].toString())
   newStock.value = props.variant['our_stock'].toString()
   newStopLoss.value = formatIntNumber(props.variant['stop_loss'].toString())
-})
+  robotStatus.value = props.variant['is_active']
+  digiStatus.value = props.variant['is_digi_active']
+}
 
 function revertDigiChange() {
   newPrice.value = initialPrice.value
