@@ -15,17 +15,6 @@
       </q-btn>
     </template>
 
-    <template v-slot:col-price_step="{ props, data }">
-      <q-select
-        v-model="props.row.price_step"
-        :options="priceStepOptions"
-        @update:model-value="handlePriceStepChange(props.row.id, data , $event)"
-        dense
-        filled
-        style="max-width: 100px"
-      />
-    </template>
-
     <template v-slot:col-is_active="{ props }">
       <q-icon v-if="props.row.is_active" right small color="green" name="mdi-checkbox-marked-circle"/>
       <q-icon v-else right small color="red" name="mdi-cancel"/>
@@ -53,7 +42,6 @@ const addRoute = 'productAdd'
 const columns = [
   {name: 'title', label: t('general.title'), field: 'title', align: 'left'},
   {name: 'dkp', label: t('general.dkp'), field: 'dkp', align: 'left'},
-  {name: 'price_step', label: t('general.priceStep'), field: 'price_step', align: 'left'},
   {name: 'is_active', label: t('general.isActive'), field: 'is_active', align: 'left'},
   {name: 'type', label: t('general.type'), field: 'type', align: 'left'},
 ]
@@ -71,27 +59,5 @@ const filters = [
   },
 ]
 
-const priceStepOptions = [100, 200, 300, 400, 500]
 
-function handlePriceStepChange(id, tableData, event) {
-  console.log(id, event)
-  const row = tableData.items.find(item => item.id === id)
-  row['price_step'] = event
-  console.log(row)
-  const url = apiRoot + id + '/'
-  const payload = {
-    'price_step': event,
-  }
-  axiosInstance.patch(url, payload).then(res => {
-    console.log('res', res)
-    q.notify({
-      type: 'positive',
-      message: t('general.snack.saveSuccess'),
-      position: 'bottom-right',
-      actions: [
-        {label: '', icon: 'close', color: 'white', round: true},
-      ],
-    })
-  })
-}
 </script>

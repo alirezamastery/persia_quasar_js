@@ -48,17 +48,6 @@
         </div>
       </div>
 
-      <div class="row q-ma-sm">
-        <div class="col col-xs-12 col-md-6 col-lg-4 col-xl-3">
-          <q-select
-            v-model="form.price_step"
-            :options="priceStepOptions"
-            :label="$t('general.priceStepToman')"
-            filled
-          />
-        </div>
-      </div>
-
       <FormActions
         :show-delete="!!editingItemId"
         @delete="deleteDialog = true"
@@ -106,7 +95,6 @@ export default {
         type: {},
         price_step: '',
       },
-      priceStepOptions: [100, 200, 300, 400, 500],
     }
   },
   computed: {
@@ -124,7 +112,6 @@ export default {
         dkp: this.form.dkp,
         is_active: this.form.is_active,
         type: this.form.type.id,
-        price_step: this.form.price_step,
       }
     },
   },
