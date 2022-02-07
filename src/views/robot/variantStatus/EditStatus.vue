@@ -57,8 +57,8 @@
             @click="handleRelatedSelectorSelect(selector.id)"
           >
             <div class="no-wrap row">
-              <q-icon v-if="selector.id === selectedIds.selector" name="check_circle" class="q-mx-sm"/>
               <span>{{ selector.value }}</span>
+              <q-icon v-if="selector.id === selectedIds.selector" name="check_circle" class="q-mx-sm"/>
             </div>
           </q-btn>
         </div>

@@ -126,7 +126,7 @@
             v-model="robotStatus"
             :label="$t('products.robotActive')"
             checked-icon="bolt"
-            unchecked-icon="power_off"
+            unchecked-icon="power_settings_new"
             @update:model-value="handleRobotStatusUpdate"
             size="lg"
           >

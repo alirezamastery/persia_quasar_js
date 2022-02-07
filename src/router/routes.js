@@ -70,7 +70,7 @@ const routesObj = {
     name: 'brandList',
     meta: {
       titleI18n: 'general.routes.brands',
-      icon: 'branding_watermark',
+      icon: 'fab fa-apple',
       requiresAuth: true,
     },
   },
@@ -375,7 +375,7 @@ const routesObj = {
     props: true,
     meta: {
       titleI18n: 'acc.profit',
-      icon: 'fas fa-money-check-alt',
+      icon: 'fab fa-ethereum',
       requiresAuth: true,
     },
   },

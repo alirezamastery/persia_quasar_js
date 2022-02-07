@@ -14,7 +14,7 @@
               :rules="[isRequired]"
             />
           </div>
-          <div class="col-xs-12 col-sm-6 col-md-3 col-lg-1">
+          <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
             <q-select
               v-model="jMonth"
               :options="month"
@@ -34,7 +34,7 @@
     </q-card-section>
 
     <q-card-section v-if="data" class="row">
-      <q-markup-table separator="cell" flat bordered class="col-xs-12 col-sm-6 col-lg-2">
+      <q-markup-table separator="cell" flat bordered class="col-xs-12 col-sm-6 col-lg-4">
         <tbody>
         <tr>
           <td class="text-left">{{ $t('acc.costs') }}</td>
