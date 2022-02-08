@@ -19,9 +19,6 @@ export const urls = {
   robotVariantsFilter: 'products/robot-variants/',
   inactiveVariants: 'products/inactive-variants/',
 
-  invoices: 'products/invoices/',
-  invoiceItems: 'products/invoice-items/',
-
   actualProductVariants: 'products/actual-product-variants/',
   updateVariantData: 'products/update-variant-data/',
   updateVariantStatus: 'products/update-variant-status/',
@@ -39,6 +36,8 @@ export const urls = {
   incomes: 'accounting/incomes/',
   productCosts: 'accounting/product-costs/',
   profit: 'accounting/profit/',
+  invoices: 'accounting/invoices/',
+  invoiceItems: 'accounting/invoice-items/',
 }
 
 // const urls = {}
