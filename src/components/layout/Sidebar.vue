@@ -21,40 +21,40 @@
         </q-item-section>
       </q-item>
 
-      <!--      <q-scroll-area class="fit">-->
-      <template
-        v-for="(item, i) in menuItems"
-        :key="i"
-      >
-        <q-expansion-item
-          expand-separator
-          :icon="item.icon"
-          :label="$t(item.titleI18n)"
-          dense-toggle
-          default-opened
-          :header-style="{ fontSize: '1.1rem' }"
-          :header-class="$q.dark.isActive ? 'bg-grey-10 text-light-blue-14' : 'bg-grey-2 text-blue'"
+      <q-scroll-area style="height: calc(100vh - 56px)">
+        <template
+          v-for="(item, i) in menuItems"
+          :key="i"
         >
-          <q-item
-            v-for="(subItem, j) in item.children"
-            :key="j"
-            :to="{name: subItem.routeName}"
-            :inset-level="0.5"
-            clickable
-            v-ripple
-            :active-class="$q.dark.isActive ? 'bg-blue-grey-10 text-blue' : 'bg-blue-1 text-blue'"
+          <q-expansion-item
+            expand-separator
+            :icon="item.icon"
+            :label="$t(item.titleI18n)"
+            dense-toggle
+            default-opened
+            :header-style="{ fontSize: '1.1rem' }"
+            :header-class="$q.dark.isActive ? 'bg-grey-10 text-light-blue-14' : 'bg-grey-2 text-blue'"
           >
-            <q-item-section v-if="subItem.icon" avatar>
-              <q-icon :name="subItem.icon"/>
-            </q-item-section>
+            <q-item
+              v-for="(subItem, j) in item.children"
+              :key="j"
+              :to="{name: subItem.routeName}"
+              :inset-level="0.5"
+              clickable
+              v-ripple
+              :active-class="$q.dark.isActive ? 'bg-blue-grey-10 text-blue' : 'bg-blue-1 text-blue'"
+            >
+              <q-item-section v-if="subItem.icon" avatar>
+                <q-icon :name="subItem.icon"/>
+              </q-item-section>
 
-            <q-item-section>
-              <q-item-label>{{ $t(subItem.titleI18n) }}</q-item-label>
-            </q-item-section>
-          </q-item>
-        </q-expansion-item>
-      </template>
-      <!--      </q-scroll-area>-->
+              <q-item-section>
+                <q-item-label>{{ $t(subItem.titleI18n) }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-expansion-item>
+        </template>
+      </q-scroll-area>
     </q-list>
   </q-drawer>
 </template>
