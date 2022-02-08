@@ -1,6 +1,7 @@
 {
   "accounting": "حسابداری",
   "profit": "سود",
+  "profit": "سود",
   "profitInMonth": "سود در ماه",
   "cost": "هزینه",
   "costs": "هزینه ها",
@@ -10,5 +11,7 @@
   "incomes": "درآمدها",
   "productCost": "هزینه محصول",
   "productCosts": "هزینه های محصول",
-  "stopLoss": "حد ضرر"
+  "stopLoss": "حد ضرر",
+  "profitEachMonth": "سود در هر ماه از سال",
+  "profitYearView": "سود در نگاه سالیانه"
 }

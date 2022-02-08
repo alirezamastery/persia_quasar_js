@@ -82,3 +82,5 @@ export const productCostAddEdit  = () =>
 
 export const profitByDate  = () =>
   import(/* webpackChunkName: "accounting" */ '../views/accounting/profit/ProfitByDate.vue')
+export const profitAllYear  = () =>
+  import(/* webpackChunkName: "accounting" */ '../views/accounting/profit/ProfitAllYear.vue')

@@ -55,6 +55,7 @@ export const menuItems = [
       getRoute('costList'),
       getRoute('incomeList'),
       getRoute('productCostList'),
+      getRoute('profitAllYear'),
       getRoute('profitByDate'),
     ],
   },

@@ -36,6 +36,7 @@ export const urls = {
   incomes: 'accounting/incomes/',
   productCosts: 'accounting/product-costs/',
   profit: 'accounting/profit/',
+  profitYear: 'accounting/profit-year/',
   invoices: 'accounting/invoices/',
   invoiceItems: 'accounting/invoice-items/',
 }

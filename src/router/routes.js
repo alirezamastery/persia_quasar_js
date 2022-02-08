@@ -379,6 +379,17 @@ const routesObj = {
       requiresAuth: true,
     },
   },
+  profitAllYear: {
+    path: '/profit-all-year',
+    name: 'profitAllYear',
+    component: views.profitAllYear,
+    props: true,
+    meta: {
+      titleI18n: 'acc.profitYearView',
+      icon: 'fas fa-chart-bar',
+      requiresAuth: true,
+    },
+  },
 
   // #################### Other ####################
   // ********** Matrix Rain **********
