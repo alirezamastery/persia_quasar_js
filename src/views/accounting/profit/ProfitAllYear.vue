@@ -18,7 +18,9 @@
       </q-form>
 
     </q-card-section>
-    <canvas id="myChart" width="400" height="400"></canvas>
+    <div id="chart-container">
+      <canvas id="myChart"></canvas>
+    </div>
   </q-card>
 </template>
 
@@ -67,33 +69,37 @@ function createChart() {
     data: {
       labels: persianMonth,
       datasets: [{
-        label: `${t('general.year')} ${jYear.value}`,
+        label: false,
+        title: `${t('general.year')} ${jYear.value}`,
         data: profits.value,
         fill: false,
         backgroundColor: getBG(),
-        barPercentage:0.5,
+        barPercentage: 0.5,
       }],
     },
     options: {
+      maintainAspectRatio: false,
       scales: {
         y: {
           beginAtZero: true,
+          stacked: true,
         },
       },
       plugins: {
-        legend: {
-          labels: {
-            // This more specific font property overrides the global property
-            font: {
-              family: '\'Samim\' , \'Robot-Regular\'',
-            },
+        title: {
+          display: true,
+          text: `${t('general.year')} ${jYear.value}`,
+          font: {
+            family: '\'Samim\' , \'Robot-Regular\'',
           },
+        },
+        legend: {
+          display: false,
         },
       },
     },
   })
 }
-
 
 onMounted(() => {
   getProfitData()
@@ -103,8 +109,9 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-#myChart {
+#chart-container {
+  position: relative;
   width: 100%;
-  max-height: 70vh;
+  height: 70vh;
 }
 </style>
