@@ -8,7 +8,7 @@
     <q-card-section>
       <q-form class="q-gutter-md" @submit.prevent="handleFormSubmit">
         <div class="row">
-          <div class="col-md-6 col-lg-3 col-xl-2">
+          <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 col-xl-2">
             <div class="user-avatar">
               <img
                 v-if="form.avatar"
@@ -57,7 +57,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-6 col-lg-3 col-xl-2">
+          <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 col-xl-2">
             <q-input
               v-model="form.first_name"
               :label="$t('general.firstName')"
@@ -66,7 +66,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-6 col-lg-3 col-xl-2">
+          <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 col-xl-2">
             <q-input
               v-model="form.last_name"
               :label="$t('general.lastName')"
