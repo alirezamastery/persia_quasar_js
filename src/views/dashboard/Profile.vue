@@ -11,8 +11,8 @@
           <div class="col-md-6 col-lg-3 col-xl-2">
             <div class="user-avatar">
               <img
-                v-if="avatarSrc"
-                :src="avatarSrc"
+                v-if="form.avatar"
+                :src="form.avatar"
                 alt=""
                 class="avatar-img"
                 @click="handleImageSelect"
@@ -208,12 +208,12 @@ function handleFormSubmit() {
   }
 }
 
-avatarSrc.value = userStore.profile.avatar
-console.log('avatarSrc', avatarSrc)
 axiosInstance.get(urls.userProfile)
   .then(res => {
     console.log('Profile response', res)
     form.value = res.data
+    form.value.avatar = process.env.SERVER_BASE_URL + form.value.avatar
+    console.log('form data:' , form.value)
   })
   .catch(err => {
     console.log('Profile error', err)
