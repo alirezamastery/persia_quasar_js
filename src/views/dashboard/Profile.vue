@@ -86,13 +86,21 @@
 
   <q-dialog v-model="dialogOpen">
     <q-card class="cropper-custom overflow-hidden-y">
-      <q-card-section>
+      <q-card-section class="row justify-between">
         <q-btn
           v-close-popup
           icon="close"
           size="lg"
           round
         />
+        <q-btn
+          v-if="$q.screen.lt.sm"
+          color="primary"
+          size="lg"
+          @click="handleCropperSubmit"
+        >
+          {{ $t('general.submit') }}
+        </q-btn>
       </q-card-section>
       <q-card-section class="cropper-custom__cropper-wrapper">
         <Cropper
@@ -106,6 +114,7 @@
       </q-card-section>
       <q-card-actions>
         <q-btn
+          v-if="$q.screen.gt.sm"
           color="primary"
           size="lg"
           @click="handleCropperSubmit"
@@ -255,7 +264,7 @@ axiosInstance.get(urls.userProfile)
   user-select: none;
 
   &__cropper {
-    max-height: 70vh !important;
+    max-height: 50vh !important;
     width: 100%;
   }
 
