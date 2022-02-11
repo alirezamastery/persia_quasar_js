@@ -84,8 +84,8 @@
     </q-card-section>
   </q-card>
 
-  <q-dialog v-model="dialogOpen" persistent>
-    <q-card>
+  <q-dialog v-model="dialogOpen">
+    <q-card class="cropper-custom overflow-hidden-y">
       <q-card-section>
         <q-btn
           v-close-popup
@@ -94,13 +94,14 @@
           round
         />
       </q-card-section>
-      <q-card-section>
+      <q-card-section class="cropper-custom__cropper-wrapper">
         <Cropper
           ref="cropper"
           :src="cropperImageObjectURL"
           :stencil-component="CircleStencil"
           :stencil-props="{aspectRatio: 1, resizable: true}"
-          :canvas="{minHeight: 0, minWidth: 0, maxHeight: 200, maxWidth: 200}"
+          :canvas="{minHeight: 30, minWidth: 30, maxHeight: 300, maxWidth: 300}"
+          class="cropper-custom__cropper"
         />
       </q-card-section>
       <q-card-actions>
@@ -247,3 +248,19 @@ axiosInstance.get(urls.userProfile)
   })
 
 </script>
+
+
+<style lang="scss">
+.cropper-custom {
+  user-select: none;
+
+  &__cropper {
+    max-height: 70vh !important;
+    width: 100%;
+  }
+
+  &__cropper-wrapper {
+    position: relative;
+  }
+}
+</style>
