@@ -171,13 +171,12 @@ function handleCropperSubmit() {
 
 function handleFormSubmit() {
   if (hasCroppedImage.value) {
-    const {canvas} = cropper.value.getResult()
-    const form = new FormData()
-    form.append('first_name', form.first_name)
-    form.append('last_name', form.last_name)
-    canvas.toBlob(blob => {
-      form.append('avatar', blob, `avatar.png`)
-      axiosInstance.patch(urls.userProfile, form, {
+    const formData = new FormData()
+    formData.append('first_name', form.value.first_name)
+    formData.append('last_name', form.value.last_name)
+    canvasData.toBlob(blob => {
+      formData.append('avatar', blob, `avatar.png`)
+      axiosInstance.patch(urls.userProfile, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
