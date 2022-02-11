@@ -24,6 +24,35 @@
                 class="avatar-img"
                 @click="handleImageSelect"
               >
+              <div class="action-icons">
+                <q-btn
+                  round
+                  color="primary"
+                  icon="mdi-image-filter-none"
+                >
+                  <q-menu>
+                    <q-list style="min-width: 100px">
+                      <q-item clickable v-close-popup @click="handleImageSelect">
+                        <q-item-section>
+                          <q-icon name="mdi-pencil"/>
+                        </q-item-section>
+                        <q-item-section>
+                          <q-item-label>{{ $t('general.select') }}</q-item-label>
+                        </q-item-section>
+                      </q-item>
+                      <q-item clickable v-close-popup @click="handleImageDelete">
+                        <q-item-section>
+                          <q-icon name="mdi-delete"/>
+                        </q-item-section>
+                        <q-item-section>
+                          <q-item-label>{{ $t('general.delete') }}</q-item-label>
+                        </q-item-section>
+                      </q-item>
+                    </q-list>
+                  </q-menu>
+                </q-btn>
+              </div>
+
             </div>
           </div>
         </div>
@@ -105,6 +134,7 @@ import {useRouter} from 'vue-router'
 import {axiosInstance} from 'src/boot/axios'
 import urls from 'src/urls'
 import {notifyMessage} from 'src/composables/notif'
+import {cloneDeep} from 'lodash'
 
 const {t} = useI18n()
 const q = useQuasar()
@@ -117,12 +147,11 @@ const form = ref({
   last_name: null,
   avatar: null,
 })
-const cropper = ref(null)
+const cropper = ref(null) // ref in the template
 const hasCroppedImage = ref(false)
 const cropperImageObjectURL = ref(null)
 const dialogOpen = ref(false)
-const showAvatarMenu = ref(false)
-const deletedImage = ref(false)
+
 let canvasData = null
 
 
@@ -133,19 +162,26 @@ function handleImageSelect() {
   imageInput.click()
 }
 
+function handleImageDelete() {
+  const data = {
+    'avatar': null,
+  }
+  axiosInstance.patch(urls.userProfile, data)
+    .then(res => {
+      console.log('delete response:', res)
+      form.value = cloneDeep(res.data)
+      userStore.SetProfile(cloneDeep(res.data))
+      notifyMessage('info', t('general.snack.saveSuccess'))
+    })
+    .catch(err => console.log('delete error:', err))
+}
+
 function handleImageSelected(event) {
   console.log('handleImageSelected', event)
   const file = event.target.files[0]
   const extension = file.name.split('.').pop()
   if (!validExtensions.includes(extension)) {
-    q.notify({
-      type: 'warning',
-      message: t('general.snack.fileFormatError'),
-      position: 'top',
-      actions: [
-        {label: '', icon: 'close', color: 'black', round: true},
-      ],
-    })
+    notifyMessage('warning', t('general.snack.fileFormatError'))
     return
   }
   cropperImageObjectURL.value = window.URL.createObjectURL(file)
@@ -162,6 +198,7 @@ function handleCropperSubmit() {
   hasCroppedImage.value = true
 }
 
+
 function handleFormSubmit() {
   if (hasCroppedImage.value) {
     const formData = new FormData()
@@ -175,7 +212,7 @@ function handleFormSubmit() {
         },
       }).then(res => {
         console.log('form patch response:', res)
-        notifyMessage('info' , t('general.snack.saveSuccess'))
+        notifyMessage('info', t('general.snack.saveSuccess'))
         userStore.SetProfile(res.data)
       }).catch(err => {
         console.log('file upload error', err)
@@ -202,8 +239,10 @@ axiosInstance.get(urls.userProfile)
   .then(res => {
     console.log('Profile response', res)
     form.value = res.data
-    form.value.avatar = process.env.SERVER_BASE_URL + form.value.avatar
-    console.log('form data:' , form.value)
+    if (form.value.avatar !== null) {
+      form.value.avatar = process.env.SERVER_BASE_URL + form.value.avatar
+    }
+    console.log('form data:', form.value)
   })
   .catch(err => {
     console.log('Profile error', err)
