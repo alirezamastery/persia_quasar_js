@@ -127,6 +127,7 @@ const cropperImageObjectURL = ref(null)
 const dialogOpen = ref(false)
 const showAvatarMenu = ref(false)
 const deletedImage = ref(false)
+let canvasData = null
 
 function handleCropperCancel() {
 
@@ -162,7 +163,9 @@ function handleImageSelected(event) {
 function handleCropperSubmit() {
   dialogOpen.value = false
   const {canvas} = cropper.value.getResult()
-  avatarSrc.value = canvas.toDataURL()
+  canvasData = canvas
+  form.value.avatar = canvasData.toDataURL()
+  console.log('handleCropperSubmit | canvas', canvasData)
   hasCroppedImage.value = true
 }
 
