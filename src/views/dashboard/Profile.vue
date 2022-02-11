@@ -96,22 +96,20 @@
  * import 'vue-advanced-cropper/dist/theme.classic.css'
  */
 
-import {ref, computed, watch} from 'vue'
+import {ref} from 'vue'
 import {Cropper, CircleStencil} from 'vue-advanced-cropper'
 import {useI18n} from 'vue-i18n'
 import {useQuasar} from 'quasar'
-import useUserStore from '../../stores/user'
+import useUserStore from 'src/stores/user'
 import {useRouter} from 'vue-router'
-import {axiosInstance} from '../../boot/axios'
+import {axiosInstance} from 'src/boot/axios'
 import urls from 'src/urls'
-import {notifyAxiosError, notifyErrors, notifyMessage} from 'src/composables/notif'
+import {notifyMessage} from 'src/composables/notif'
 
 const {t} = useI18n()
 const q = useQuasar()
 const userStore = useUserStore()
 const router = useRouter()
-
-// const userAvatar = computed(() => process.env.SERVER_BASE_URL + userStore.profile.avatar)
 
 const validExtensions = ['png', 'jpg', 'jpeg', 'JPG', 'JPEG']
 const form = ref({
@@ -120,18 +118,13 @@ const form = ref({
   avatar: null,
 })
 const cropper = ref(null)
-const avatarSrc = ref(null)
 const hasCroppedImage = ref(false)
 const cropperImageObjectURL = ref(null)
-// const imageInput = ref(null)
 const dialogOpen = ref(false)
 const showAvatarMenu = ref(false)
 const deletedImage = ref(false)
 let canvasData = null
 
-function handleCropperCancel() {
-
-}
 
 function handleImageSelect() {
   const imageInput = document.createElement('input')
@@ -181,15 +174,11 @@ function handleFormSubmit() {
           'Content-Type': 'multipart/form-data',
         },
       }).then(res => {
-        console.log('form patch response', res)
-        q.notify({
-          type: 'positive',
-          message: t('general.snack.saveSuccess'),
-        })
+        console.log('form patch response:', res)
+        notifyMessage('info' , t('general.snack.saveSuccess'))
         userStore.SetProfile(res.data)
       }).catch(err => {
         console.log('file upload error', err)
-        // notifyAxiosError(err)
       })
     })
   } else {
@@ -199,13 +188,12 @@ function handleFormSubmit() {
     }
     axiosInstance.patch(urls.userProfile, data)
       .then(res => {
-        console.log('simple patch response', res)
+        console.log('without avatar change response:', res)
         userStore.SetProfile(res.data)
-        notifyMessage('positive', t('general.snack.saveSuccess'))
+        notifyMessage('info', t('general.snack.saveSuccess'))
       })
       .catch(err => {
         console.log('simple patch error', err)
-        // notifyAxiosError(err)
       })
   }
 }
@@ -235,18 +223,21 @@ axiosInstance.get(urls.userProfile)
   max-width: 100%;
   direction: ltr;
 }
+
 .vue-advanced-cropper__stretcher {
   pointer-events: none;
   position: relative;
   max-width: 100%;
   max-height: 100%;
 }
+
 .vue-advanced-cropper__image {
   user-select: none;
   position: absolute;
   transform-origin: center;
   max-width: none !important;
 }
+
 .vue-advanced-cropper__background, .vue-advanced-cropper__foreground {
   opacity: 1;
   background: black;
@@ -255,9 +246,11 @@ axiosInstance.get(urls.userProfile)
   top: 50%;
   left: 50%;
 }
+
 .vue-advanced-cropper__foreground {
   opacity: 0.5;
 }
+
 .vue-advanced-cropper__boundaries {
   opacity: 1;
   transform: translate(-50%, -50%);
@@ -265,16 +258,19 @@ axiosInstance.get(urls.userProfile)
   left: 50%;
   top: 50%;
 }
+
 .vue-advanced-cropper__cropper-wrapper {
   width: 100%;
   height: 100%;
 }
+
 .vue-advanced-cropper__image-wrapper {
   overflow: hidden;
   position: absolute;
   width: 100%;
   height: 100%;
 }
+
 .vue-advanced-cropper__stencil-wrapper {
   position: absolute;
 }
@@ -290,34 +286,41 @@ axiosInstance.get(urls.userProfile)
   align-items: center;
   justify-content: center;
 }
+
 .vue-line-wrapper--north, .vue-line-wrapper--south {
   height: 12px;
   width: 100%;
   left: 0;
   transform: translateY(-50%);
 }
+
 .vue-line-wrapper--north {
   top: 0;
   cursor: n-resize;
 }
+
 .vue-line-wrapper--south {
   top: 100%;
   cursor: s-resize;
 }
+
 .vue-line-wrapper--east, .vue-line-wrapper--west {
   width: 12px;
   height: 100%;
   transform: translateX(-50%);
   top: 0;
 }
+
 .vue-line-wrapper--east {
   left: 100%;
   cursor: e-resize;
 }
+
 .vue-line-wrapper--west {
   left: 0;
   cursor: w-resize;
 }
+
 .vue-line-wrapper--disabled {
   cursor: auto;
 }
@@ -328,6 +331,7 @@ axiosInstance.get(urls.userProfile)
   width: 30px;
   height: 30px;
 }
+
 .vue-handler-wrapper__draggable {
   width: 100%;
   height: 100%;
@@ -335,30 +339,39 @@ axiosInstance.get(urls.userProfile)
   align-items: center;
   justify-content: center;
 }
+
 .vue-handler-wrapper--west-north {
   cursor: nw-resize;
 }
+
 .vue-handler-wrapper--north {
   cursor: n-resize;
 }
+
 .vue-handler-wrapper--east-north {
   cursor: ne-resize;
 }
+
 .vue-handler-wrapper--east {
   cursor: e-resize;
 }
+
 .vue-handler-wrapper--east-south {
   cursor: se-resize;
 }
+
 .vue-handler-wrapper--south {
   cursor: s-resize;
 }
+
 .vue-handler-wrapper--west-south {
   cursor: sw-resize;
 }
+
 .vue-handler-wrapper--west {
   cursor: w-resize;
 }
+
 .vue-handler-wrapper--disabled {
   cursor: auto;
 }
@@ -377,26 +390,33 @@ axiosInstance.get(urls.userProfile)
   border-width: 0;
   border-style: solid;
 }
+
 .vue-simple-line--south, .vue-simple-line--north {
   height: 0;
   width: 100%;
 }
+
 .vue-simple-line--east, .vue-simple-line--west {
   height: 100%;
   width: 0;
 }
+
 .vue-simple-line--east {
   border-right-width: 1px;
 }
+
 .vue-simple-line--west {
   border-left-width: 1px;
 }
+
 .vue-simple-line--south {
   border-bottom-width: 1px;
 }
+
 .vue-simple-line--north {
   border-top-width: 1px;
 }
+
 .vue-simple-line--hover {
   opacity: 1;
   border-color: white;
@@ -407,37 +427,46 @@ axiosInstance.get(urls.userProfile)
   height: 100%;
   width: 100%;
 }
+
 .vue-bounding-box__handler {
   position: absolute;
 }
+
 .vue-bounding-box__handler--west-north {
   left: 0;
   top: 0;
 }
+
 .vue-bounding-box__handler--north {
   left: 50%;
   top: 0;
 }
+
 .vue-bounding-box__handler--east-north {
   left: 100%;
   top: 0;
 }
+
 .vue-bounding-box__handler--east {
   left: 100%;
   top: 50%;
 }
+
 .vue-bounding-box__handler--east-south {
   left: 100%;
   top: 100%;
 }
+
 .vue-bounding-box__handler--south {
   left: 50%;
   top: 100%;
 }
+
 .vue-bounding-box__handler--west-south {
   left: 0;
   top: 100%;
 }
+
 .vue-bounding-box__handler--west {
   left: 0;
   top: 50%;
@@ -449,11 +478,13 @@ axiosInstance.get(urls.userProfile)
   width: 100%;
   box-sizing: border-box;
 }
+
 .vue-rectangle-stencil__preview {
   position: absolute;
   width: 100%;
   height: 100%;
 }
+
 .vue-rectangle-stencil--movable {
   cursor: move;
 }
@@ -465,9 +496,11 @@ axiosInstance.get(urls.userProfile)
   height: 100%;
   width: 100%;
 }
+
 .vue-preview-result__wrapper {
   position: absolute;
 }
+
 .vue-preview-result__image {
   pointer-events: none;
   position: relative;
@@ -483,12 +516,14 @@ axiosInstance.get(urls.userProfile)
   box-sizing: content-box;
   cursor: move;
 }
+
 .vue-circle-stencil__preview {
   border-radius: 50%;
   position: absolute;
   width: 100%;
   height: 100%;
 }
+
 .vue-circle-stencil--movable {
   cursor: move;
 }
@@ -498,16 +533,19 @@ axiosInstance.get(urls.userProfile)
   box-sizing: border-box;
   position: relative;
 }
+
 .vue-preview--fill {
   width: 100%;
   height: 100%;
   position: absolute;
 }
+
 .vue-preview__wrapper {
   position: absolute;
   height: 100%;
   width: 100%;
 }
+
 .vue-preview__image {
   pointer-events: none;
   position: absolute;
@@ -534,6 +572,7 @@ axiosInstance.get(urls.userProfile)
   width: 8px;
   opacity: 0.5;
 }
+
 .vue-simple-handler--hover {
   opacity: 1;
 }
@@ -541,12 +580,15 @@ axiosInstance.get(urls.userProfile)
 .vue-circle-stencil__preview {
   border: solid 2px rgba(255, 255, 255, 0.8);
 }
+
 .vue-circle-stencil .vue-simple-line {
   border-color: rgba(255, 255, 255, 0.3);
 }
+
 .vue-circle-stencil .vue-simple-handler--west-north, .vue-circle-stencil .vue-simple-handler--east-south, .vue-circle-stencil .vue-simple-handler--west-south, .vue-circle-stencil .vue-simple-handler--east-north {
   opacity: 0.5;
 }
+
 .vue-circle-stencil .vue-simple-handler--hover {
   opacity: 1;
 }
@@ -562,6 +604,7 @@ axiosInstance.get(urls.userProfile)
   pointer-events: none;
   z-index: 1;
 }
+
 .vue-circle-stencil__preview:after,
 .vue-rectangle-stencil__preview:after {
   border-left: dashed 1px white;
@@ -573,6 +616,7 @@ axiosInstance.get(urls.userProfile)
   left: 50%;
   top: 0;
 }
+
 .vue-circle-stencil__preview:before,
 .vue-rectangle-stencil__preview:before {
   border-top: dashed 1px white;
@@ -584,6 +628,7 @@ axiosInstance.get(urls.userProfile)
   top: 50%;
   left: 0;
 }
+
 .vue-circle-stencil--moving .vue-rectangle-stencil__preview:after, .vue-circle-stencil--moving .vue-rectangle-stencil__preview:before,
 .vue-circle-stencil--moving .vue-circle-stencil__preview:after,
 .vue-circle-stencil--moving .vue-circle-stencil__preview:before, .vue-circle-stencil--resizing .vue-rectangle-stencil__preview:after, .vue-circle-stencil--resizing .vue-rectangle-stencil__preview:before,
@@ -599,6 +644,7 @@ axiosInstance.get(urls.userProfile)
 .vue-rectangle-stencil--resizing .vue-circle-stencil__preview:before {
   opacity: 0.7;
 }
+
 .vue-circle-stencil--moving .vue-simple-handler, .vue-circle-stencil--resizing .vue-simple-handler,
 .vue-rectangle-stencil--moving .vue-simple-handler,
 .vue-rectangle-stencil--resizing .vue-simple-handler {
