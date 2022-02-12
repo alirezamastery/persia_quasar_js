@@ -25,7 +25,7 @@
 </template>
 
 <script setup>
-import {computed, defineComponent, ref} from 'vue'
+import {computed, defineComponent, ref,onMounted} from 'vue'
 import {useRouter, useRoute} from 'vue-router'
 import useUserStore from 'src/stores/user'
 import useGeneralStore from 'src/stores/general'
@@ -36,6 +36,10 @@ import Banners from 'src/components/layout/Banners.vue'
 import urls from 'src/urls'
 import {notifyErrors} from './composables/notif'
 import {broadcastInstance} from './boot/broadcast'
+
+import {getAuth, signInAnonymously} from 'firebase/auth'
+import {getMessaging, onMessage, getToken} from 'firebase/messaging'
+import {messaging} from '../firebase-2'
 
 const userStore = useUserStore()
 const generalStore = useGeneralStore()
@@ -57,5 +61,31 @@ broadcastInstance.addBroadcastCallback('LOGOUT', () => {
 })
 
 // TODO: QAjaxBar plugin
+
+async function authenticate(){
+  await signInAnonymously(getAuth())
+  await activate()
+}
+
+async function activate(){
+  const token = await getToken(messaging , {
+    vapidKey: process.env.VUE_APP_VAPID_KEY
+  })
+
+  if (token){
+    console.log('firebase token:', token)
+  }else {
+    // request permission
+  }
+}
+
+onMounted(()=>{
+  const messaging = getMessaging()
+  onMessage(messaging , (payload)=>{
+    console.log('firebase message when alive:' , payload)
+  })
+})
+
+authenticate()
 
 </script>
