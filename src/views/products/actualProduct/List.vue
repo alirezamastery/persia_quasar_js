@@ -21,6 +21,7 @@
       <q-select
         v-model="props.row.price_step"
         :options="priceStepOptions"
+        :label="$t('general.priceStepRial')"
         @update:model-value="handlePriceStepChange(props.row.id, data , $event)"
         dense
         filled

@@ -4,7 +4,7 @@ export const dataToolsMixin = {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     },
     removeCommas(val) {
-      return val.replace(/,/g, '')
+      return String(val).replace(/,/g, '')
     },
     formatIntNumber(val) {
       const commaRemoved = this.removeCommas(val)

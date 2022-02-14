@@ -58,7 +58,7 @@
         <div class="col col-xs-12 col-md-6 col-lg-4 col-xl-3">
           <q-input
             v-model="form.price_min"
-            :label="$t('general.priceMinToman')"
+            :label="$t('general.priceMinRial')"
             filled
             :rules="[isRequired]"
           />

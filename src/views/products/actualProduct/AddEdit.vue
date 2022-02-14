@@ -33,7 +33,7 @@
           <q-select
             v-model="form.price_step"
             :options="priceStepOptions"
-            :label="$t('general.priceStepToman')"
+            :label="$t('general.priceStepRial')"
             filled
           />
         </div>

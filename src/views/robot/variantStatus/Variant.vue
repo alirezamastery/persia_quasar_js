@@ -141,7 +141,7 @@
             <div class="col-xs-12 col-sm-6">
               <q-input
                 v-model="newPriceMin"
-                :label="$t('general.priceMinToman')"
+                :label="$t('general.priceMinRial')"
                 filled
               />
             </div>
