@@ -24,8 +24,6 @@ export const useUserStore = defineStore({
   },
   actions: {
     Login(user) {
-      console.log('user', user)
-      localDb.set('user', user)
       this.user = user
     },
     Logout() {
@@ -38,7 +36,6 @@ export const useUserStore = defineStore({
     SetProfile(payload) {
       this.profile = payload
       for (const [key, value] of Object.entries(payload)) {
-        console.log(key, value)
         let val = value
         if (key === 'avatar' && value !== null)
           val = process.env.SERVER_BASE_URL + value

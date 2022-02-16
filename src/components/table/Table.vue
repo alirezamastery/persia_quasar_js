@@ -176,7 +176,7 @@ function fetchData() {
   loading.value = true
   axiosInstance.get(url)
     .then(res => {
-      console.log('reFetchData | response', res)
+      console.log('fetchData | response', res)
       data.value = res.data
       pagination.value.rowsNumber = res.data.count
     })

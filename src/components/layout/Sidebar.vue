@@ -76,7 +76,6 @@ const user = computed(() => userStore.user)
 const profile = computed(() => userStore.profile)
 const userAvatar = computed(() => userStore.profile.avatar)
 const fullName = computed(() => {
-  console.log('profile', profile)
   const firstName = userStore.profile.first_name || ''
   const lastName = userStore.profile.last_name || ''
   return firstName + ' ' + lastName
@@ -85,12 +84,10 @@ const fullName = computed(() => {
 if (userStore.isAuthenticated) {
   axiosInstance.get(urls.userProfile)
     .then(res => {
-      console.log('profile from server:', res)
       userStore.SetProfile(res.data)
     })
     .catch(err => {
       console.log(err)
-      // notifyAxiosError(err)
       router.push({name: 'Login'})
     })
 }
