@@ -56,14 +56,14 @@ const uiType = computed(() => {
   return type
 })
 
+if (props.filter.type === 'boolean') {
+  inputValue.value = null
+}
+
 watch(() => resetSignal.value, () => inputValue.value = null)
 watch(inputValue, () => {
   emits('update:modelValue', inputValue.value)
 })
-
-if (props.filter.type === 'boolean') {
-  inputValue.value = null
-}
 
 </script>
 
