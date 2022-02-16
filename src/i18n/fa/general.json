@@ -31,6 +31,7 @@
     "digiPassword": "پسورد دیجیکالا",
     "scrapeInvoice": "استخراج صورت حساب",
     "variantStatus": "وضعیت تنوع",
+    "variantStatusDKPC": "وضعیت تنوع با dkpc",
     "inactiveVariants": "تنوع های غیر فعال",
     "profile": "پروفایل"
   },

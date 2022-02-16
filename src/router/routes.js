@@ -191,6 +191,17 @@ const routesObj = {
       requiresAuth: true,
     },
   },
+  // ********** Variant Status DKPC**********
+  editVariantStatusDKPC: {
+    path: '/robot/variant-status-dkpc',
+    name: 'editVariantStatusDKPC',
+    component: views.editVariantStatusDKPC,
+    meta: {
+      titleI18n: 'general.routes.variantStatusDKPC',
+      icon: 'find_in_page',
+      requiresAuth: true,
+    },
+  },
   // ********** Invoice List **********
   invoiceDownload: {
     path: '/robot/invoices',

@@ -9,6 +9,7 @@ export const urls = {
   brands: 'products/brands/',
   actualProducts: 'products/actual-products/',
   variantDigiData: 'products/variant-digi-data/',
+  variantDigiDataDKPC: 'products/variant-digi-data-dkpc/',
   products: 'products/products/',
   productTypes: 'products/products-types/',
   productTypeSelectors: 'products/product-type-selectors/',

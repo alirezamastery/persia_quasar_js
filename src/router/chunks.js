@@ -49,6 +49,8 @@ export const variantAddEdit = () =>
 
 export const editVariantStatus = () =>
   import(/* webpackChunkName: "robot" */ '../views/robot/variantStatus/EditStatus.vue')
+export const editVariantStatusDKPC = () =>
+  import(/* webpackChunkName: "robot" */ '../views/robot/variantStatusDKPC/Status.vue')
 export const invoiceDownload = () =>
   import(/* webpackChunkName: "robot" */ '../views/robot/invoice/List.vue')
 export const invoiceDetails = () =>
