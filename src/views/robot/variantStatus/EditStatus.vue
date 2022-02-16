@@ -96,7 +96,7 @@
 <script setup>
 import {ref, nextTick} from 'vue'
 import urls from 'src/urls'
-import Variant from './Variant.vue'
+import Variant from 'src/components/Variant.vue'
 import {axiosInstance} from 'src/boot/axios'
 import {notifyAxiosError, notifyErrors} from 'src/composables/notif'
 import {scroll} from 'quasar'

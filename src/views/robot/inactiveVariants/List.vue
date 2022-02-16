@@ -18,7 +18,7 @@ import {axiosInstance} from '../../../boot/axios'
 import urls from '../../../urls'
 import {useI18n} from 'vue-i18n'
 import {cloneDeep} from 'lodash'
-import Variant from 'src/views/robot/variantStatus/Variant.vue'
+import Variant from 'src/components/Variant.vue'
 
 const {t} = useI18n()
 
