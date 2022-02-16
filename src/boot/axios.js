@@ -2,10 +2,11 @@ import {boot} from 'quasar/wrappers'
 import axios from 'axios'
 import {useGeneralStore} from 'src/stores/general'
 import urls from 'src/urls'
-import {useQuasar} from 'quasar'
-import localDb from '../local-db'
+import localDb from 'src/local-db'
 import {useRouter} from 'vue-router'
-import {notifyErrors, notifyAxiosError} from '../composables/notif'
+import {notifyAxiosError} from 'src/composables/notif'
+import {routerInstance} from 'src/router'
+import useUserStore from '../stores/user'
 
 function getCookie(name) {
   let cookieValue = null
@@ -65,7 +66,7 @@ axiosInstance.interceptors.response.use(
   },
   async function (error) {
     const generalStore = useGeneralStore()
-    const router = useRouter()
+    const userStore = useUserStore()
 
     generalStore.DecrementHttpRequestQueue()
 
@@ -131,20 +132,25 @@ axiosInstance.interceptors.response.use(
 
               return axiosInstance(originalRequest)
             })
-            .catch((err) => {
+            .catch(async (err) => {
               console.log('error in refresh token part: ', err)
+              // localDb.clearAll()
+              userStore.Logout()
+              await routerInstance.push({name: 'Login'})
               // window.location.href = '/login/'
             })
         } else {
           console.log('Refresh token is expired', tokenParts, now)
           // throw new Error('refresh_token_expired')
           // window.location.href = '/login/'
-          await router.push({name: 'Login'})
+          userStore.Logout()
+          await routerInstance.push({name: 'Login'})
         }
       } else {
         console.log('in axiosInstance: Refresh token not available. refreshToken is: ', refreshToken)
         // window.location.href = '/login/'
-        await router.push({name: 'Login'})
+        userStore.Logout()
+        await routerInstance.push({name: 'Login'})
       }
     }
 
