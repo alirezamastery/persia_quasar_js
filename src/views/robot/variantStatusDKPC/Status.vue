@@ -1,15 +1,19 @@
 <template>
   <div class="q-ma-md q-pa-sm">
-    <q-form autofocus class="q-my-md" @submit.prevent="handleSubmit">
-      <div class="row q-col-gutter-md items-center">
-        <q-input
-          v-model="dkpc"
-          label="dkpc"
-          filled
-          class="col-xs-6"
-          style="max-width: 200px"
-        />
-        <div class="col-xs-6">
+    <q-form autofocus class="q-my-md q-col-gutter-md" @submit.prevent="handleSubmit">
+      <div class="row">
+        <div class="col col-xs-12 col-md-6 col-lg-4 col-xl-3">
+          <q-input
+            v-model="dkpc"
+            label="dkpc"
+            filled
+            class="col-12"
+            style="max-width: 200px"
+          />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col col-xs-12 col-md-6 col-lg-4 col-xl-3">
           <q-btn type="submit" color="primary">{{ $t('general.receive') }}</q-btn>
         </div>
       </div>
