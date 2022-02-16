@@ -48,7 +48,7 @@
         <div
           v-for="selector in relatedSelectors"
           :key="selector.id"
-          class="col-xs-12 col-sm-6 col-md-2 col-lg-1"
+          class="col-xs-12 col-sm-6 col-md-3 col-lg-2"
         >
           <q-btn
             flat
@@ -198,11 +198,19 @@ function handleVariantSelect(id) {
 }
 
 function selectorStyles(selector) {
-  if (selector.selector.title === 'color')
+  console.log(selector)
+  if (selector.selector.title === 'color') {
+    if (selector['digikala_id'] === 1) {
+      return {
+        'background-color': '#000000',
+        'color': '#FFFFFF',
+      }
+    }
     return {
       'background-color': selector['extra_info'],
       'color': 'black',
     }
+  }
   return {}
 }
 
