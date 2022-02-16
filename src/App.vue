@@ -36,6 +36,10 @@ import Banners from 'src/components/layout/Banners.vue'
 import urls from 'src/urls'
 import {notifyErrors} from './composables/notif'
 import {broadcastInstance} from './boot/broadcast'
+import localDb from './local-db'
+import {useQuasar} from 'quasar'
+
+const q = useQuasar()
 
 const userStore = useUserStore()
 const generalStore = useGeneralStore()
@@ -55,6 +59,9 @@ const showAppLayout = computed(() => {
 broadcastInstance.addBroadcastCallback('LOGOUT', () => {
   userStore.Logout()
 })
+
+const isDark = localDb.get('isDark')
+q.dark.set(isDark)
 
 // TODO: QAjaxBar plugin
 

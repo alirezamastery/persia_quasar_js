@@ -4,7 +4,7 @@
     text-color="amber"
     icon="light_mode"
     class="bg-transparent"
-    @click="q.dark.toggle"
+    @click="handleThemeToggle"
     flat
   />
   <q-btn
@@ -12,24 +12,20 @@
     text-color="black"
     icon="dark_mode"
     class="bg-transparent"
-    @click="q.dark.toggle"
+    @click="handleThemeToggle"
     flat
   />
 </template>
 
-<script>
-import { useQuasar } from 'quasar'
+<script setup>
+import {useQuasar} from 'quasar'
+import localDb from 'src/local-db'
 
-export default {
-  name: 'ThemeToggle',
-  setup() {
-    const q = useQuasar()
+const q = useQuasar()
 
-    return { q }
-  }
+function handleThemeToggle() {
+  q.dark.toggle()
+  localDb.set('isDark', q.dark.isActive)
 }
+
 </script>
-
-<style scoped>
-
-</style>
