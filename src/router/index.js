@@ -34,6 +34,7 @@ export default route(function (/* { store, ssrContext } */) {
     const userStore = useUserStore()
     const needsAuthentication = to.matched.some((record) => record.meta['requiresAuth'])
     let isAuthenticated = userStore.isAuthenticated
+    console.log('isAuthenticated:', userStore.isAuthenticated)
     if (!isAuthenticated) {
       const user = localDb.get('user')
       if (user !== undefined) {

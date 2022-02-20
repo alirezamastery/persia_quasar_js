@@ -39,13 +39,13 @@
               v-for="(subItem, j) in item.children"
               :key="j"
               :to="{name: subItem.routeName}"
-              :inset-level="0.5"
+              :inset-level="0.3"
               clickable
               v-ripple
               :active-class="$q.dark.isActive ? 'bg-blue-grey-10 text-blue' : 'bg-blue-1 text-blue'"
             >
               <q-item-section v-if="subItem.icon" avatar>
-                <q-icon :name="subItem.icon"/>
+                <q-icon :name="subItem.icon" :size="$q.screen.gt.sm ? 'xs' : 'sm'"/>
               </q-item-section>
 
               <q-item-section>
@@ -84,6 +84,7 @@ const fullName = computed(() => {
 if (userStore.isAuthenticated) {
   axiosInstance.get(urls.userProfile)
     .then(res => {
+      console.log('profile:' , res)
       userStore.SetProfile(res.data)
     })
     .catch(err => {
