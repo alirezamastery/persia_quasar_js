@@ -61,7 +61,7 @@ function constructData(resData) {
   for (const variant of data) {
     for (const digiItem of digiItems.value) {
       const temp = cloneDeep(variant)
-      if (String(digiItem.id) === variant.dkpc) {
+      if (digiItem.id === variant.dkpc) {
         temp['is_digi_active'] = digiItem['isActive']
         temp['our_stock'] = digiItem['marketplace_seller_stock_latin']
         temp['reserved'] = digiItem['reservation_latin']
