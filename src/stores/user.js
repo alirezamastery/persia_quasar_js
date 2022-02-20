@@ -19,13 +19,15 @@ export const useUserStore = defineStore({
   }),
   getters: {
     isAuthenticated() {
-      return !!this.user
-      // if(this.user) return true
-      // else {
-      //   const user = localDb.get('user')
-      //   console.log('isAuthenticated | user:' , user)
-      //   return !!user
-      // }
+      if (this.user) return true
+      else {
+        const user = localDb.get('user')
+        if (user !== undefined) {
+          this.user = user
+          return true
+        }
+        return false
+      }
     },
   },
   actions: {

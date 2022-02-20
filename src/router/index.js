@@ -34,14 +34,6 @@ export default route(function (/* { store, ssrContext } */) {
     const userStore = useUserStore()
     const needsAuthentication = to.matched.some((record) => record.meta['requiresAuth'])
     let isAuthenticated = userStore.isAuthenticated
-    console.log('isAuthenticated:', userStore.isAuthenticated)
-    if (!isAuthenticated) {
-      const user = localDb.get('user')
-      if (user !== undefined) {
-        userStore.Login(user)
-        isAuthenticated = true
-      }
-    }
     if (needsAuthentication) {
       if (isAuthenticated)
         next()
@@ -56,13 +48,6 @@ export default route(function (/* { store, ssrContext } */) {
     const userStore = useUserStore()
     const guestRoute = to.matched.some((record) => record.meta['guest'])
     let isAuthenticated = userStore.isAuthenticated
-    if (!isAuthenticated) {
-      const user = localDb.get('user')
-      if (user !== undefined) {
-        userStore.Login(user)
-        isAuthenticated = true
-      }
-    }
     if (guestRoute) {
       if (isAuthenticated)
         next({name: 'Home'})
