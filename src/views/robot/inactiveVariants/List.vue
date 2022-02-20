@@ -1,13 +1,17 @@
 <template>
   <div class="q-ma-sm-sm q-ma-md-xl q-pa-md">
-    <template
-      v-for="variant in variants"
-      :key="variant.id"
-
-    >
-<!--      <img :src="variant['image_src']" alt="">-->
-      <Variant :variant="variant"/>
-      <div class="q-my-lg"></div>
+    <template v-if="loaded">
+      <div v-if="variants.length === 0">
+        {{ $t('general.noItemsFound') }}
+      </div>
+      <template
+        v-else
+        v-for="variant in variants"
+        :key="variant.id"
+      >
+        <Variant :variant="variant"/>
+        <div class="q-my-lg"></div>
+      </template>
     </template>
   </div>
 </template>
@@ -25,6 +29,7 @@ const {t} = useI18n()
 // const items = ref([])
 const digiItems = ref([])
 const variants = ref([])
+const loaded = ref(false)
 
 const gotPersiaData = ref(false)
 const pagination = ref({
@@ -73,7 +78,8 @@ function constructData(resData) {
       }
     }
   }
-  console.log('combined result:' , result)
+  console.log('combined result:', result)
   variants.value = result
+  loaded.value = true
 }
 </script>
