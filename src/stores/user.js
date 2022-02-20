@@ -31,6 +31,7 @@ export const useUserStore = defineStore({
   actions: {
     Login(user) {
       this.user = user
+      localDb.set('user', user)
     },
     Logout() {
       this.user = null
