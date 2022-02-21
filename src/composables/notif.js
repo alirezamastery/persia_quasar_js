@@ -29,7 +29,7 @@ export function notifyAxiosError(error, log = false) {
     options.message = 'Server Error'
   } else if (error.response.status === 404) {
     options.message = '404 Not Found'
-  } if (error.response.status === 403) {
+  } else if (error.response.status === 403) {
     options.message = error.response.data.detail
   }  else {
     for (const [field, err] of Object.entries(error.response.data)) {
