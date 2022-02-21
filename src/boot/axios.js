@@ -77,7 +77,6 @@ axiosInstance.interceptors.response.use(
 
     if (typeof error.response === 'undefined') {
       console.log('axios error.response is undefined', error)
-      // notifyErrors({error: 'Network Error'})
       return Promise.reject(error)
     }
 
@@ -86,10 +85,6 @@ axiosInstance.interceptors.response.use(
       console.log('in axiosInstance | BEGINNING | error.response.status: ', error.response.status)
     }
 
-    // if (error.response.status === 500) {
-    //   notifyErrors({error:'Server Error'})
-    //   return Promise.reject()
-    // }
 
     if (
       error.response.status === 401 &&
@@ -134,7 +129,6 @@ axiosInstance.interceptors.response.use(
             })
             .catch(async (err) => {
               console.log('error in refresh token part: ', err)
-              // localDb.clearAll()
               userStore.Logout()
               await routerInstance.push({name: 'Login'})
               // window.location.href = '/login/'
