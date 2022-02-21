@@ -83,7 +83,13 @@ export default {
         title: null,
         brand: {id: null},
       },
-      priceStepOptions: [100, 200, 300, 400, 500],
+      priceStepOptions: [
+        {label: '1,000', value: 1000},
+        {label: '2,000', value: 2000},
+        {label: '3,000', value: 3000},
+        {label: '4,000', value: 4000},
+        {label: '5,000', value: 5000},
+      ]
     }
   },
   computed: {
@@ -96,10 +102,11 @@ export default {
       this.form = cloneDeep(resData)
     },
     getRequestData() {
+      console.log(this.form.price_step)
       return {
         title: this.form.title,
         brand: this.form.brand.id,
-        price_step: this.form.price_step,
+        price_step: this.form.price_step.value,
       }
     },
   },

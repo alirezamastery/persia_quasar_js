@@ -21,7 +21,6 @@
       <q-select
         v-model="props.row.price_step"
         :options="priceStepOptions"
-        :label="$t('general.priceStepRial')"
         @update:model-value="handlePriceStepChange(props.row.id, data , $event)"
         dense
         filled
@@ -47,19 +46,25 @@ const addRoute = 'actualProductAdd'
 const columns = [
   {name: 'title', label: t('general.title'), field: 'title', align: 'left'},
   {name: 'brand', label: t('products.brand'), field: 'brand', align: 'left'},
-  {name: 'price_step', label: t('general.priceStep'), field: 'price_step', align: 'left'},
+  {name: 'price_step', label: t('general.priceStepRial'), field: 'price_step', align: 'left'},
 ]
 
-const priceStepOptions = [100, 200, 300, 400, 500]
+const priceStepOptions = [
+  {label:'1,000',value: 1000},
+  {label:'2,000',value:2000 },
+  {label:'3,000',value: 3000},
+  {label:'4,000',value: 4000},
+  {label:'5,000',value: 5000},
+]
 
 function handlePriceStepChange(id, tableData, event) {
   console.log(id, event)
   const row = tableData.items.find(item => item.id === id)
   row['price_step'] = event
-  console.log(row)
+  console.log('row:', row)
   const url = apiRoot + id + '/'
   const payload = {
-    'price_step': event,
+    'price_step': event.value,
   }
   axiosInstance.patch(url, payload).then(res => {
     console.log('res', res)
