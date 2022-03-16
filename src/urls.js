@@ -24,6 +24,7 @@ export const urls = {
   updateVariantData: 'products/update-variant-data/',
   updateVariantStatus: 'products/update-variant-status/',
   updateVariantPriceMin: 'products/update-variant-price-min/',
+  updateBrandStatus: 'products/update-brand-status/',
   invoiceExcel: 'products/invoice-excel/',
   digiCreds: 'products/digi-creds/',
   celeryTest: 'products/celery-task-test/',
