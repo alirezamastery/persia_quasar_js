@@ -73,16 +73,18 @@ axiosInstance.interceptors.response.use(
     const originalRequest = error.config
     console.log('in axiosInstance | BEGINNING | error: ', error)
 
-    notifyAxiosError(error)
 
     if (typeof error.response === 'undefined') {
       console.log('axios error.response is undefined', error)
+      notifyAxiosError(error)
       return Promise.reject(error)
     }
-
-    if (error.response) {
+    else {
       console.log('in axiosInstance | BEGINNING | error.response.data: ', error.response.data)
       console.log('in axiosInstance | BEGINNING | error.response.status: ', error.response.status)
+      if (error.response.status !== 403) {
+        notifyAxiosError(error)
+      }
     }
 
 
