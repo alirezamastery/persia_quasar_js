@@ -16,9 +16,14 @@
         @click="toggleLeftDrawer"
       />
 
-      <q-toolbar-title>
+      <q-toolbar-title v-if="q.screen.gt.sm">
         {{ $t('general.siteHeader') }}
       </q-toolbar-title>
+
+      <q-space/>
+      <RobotStatus/>
+      <q-space v-if="q.screen.gt.sm"/>
+      <q-space/>
 
       <q-btn-group rounded unelevated>
         <ThemeToggle/>
@@ -44,11 +49,13 @@ import useUserStore from 'src/stores/user'
 import useGeneralStore from 'src/stores/general'
 import {sidebarOpen, generalState} from 'src/components/layout/composables'
 import ThemeToggle from './ThemeToggle.vue'
+import RobotStatus from './RobotStatus.vue'
 
 export default {
   name: 'Header',
   components: {
     ThemeToggle,
+    RobotStatus,
   },
   setup() {
     const q = useQuasar()

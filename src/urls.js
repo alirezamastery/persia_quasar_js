@@ -20,6 +20,7 @@ export const urls = {
   robotVariantsFilter: 'products/robot-variants/',
   inactiveVariants: 'products/inactive-variants/',
 
+  robotStatus: 'products/robot-status/',
   actualProductVariants: 'products/actual-product-variants/',
   updateVariantData: 'products/update-variant-data/',
   updateVariantStatus: 'products/update-variant-status/',
