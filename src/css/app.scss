@@ -65,6 +65,10 @@ body.body--light {
   }
 }
 
+.q-toggle__thumb::before {
+  display: none!important;
+}
+
 //.q-field--with-bottom {
 //  padding-bottom: unset !important;
 //}
