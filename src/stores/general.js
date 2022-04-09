@@ -4,7 +4,7 @@ const storeID = 'general'
 
 
 export const useGeneralStore = defineStore({
-  id: 'general',
+  id: storeID,
   state: () => ({
     httpRequestQueue: 0,
     sidebarOpen: false,
@@ -52,7 +52,7 @@ export const useGeneralStore = defineStore({
     },
     ResetTableFilter() {
       this.tableFilterResetSignal = !this.tableFilterResetSignal
-      console.log('this.tableFilterResetSignal' ,this.tableFilterResetSignal)
+      console.log('this.tableFilterResetSignal', this.tableFilterResetSignal)
     },
   },
 })

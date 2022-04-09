@@ -13,7 +13,6 @@
       </q-card-section>
     </q-card>
   </div>
-
 </template>
 
 <script setup>
@@ -32,6 +31,5 @@ function goBack() {
 function logout(){
   userStore.Logout()
   robotStore.HandleLogout()
-  // broadcast.sendBroadcastMessage('LOGOUT', {})  // TODO
 }
 </script>

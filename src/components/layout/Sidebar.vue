@@ -60,12 +60,10 @@
 </template>
 
 <script setup>
-import {ref, computed} from 'vue'
-import useGeneralStore from '../../stores/general'
+import {computed} from 'vue'
 import useUserStore from '../../stores/user'
 import {axiosInstance} from '../../boot/axios'
 import urls from '../../urls'
-import {notifyAxiosError, notifyErrors} from '../../composables/notif'
 import {useRouter} from 'vue-router'
 import {generalState, menuItems} from './composables'
 

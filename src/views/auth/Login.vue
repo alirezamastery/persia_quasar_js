@@ -58,9 +58,8 @@ import useUserStore from 'src/stores/user'
 import useRobotStore from 'src/stores/robot'
 import MatrixRain from 'src/components/MatrixRain.vue'
 import {isRequired} from 'src/composables/form-validation'
-import {notifyAxiosError, notifyErrors} from 'src/composables/notif'
 import urls from 'src/urls'
-import localDb from '../../local-db'
+import localDb from 'src/local-db'
 
 
 const q = useQuasar()
@@ -83,21 +82,9 @@ function handleSubmit() {
       userStore.Login(form.mobile)
       router.push({name: 'Home'})
       robotStore.HandleTokenUpdate()
-      // getUserData()
     })
     .catch(err => {
       console.log('axios error:', err)
-      // notifyAxiosError(err)
-    })
-}
-
-function getUserData() {
-  axiosInstance.get(urls.userProfile)
-    .then(res => {
-      console.log('getUserData', res)
-    })
-    .catch(err => {
-      console.log('getUserData error', err)
     })
 }
 
@@ -114,7 +101,6 @@ function handleShowPassword() {
   align-items: center;
   width: 100%;
   height: 90vh;
-  //height: max-content;
   background-color: transparent;
   color: white;
   z-index: 2;

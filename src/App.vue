@@ -25,17 +25,14 @@
 </template>
 
 <script setup>
-import {computed, defineComponent, ref} from 'vue'
+import {computed} from 'vue'
 import {useRouter, useRoute} from 'vue-router'
 import useUserStore from 'src/stores/user'
 import useGeneralStore from 'src/stores/general'
 import useRobotStore from 'src/stores/robot'
-import {axiosInstance} from 'boot/axios'
 import Header from 'src/components/layout/Header.vue'
 import Sidebar from 'src/components/layout/Sidebar.vue'
 import Banners from 'src/components/layout/Banners.vue'
-import urls from 'src/urls'
-import {notifyErrors} from './composables/notif'
 import {broadcastInstance} from './boot/broadcast'
 import localDb from './local-db'
 import {useQuasar} from 'quasar'

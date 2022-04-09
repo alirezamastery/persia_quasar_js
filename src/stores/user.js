@@ -1,5 +1,4 @@
 import {defineStore} from 'pinia'
-import {useRouter} from 'vue-router'
 import {routerInstance} from 'src/router'
 import {axiosInstance} from 'src/boot/axios'
 import localDb from 'src/local-db'
