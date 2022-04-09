@@ -55,6 +55,7 @@ import {ref, reactive} from 'vue'
 import {useRouter} from 'vue-router'
 import {axiosInstance} from 'src/boot/axios'
 import useUserStore from 'src/stores/user'
+import useRobotStore from 'src/stores/robot'
 import MatrixRain from 'src/components/MatrixRain.vue'
 import {isRequired} from 'src/composables/form-validation'
 import {notifyAxiosError, notifyErrors} from 'src/composables/notif'
@@ -64,6 +65,7 @@ import localDb from '../../local-db'
 
 const q = useQuasar()
 const userStore = useUserStore()
+const robotStore = useRobotStore()
 const router = useRouter()
 const showPassword = ref(false)
 const form = reactive({
@@ -80,6 +82,7 @@ function handleSubmit() {
       axiosInstance.defaults.headers['Authorization'] = 'Bearer ' + localDb.get('access_token')
       userStore.Login(form.mobile)
       router.push({name: 'Home'})
+      robotStore.HandleTokenUpdate()
       // getUserData()
     })
     .catch(err => {

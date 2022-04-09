@@ -19,9 +19,11 @@
 <script setup>
 import {useRouter} from 'vue-router'
 import useUserStore from '../../stores/user'
+import useRobotStore from '../../stores/robot'
 
 const router = useRouter()
 const userStore = useUserStore()
+const robotStore = useRobotStore()
 
 function goBack() {
   router.go(-1)
@@ -29,6 +31,7 @@ function goBack() {
 
 function logout(){
   userStore.Logout()
+  robotStore.HandleLogout()
   // broadcast.sendBroadcastMessage('LOGOUT', {})  // TODO
 }
 </script>

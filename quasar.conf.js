@@ -85,6 +85,9 @@ module.exports = configure(function (ctx) {
         API_BASE: ctx.dev
           ? 'http://localhost:8000/api/'
           : 'https://persia-atlas.com/api/',
+        WEBSOCKET_BASE: ctx.dev
+          ? 'ws://localhost:8000/ws/'
+          : 'wss://persia-atlas.com/ws/',
       },
     },
 
