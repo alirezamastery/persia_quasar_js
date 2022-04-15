@@ -10,7 +10,7 @@
           {{ variant.product.title }}
         </div>
         <div class="col-xs-12 col-sm-6 col-md-3 col-lg-1 text-body1">
-          {{ variant.selector_values[0].value }}
+          {{ variant.selector.value }}
         </div>
         <q-btn
           type="a"

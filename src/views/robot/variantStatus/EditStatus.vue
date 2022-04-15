@@ -79,7 +79,7 @@
             @click="handleVariantSelect(variant.id)"
             :class="selectedBtnClass(variant.id === selectedIds.variant,$q.dark.isActive)"
           >
-            {{ `${variant.product.title} ${variant.selector_values[0].value}` }}
+            {{ `${variant.product.title} ${variant.selector.value}` }}
           </q-btn>
         </div>
       </div>
