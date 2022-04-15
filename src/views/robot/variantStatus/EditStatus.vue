@@ -198,7 +198,7 @@ function handleVariantSelect(id) {
 }
 
 function selectorStyles(selector) {
-  console.log(selector)
+  console.log('selectorStyles | selector:', selector)
   if (selector.selector.title === 'color') {
     if (selector['digikala_id'] === 1) {
       return {
