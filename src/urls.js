@@ -5,6 +5,7 @@ export const urls = {
   token: 'token/',
   refreshToken: 'token/refresh/',
   userProfile: 'users/profile/',
+  users: 'users/users/',
 
   brands: 'products/brands/',
   actualProducts: 'products/actual-products/',

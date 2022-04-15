@@ -44,6 +44,7 @@ export const menuItems = [
       getRoute('invoiceDownload'),
       getRoute('digiCredentials'),
       getRoute('scrapeInvoice'),
+      // getRoute('WebRTCTest'),
     ],
   },
   {

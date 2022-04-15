@@ -61,6 +61,8 @@ export const scrapeInvoice = () =>
   import(/* webpackChunkName: "robot" */ '../views/robot/scrapeInvoice/scrape.vue')
 export const inactiveVariants = () =>
   import(/* webpackChunkName: "robot" */ '../views/robot/inactiveVariants/List.vue')
+export const WebRTCTest = () =>
+    import(/* webpackChunkName: "robot" */ '../views/robot/call/WebRTCTest.vue')
 
 export const costList  = () =>
   import(/* webpackChunkName: "accounting" */ '../views/accounting/cost/List.vue')

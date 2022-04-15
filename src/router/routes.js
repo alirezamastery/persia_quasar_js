@@ -255,6 +255,17 @@ const routesObj = {
       requiresAuth: true,
     },
   },
+  // ********** WebRTC Test **********
+  WebRTCTest: {
+    path: '/robot/call',
+    name: 'inactiveVariants',
+    component: views.WebRTCTest,
+    meta: {
+      titleI18n: 'call',
+      icon: 'call',
+      requiresAuth: true,
+    },
+  },
 
   // #################### Accounting ####################
   // ********** Cost **********
