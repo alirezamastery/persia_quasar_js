@@ -73,8 +73,10 @@ axiosInstance.interceptors.response.use(
     const originalRequest = error.config
     console.log('in axiosInstance | BEGINNING | error: ', error)
 
+    console.log('config baseURL:' , error.config.baseURL)
 
-    if (typeof error.response === 'undefined') {
+
+    if (!error.response || typeof error.response === 'undefined') {
       console.log('axios error.response is undefined', error)
       notifyAxiosError(error)
       return Promise.reject(error)
