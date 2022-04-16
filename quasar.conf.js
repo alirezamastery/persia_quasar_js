@@ -80,13 +80,13 @@ module.exports = configure(function (ctx) {
 
       env: {
         SERVER_BASE_URL: ctx.dev
-          ? 'http://localhost:8000'
+          ? (ctx.mode.cordova ? 'http://192.168.1.122:8000' : 'http://localhost:8000')
           : 'https://persia-atlas.com',
         API_BASE: ctx.dev
-          ? 'http://localhost:8000/api/'
+          ? (ctx.mode.cordova ? 'http://192.168.1.122:8000/api/' : 'http://localhost:8000/api/')
           : 'https://persia-atlas.com/api/',
         WEBSOCKET_BASE: ctx.dev
-          ? 'ws://localhost:8000/ws/'
+          ? (ctx.mode.cordova ? 'ws://192.168.1.122:8000/ws/' : 'ws://localhost:8000/ws/')
           : 'wss://persia-atlas.com/ws/',
       },
     },
