@@ -261,7 +261,7 @@ const routesObj = {
     name: 'inactiveVariants',
     component: views.WebRTCTest,
     meta: {
-      titleI18n: 'call',
+      titleI18n: 'general.call',
       icon: 'call',
       requiresAuth: true,
     },

@@ -23,7 +23,7 @@ export const useRobotStore = defineStore({
       audio: true,
       video: false,
     },
-    callee: null
+    callee: null,
   }),
   getters: {},
   actions: {
@@ -390,7 +390,7 @@ export const useRobotStore = defineStore({
     },
 
     handleGetUserMediaError(e) {
-      console.log('error:', e)
+      console.log('error:', e.name, e.message)
       switch (e.name) {
         case 'NotFoundError':
           console.error('Unable to open your call because no camera and/or microphone were found.')

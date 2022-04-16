@@ -124,6 +124,7 @@
   "firstName": "نام",
   "lastName": "نام خانوادگی",
   "quantity": "تعداد",
+  "call": "تماس",
   "alert": {
     "saveSuccess": "{type} \"{item}\" با موفقیت ثبت شد",
     "saveSuccessGeneral": "{type} با موفقیت ثبت شد",
