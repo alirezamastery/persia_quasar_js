@@ -7,6 +7,17 @@ import useUserStore from './user'
 const websocketServerURL = process.env.WEBSOCKET_BASE
 const WS_RECONNECT_INTERVAL = 1000
 
+function checkPermissions() {
+  const permissions = cordova.plugins.permissions
+  const permissionList = [
+    permissions.MODIFY_AUDIO_SETTINGS,
+    permissions.RECORD_AUDIO,
+  ]
+  const successCallback = () => console.log('permissions success')
+  const errorCallback = () => console.log('permissions error')
+
+  permissions.requestPermissions(permissionList, successCallback, errorCallback)
+}
 
 export const useRobotStore = defineStore({
   id: 'robot',
@@ -174,6 +185,9 @@ export const useRobotStore = defineStore({
         this.targetUsername = targetUser.mobile
         this.callee = targetUser
         this.createPeerConnection()
+
+        console.log('navigator.mediaDevices:', navigator.mediaDevices)
+        checkPermissions()
 
         navigator.mediaDevices.getUserMedia(this.mediaConstraints)
           .then((localStream) => {
