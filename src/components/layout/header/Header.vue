@@ -1,11 +1,14 @@
 <template>
+
   <q-header
     :class="q.dark.isActive ? 'bg-grey-10 text-white' : 'bg-white text-black'"
     elevated
     :height-hint="56"
-    style="height: 56px"
     class="flex items-center"
   >
+
+    <CallRequest/>
+
     <q-toolbar>
       <q-btn
         flat
@@ -50,10 +53,12 @@ import useGeneralStore from 'src/stores/general'
 import {sidebarOpen, generalState} from 'src/components/layout/composables'
 import ThemeToggle from './ThemeToggle.vue'
 import RobotStatus from './RobotStatus.vue'
+import CallRequest from './CallRequest'
 
 export default {
   name: 'Header',
   components: {
+    CallRequest,
     ThemeToggle,
     RobotStatus,
   },
