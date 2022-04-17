@@ -88,6 +88,7 @@ module.exports = configure(function (ctx) {
         WEBSOCKET_BASE: ctx.dev
           ? (ctx.mode.cordova ? 'ws://192.168.1.122:8000/ws/' : 'ws://localhost:8000/ws/')
           : 'wss://persia-atlas.com/ws/',
+        ONESIGNAL_APP_ID: '10181441-6308-414b-9d4d-2e13dd58cee5',
       },
     },
 
