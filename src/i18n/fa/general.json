@@ -125,6 +125,7 @@
   "lastName": "نام خانوادگی",
   "quantity": "تعداد",
   "call": "تماس",
+  "users": "کاربرها",
   "alert": {
     "saveSuccess": "{type} \"{item}\" با موفقیت ثبت شد",
     "saveSuccessGeneral": "{type} با موفقیت ثبت شد",

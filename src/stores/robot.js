@@ -1,13 +1,16 @@
 import {defineStore} from 'pinia'
 import localDb from '../local-db'
-import {uid} from 'quasar'
+import {uid, Notify} from 'quasar'
 import useUserStore from './user'
 
 
 const websocketServerURL = process.env.WEBSOCKET_BASE
 const WS_RECONNECT_INTERVAL = 1000
+const AUDIO_ELEMENT_ID = 'call-received-audio'
+
 
 function checkPermissions() {
+  if (!window.hasOwnProperty('cordova')) return
   const permissions = cordova.plugins.permissions
   const permissionList = [
     permissions.MODIFY_AUDIO_SETTINGS,
@@ -19,7 +22,7 @@ function checkPermissions() {
   permissions.requestPermissions(permissionList, successCallback, errorCallback)
 }
 
-export const useRobotStore = defineStore({
+export const useWebSocketStore = defineStore({
   id: 'robot',
   state: () => ({
     WS: null,
@@ -35,6 +38,10 @@ export const useRobotStore = defineStore({
       video: false,
     },
     callee: null,
+    caller: null,
+    callOfferData: null,
+    hasCallInvite: false,
+    iceCandidateMsgQueue: [],
   }),
   getters: {},
   actions: {
@@ -50,7 +57,6 @@ export const useRobotStore = defineStore({
         'fetch_response': response => this.HandleFetch(response),
         'robot_status': response => this.HandleRobotStatus(response),
         'robot_stopped': response => this.HandleRobotStop(response),
-
         'webrtc_signal': response => this.handleWebRTCSignal(response),
       }
 
@@ -166,21 +172,24 @@ export const useRobotStore = defineStore({
       const signalType = response.data.type
       switch (signalType) {
         case 'offer':
-          this.handleVideoOfferMsg(response)
+          this.handleCallInvite(response)
           break
         case 'answer':
-          this.handleVideoAnswerMsg(response)
+          this.handleCallAnswer(response)
+          break
+        case 'reject':
+          this.handleCallReject(response)
           break
         case 'candidate':
           this.handleNewICECandidateMsg(response)
           break
         case 'hang-up':
-          this.handleHangUpMsg()
+          this.handleCallHangUp()
           break
       }
     },
 
-    invite(targetUser) {
+    inviteToCall(targetUser) {
       console.log('***************************************************************************')
       if (this.myPeerConnection) {
         alert('You can\'t start a call because you already have one open!')
@@ -195,7 +204,6 @@ export const useRobotStore = defineStore({
         navigator.mediaDevices.getUserMedia(this.mediaConstraints)
           .then((localStream) => {
             console.log('got user media:', localStream)
-            // document.getElementById('local_video').srcObject = localStream
             localStream.getTracks().forEach(track => {
               console.log('track of stream:', track)
               this.myPeerConnection.addTrack(track, localStream)
@@ -205,12 +213,20 @@ export const useRobotStore = defineStore({
       }
     },
 
+    handleCallInvite(response) {
+      this.hasCallInvite = true
+      this.caller = response.data.name
+      this.callOfferData = response.data
+    },
+
     createPeerConnection() {
+      const audioElement = document.createElement('audio')
+      audioElement.id = AUDIO_ELEMENT_ID
+      document.body.appendChild(audioElement)
+
       this.myPeerConnection = new RTCPeerConnection({
-        iceServers: [     // Information about ICE servers - Use your own!
+        iceServers: [
           {
-            // urls: 'stun:stun.stunprotocol.org',
-            // urls: 'stun:stun.1.google.com:19302',
             urls: ['stun:stun.persia-atlas.com:3478', 'turn:turn.persia-atlas.com:3478'],
             // urls: ['stun:stun.persia-atlas.com:5349', 'turn:turn.persia-atlas.com:5349'],
             username: 'guest',
@@ -248,14 +264,17 @@ export const useRobotStore = defineStore({
       console.log('handleNewICECandidateMsg | data:', response.data)
       const candidate = new RTCIceCandidate(response.data.candidate)
 
-      this.myPeerConnection.addIceCandidate(candidate)
-        .catch(err => console.log('handleNewICECandidateMsg | error:', err))
+      if (this.myPeerConnection) {
+        this.myPeerConnection.addIceCandidate(candidate)
+          .catch(err => console.log('handleNewICECandidateMsg | error:', err))
+      } else {
+        this.iceCandidateMsgQueue.push(candidate)
+      }
     },
 
     handleTrackEvent(event) {
       console.log('handleTrackEvent | event:', event)
       document.getElementById('received_video').srcObject = event.streams[0]
-      document.getElementById('hangup-button').disabled = false
     },
 
     handleNegotiationNeededEvent() {
@@ -286,7 +305,7 @@ export const useRobotStore = defineStore({
       console.log('handleRemoveTrackEvent | trackList:', trackList)
 
       if (trackList.length === 0) {
-        this.closeVideoCall()
+        this.terminateCall()
       }
     },
 
@@ -296,7 +315,7 @@ export const useRobotStore = defineStore({
       switch (this.myPeerConnection.iceConnectionState) {
         case 'closed':
         case 'failed':
-          this.closeVideoCall()
+          this.terminateCall()
           break
       }
     },
@@ -314,23 +333,34 @@ export const useRobotStore = defineStore({
 
       switch (this.myPeerConnection.signalingState) {
         case 'closed':
-          this.closeVideoCall()
+          this.terminateCall()
           break
       }
     },
 
+    checkIceMsgQueue() {
+      for (const candidate of this.iceCandidateMsgQueue) {
+        this.myPeerConnection.addIceCandidate(candidate)
+          .catch(err => console.log('handleNewICECandidateMsg | error:', err))
+      }
+    },
 
-    handleVideoOfferMsg(response) {
+
+    handleCallOffer(response) {
       console.log('***************************************************************************')
       console.log('HandleWebRTCOffer | response:', response)
-      const data = response.data
+
+      checkPermissions()
+
+      // const data = response.data
+      const data = this.callOfferData
       let localStream = null
 
       this.targetUsername = data.name
       this.createPeerConnection()
 
-      const desc = new RTCSessionDescription(data.sdp)
-      // const desc = new RTCSessionDescription(msg.offer)
+      // const desc = new RTCSessionDescription(data.sdp)
+      const desc = new RTCSessionDescription(this.callOfferData.sdp)
 
       this.myPeerConnection.setRemoteDescription(desc).then(() => {
         return navigator.mediaDevices.getUserMedia(this.mediaConstraints)
@@ -356,7 +386,7 @@ export const useRobotStore = defineStore({
         .then(() => {
           console.log('send answer (localDescription):', this.myPeerConnection.localDescription)
           const userStore = useUserStore()
-          this.sendToWS({
+          const payload = {
             command: 3,
             payload: {
               type: 'answer',
@@ -364,16 +394,17 @@ export const useRobotStore = defineStore({
               target: this.targetUsername,
               sdp: this.myPeerConnection.localDescription,
             },
-          })
+          }
+          console.log('handleVideoOfferMsg | answer payload:' , payload)
+          this.sendToWS(payload)
         })
         .catch(this.handleGetUserMediaError)
+
+      this.checkIceMsgQueue()
+
     },
 
-    // handleAnswer(response) {
-    //   this.myPeerConnection.setRemoteDescription(new RTCSessionDescription(response.data.answer))
-    // },
-
-    handleVideoAnswerMsg(response) {
+    handleCallAnswer(response) {
       console.log('*** handleVideoAnswerMsg | data:', response.data)
 
       // Configure the remote description, which is the SDP payload
@@ -382,6 +413,26 @@ export const useRobotStore = defineStore({
       const desc = new RTCSessionDescription(response.data.sdp)
       this.myPeerConnection.setRemoteDescription(desc)
         .catch(err => console.log('handleVideoAnswerMsg error:', err))
+    },
+
+    rejectCall() {
+      console.log('reject call')
+
+      this.sendToWS({
+        command: 3,
+        payload: {
+          type: 'reject',
+          target: this.callOfferData.name,
+        },
+      })
+
+      this.callOfferData = null
+      this.hasCallInvite = false
+    },
+
+    handleCallReject(response) {
+      console.log('call rejected')
+      this.terminateCall()
     },
 
     hangUpCall() {
@@ -397,13 +448,13 @@ export const useRobotStore = defineStore({
         },
       })
 
-      this.closeVideoCall()
+      this.terminateCall()
     },
 
-    handleHangUpMsg(msg) {
+    handleCallHangUp(msg) {
       console.log('*** Received hang up notification from other peer')
 
-      this.closeVideoCall()
+      this.terminateCall()
     },
 
     handleGetUserMediaError(e) {
@@ -421,14 +472,14 @@ export const useRobotStore = defineStore({
           break
       }
 
-      this.closeVideoCall()
+      this.terminateCall()
     },
 
-    closeVideoCall() {
+    terminateCall() {
       console.log('closeVideoCall')
       console.log('closeVideoCall | myPeerConnection:', this.myPeerConnection)
-      const remoteVideo = document.getElementById('received_video')
-      // const localVideo = document.getElementById('local_video')
+      // const remoteAudio = document.getElementById('video')
+      this.hasCallInvite = false
 
       if (this.myPeerConnection) {
         this.myPeerConnection.ontrack = null
@@ -440,10 +491,9 @@ export const useRobotStore = defineStore({
         this.myPeerConnection.onicegatheringstatechange = null
         this.myPeerConnection.onnegotiationneeded = null
 
-        if (remoteVideo.srcObject) {
-          remoteVideo.srcObject.getTracks().forEach(track => track.stop())
-        }
-
+        // if (remoteAudio.srcObject) {
+        //   remoteAudio.srcObject.getTracks().forEach(track => track.stop())
+        // }
         // if (localVideo.srcObject) {
         //   localVideo.srcObject.getTracks().forEach(track => track.stop())
         // }
@@ -452,18 +502,18 @@ export const useRobotStore = defineStore({
         this.myPeerConnection = null
       }
 
-      remoteVideo.removeAttribute('src')
-      remoteVideo.removeAttribute('srcObject')
-      // localVideo.removeAttribute('src')
-      remoteVideo.removeAttribute('srcObject')
+      const remoteAudio = document.getElementById(AUDIO_ELEMENT_ID)
+      if (remoteAudio) {
+        remoteAudio.removeAttribute('src')
+        remoteAudio.removeAttribute('srcObject')
+      }
 
-      document.getElementById('hangup-button').disabled = true
       this.targetUsername = null
     },
   },
 })
 
-export default useRobotStore
+export default useWebSocketStore
 
 
 //stun:stun.persia-atlas.com:3478

@@ -29,8 +29,8 @@ import {computed} from 'vue'
 import {useRouter, useRoute} from 'vue-router'
 import useUserStore from 'src/stores/user'
 import useGeneralStore from 'src/stores/general'
-import useRobotStore from 'src/stores/robot'
-import Header from 'src/components/layout/Header.vue'
+import useWebSocketStore from 'src/stores/robot'
+import Header from 'src/components/layout/header/Header.vue'
 import Sidebar from 'src/components/layout/Sidebar.vue'
 import Banners from 'src/components/layout/Banners.vue'
 import {broadcastInstance} from './boot/broadcast'
@@ -41,7 +41,7 @@ const q = useQuasar()
 
 const userStore = useUserStore()
 const generalStore = useGeneralStore()
-const robotStore = useRobotStore()
+const wsStore = useWebSocketStore()
 
 const router = useRouter()
 const route = useRoute()
@@ -56,12 +56,12 @@ const showAppLayout = computed(() => {
 })
 
 if (userStore.isAuthenticated) {
-  robotStore.openWS()
+  wsStore.openWS()
 }
 
 broadcastInstance.addBroadcastCallback('LOGOUT', () => {
   userStore.Logout()
-  robotStore.HandleLogout()
+  wsStore.HandleLogout()
 })
 
 let isDark = localDb.get('isDark')

@@ -1,6 +1,6 @@
 <template>
   <q-toggle
-    v-model="robotIsOn"
+    :model-value="robotIsOn"
     unchecked-icon="power_settings_new"
     checked-icon="bolt"
     size="xl"
@@ -13,24 +13,18 @@
 
 <script setup>
 import {ref, computed, watch} from 'vue'
-import useRobotStore from 'src/stores/robot'
-import GearsMotionless from '../static/GearsMotionless.vue'
+import useWebSocketStore from 'src/stores/robot'
+import GearsMotionless from '../../static/GearsMotionless.vue'
 
-const robotStore = useRobotStore()
+const wsStore = useWebSocketStore()
 
-const robotIsOn = ref(false)
 const updatingStatus = ref(false)
-const robotRunning = computed(() => robotStore.robotRunning)
-
-watch(() => robotStore.robotIsOn, (newVal) => {
-  robotIsOn.value = newVal
-  updatingStatus.value = false
-})
+const robotRunning = computed(() => wsStore.robotRunning)
+const robotIsOn = computed(() => wsStore.robotIsOn)
 
 function updateRobotStatus(event) {
   console.log('event:', event)
-  updatingStatus.value = true
-  robotStore.SendCommandToWS({
+  wsStore.SendCommandToWS({
     'command': 2,
     'payload': {
       'stop': !event,
