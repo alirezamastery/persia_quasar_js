@@ -67,6 +67,28 @@ broadcastInstance.addBroadcastCallback('LOGOUT', () => {
 const isDark = localDb.get('isDark')
 q.dark.set(isDark)
 
+if (q.platform.is.android) {
+  document.addEventListener('deviceready', OneSignalInit, false)
+
+  function OneSignalInit() {
+    // Uncomment to set OneSignal device logging to VERBOSE
+    window.plugins.OneSignal.setLogLevel(6, 0)
+
+    // NOTE: Update the setAppId value below with your OneSignal AppId.
+    window.plugins.OneSignal.setAppId('10181441-6308-414b-9d4d-2e13dd58cee5')
+    window.plugins.OneSignal.setNotificationOpenedHandler(function (jsonData) {
+      console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData))
+    })
+
+    // iOS - Prompts the user for notification permissions.
+    //    * Since this shows a generic native prompt, we recommend instead using an In-App Message to prompt for notification permission (See step 6) to better communicate to your users what notifications they will get.
+    window.plugins.OneSignal.promptForPushNotificationsWithUserResponse(function (accepted) {
+      console.log('User accepted notifications: ' + accepted)
+    })
+  }
+
+}
+
 // TODO: QAjaxBar plugin
 
 </script>
