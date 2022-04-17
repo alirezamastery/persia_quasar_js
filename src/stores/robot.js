@@ -104,6 +104,9 @@ export const useRobotStore = defineStore({
     },
 
     HandleLogout() {
+      if (this.myPeerConnection)
+        this.hangUpCall()
+
       this.WS.onclose = function () {
         console.log('ws close after logout')
       }

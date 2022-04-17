@@ -55,7 +55,7 @@ const showAppLayout = computed(() => {
   return isAuthenticated.value && !noAuthRoutes.includes(String(route.name))
 })
 
-if (userStore.isAuthenticated){
+if (userStore.isAuthenticated) {
   robotStore.openWS()
 }
 
@@ -64,7 +64,11 @@ broadcastInstance.addBroadcastCallback('LOGOUT', () => {
   robotStore.HandleLogout()
 })
 
-const isDark = localDb.get('isDark')
+let isDark = localDb.get('isDark')
+if (isDark === undefined) {
+  localDb.set('isDark', true)
+  isDark = true
+}
 q.dark.set(isDark)
 
 if (q.platform.is.android) {
