@@ -44,49 +44,32 @@
   </q-header>
 </template>
 
-<script>
+<script setup>
 import {computed, ref} from 'vue'
 import {useRouter} from 'vue-router'
 import {useQuasar} from 'quasar'
 import useUserStore from 'src/stores/user'
-import useGeneralStore from 'src/stores/general'
 import {sidebarOpen, generalState} from 'src/components/layout/composables'
 import ThemeToggle from './ThemeToggle.vue'
 import RobotStatus from './RobotStatus.vue'
 import CallRequest from './CallRequest'
 
-export default {
-  name: 'Header',
-  components: {
-    CallRequest,
-    ThemeToggle,
-    RobotStatus,
-  },
-  setup() {
-    const q = useQuasar()
 
-    const userStore = useUserStore()
-    const router = useRouter()
+const q = useQuasar()
 
-    const isAuthenticated = computed(() => userStore.isAuthenticated)
+const userStore = useUserStore()
+const router = useRouter()
 
-    function toggleLeftDrawer() {
-      generalState.sideOpen = !generalState.sideOpen
-    }
+const isAuthenticated = computed(() => userStore.isAuthenticated)
 
-    function handleLogout() {
-      void userStore.Logout()
-    }
-
-    return {
-      sidebarOpen,
-      toggleLeftDrawer,
-      isAuthenticated,
-      handleLogout,
-      q,
-    }
-  },
+function toggleLeftDrawer() {
+  generalState.sideOpen = !generalState.sideOpen
 }
+
+function handleLogout() {
+  void userStore.Logout()
+}
+
 </script>
 
 <style scoped>
