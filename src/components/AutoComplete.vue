@@ -132,7 +132,11 @@ function handleSearchInput(val, update, abort) {
         .finally(() => loading.value = false)
     },
     ref => {
-      // you can make changes to the q-select in this function
+      // ref is the q-select itself. you can make changes to the q-select in this function
+      if (val !== '' && ref.options.length > 0) {
+        ref.setOptionIndex(-1) // reset optionIndex in case there is something selected
+        ref.moveOptionSelection(1, true) // focus the first selectable option and do not update the input-value
+      }
     },
   )
 }
