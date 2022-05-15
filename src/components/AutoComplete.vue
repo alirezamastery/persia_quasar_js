@@ -11,6 +11,7 @@
     filled
     use-chips
     @filter="handleSearchInput"
+    @virtual-scroll="onScroll"
     :error-message="errors"
     :error="errors?.length > 0"
     :rules="rules"
@@ -82,6 +83,35 @@ const loading = ref(false)
 const items = ref([])
 const selectedValue = ref(null)
 
+const nextPage = ref('')
+
+
+function onScroll({index, to, ref}) {
+  const lastIndex = items.value.length - 1
+  console.log('AutoComplete | onScroll lastIndex:', lastIndex, 'to:', to, 'index:', index)
+
+  if (loading.value !== true && !!nextPage.value && to === index) {
+    console.log('AutoComplete | onScroll get data')
+
+    loading.value = true
+
+    axiosInstance.get(nextPage.value)
+      .then(res => {
+        console.log('AutoComplete | onScroll response:', res)
+        for (const item of res.data.items) {
+          items.value.push(item) // must use ".value.push" to add to ref array
+        }
+        console.log(items.value)
+        console.log('length items:' , items.value.length)
+        nextPage.value = res.data.next
+        ref.refresh()
+      })
+      .catch(err => {
+        console.log('AutoComplete | onScroll error:', err)
+      })
+      .finally(() => loading.value = false)
+  }
+}
 
 function handleSearchInput(val, update, abort) {
   // console.log('handleSearchInput', val, update)
@@ -94,6 +124,7 @@ function handleSearchInput(val, update, abort) {
         .then(res => {
           console.log('AutoComplete | handleSearchInput response:', res)
           items.value = res.data.items
+          nextPage.value = res.data.next
         })
         .catch(err => {
           console.log('AutoComplete | handleSearchInput error:', err)
@@ -170,5 +201,6 @@ if (props.modelValue)
 axiosInstance.get(props.api)
   .then(res => {
     items.value = res.data.items
+    nextPage.value = res.data.next
   })
 </script>
