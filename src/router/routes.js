@@ -258,7 +258,7 @@ const routesObj = {
   // ********** WebRTC Test **********
   WebRTCTest: {
     path: '/robot/call',
-    name: 'inactiveVariants',
+    name: 'WebRTCTest',
     component: views.WebRTCTest,
     meta: {
       titleI18n: 'general.call',
