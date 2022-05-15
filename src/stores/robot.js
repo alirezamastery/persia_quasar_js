@@ -2,7 +2,6 @@ import {defineStore} from 'pinia'
 import localDb from '../local-db'
 import {uid, Notify} from 'quasar'
 import useUserStore from './user'
-import {logger} from '../utils'
 
 const websocketServerURL = process.env.WEBSOCKET_BASE
 const WS_RECONNECT_INTERVAL = 1000
@@ -39,7 +38,7 @@ export const useWebSocketStore = defineStore({
       this.setupWS()
     },
     setupWS() {
-      logger('ws setup')
+      console.log('ws setup')
       const MESSAGE_HANDLERS = {
         'fetch_response': response => this.HandleFetch(response),
         'robot_status': response => this.HandleRobotStatus(response),
@@ -48,7 +47,7 @@ export const useWebSocketStore = defineStore({
       }
 
       this.WS.onopen = async () => {
-        logger('%cws opened', 'color: green;')
+        console.log('%cws opened', 'color: green;')
         this.HandleWSIsOpen()
       }
 
@@ -79,7 +78,7 @@ export const useWebSocketStore = defineStore({
       }
 
       this.WS.onclose = ev => {
-        logger(`ws close | reason: ${ev.reason} | code: ${ev.code}`)
+        console.log(`ws close | reason: ${ev.reason} | code: ${ev.code}`)
         setTimeout(() => {
             this.openWS()
           },
@@ -90,7 +89,7 @@ export const useWebSocketStore = defineStore({
 
     HandleTokenUpdate() {
       const accessToken = localDb.get('access_token')
-      logger('Token Updated', accessToken)
+      console.log('Token Updated', accessToken)
       if (accessToken) {
         this.openWS()
       }
@@ -101,7 +100,7 @@ export const useWebSocketStore = defineStore({
         this.hangUpCall()
 
       this.WS.onclose = function () {
-        logger('ws close after logout')
+        console.log('ws close after logout')
       }
       this.WS.close()
     },
@@ -138,19 +137,19 @@ export const useWebSocketStore = defineStore({
     },
 
     HandleFetch(response) {
-      logger('HandleFetch | response:', response)
+      console.log('HandleFetch | response:', response)
       const data = response['data']
       this.robotRunning = data['robot_running']
       this.robotIsOn = data['robot_is_on']
     },
 
     HandleRobotStatus(response) {
-      logger('HandleRobotStatus | response:', response)
+      console.log('HandleRobotStatus | response:', response)
       this.robotRunning = response['data']['robot_running']
     },
 
     HandleRobotStop(response) {
-      logger('HandleRobotStop | response:', response)
+      console.log('HandleRobotStop | response:', response)
       this.robotIsOn = response['data']['robot_is_on']
     },
 
@@ -177,8 +176,8 @@ export const useWebSocketStore = defineStore({
     },
 
     inviteToCall(targetUser) {
-      logger('***************************************************************************')
-      logger('base url:', process.env.SERVER_BASE_URL)
+      console.log('***************************************************************************')
+      console.log('base url:', process.env.SERVER_BASE_URL)
       if (this.myPeerConnection) {
         alert('You can\'t start a call because you already have one open!')
       } else {
@@ -186,14 +185,14 @@ export const useWebSocketStore = defineStore({
         this.callee = targetUser
         this.createPeerConnection()
 
-        logger('navigator.mediaDevices:', navigator.mediaDevices)
+        console.log('navigator.mediaDevices:', navigator.mediaDevices)
         checkPermissions()
 
         navigator.mediaDevices.getUserMedia(this.mediaConstraints)
           .then((localStream) => {
-            logger(`got user media: ${localStream}`)
+            console.log(`got user media: ${localStream}`)
             localStream.getTracks().forEach(track => {
-              logger('track of stream:', track)
+              console.log('track of stream:', track)
               this.myPeerConnection.addTrack(track, localStream)
             })
           })
@@ -233,14 +232,14 @@ export const useWebSocketStore = defineStore({
     },
 
     handleICECandidateEvent(event) {
-      logger('handleICECandidateEvent | event:', event)
+      console.log('handleICECandidateEvent | event:', event)
       if (event.candidate) {
         const payload = {
           type: 'candidate',
           target: this.targetUsername,
           candidate: event.candidate,
         }
-        logger('handleICECandidateEvent | payload:', payload)
+        console.log('handleICECandidateEvent | payload:', payload)
         this.sendToWS({
           command: 3,
           payload: payload,
@@ -249,29 +248,29 @@ export const useWebSocketStore = defineStore({
     },
 
     handleNewICECandidateMsg(response) {
-      logger('handleNewICECandidateMsg | data:', response.data)
+      console.log('handleNewICECandidateMsg | data:', response.data)
       const candidate = new RTCIceCandidate(response.data.candidate)
 
       if (this.myPeerConnection) {
         this.myPeerConnection.addIceCandidate(candidate)
-          .catch(err => logger('handleNewICECandidateMsg | error:', err))
+          .catch(err => console.log('handleNewICECandidateMsg | error:', err))
       } else {
         this.iceCandidateMsgQueue.push(candidate)
       }
     },
 
     handleTrackEvent(event) {
-      logger('handleTrackEvent | event:', event)
+      console.log('handleTrackEvent | event:', event)
       document.getElementById('received_video').srcObject = event.streams[0]
     },
 
     handleNegotiationNeededEvent() {
       this.myPeerConnection.createOffer().then((offer) => {
-        logger('handleNegotiationNeededEvent | offer:', offer)
+        console.log('handleNegotiationNeededEvent | offer:', offer)
         return this.myPeerConnection.setLocalDescription(offer)
       })
         .then(() => {
-          logger('handleNegotiationNeededEvent | send offer')
+          console.log('handleNegotiationNeededEvent | send offer')
           const userStore = useUserStore()
           this.sendToWS({
             command: 3,
@@ -283,14 +282,14 @@ export const useWebSocketStore = defineStore({
             },
           })
         })
-        .catch(err => logger('handleNegotiationNeededEvent error:', err))
+        .catch(err => console.log('handleNegotiationNeededEvent error:', err))
     },
 
     handleRemoveTrackEvent(event) {
-      logger('handleRemoveTrackEvent | event:', event)
+      console.log('handleRemoveTrackEvent | event:', event)
       const stream = document.getElementById('received_video').srcObject
       const trackList = stream.getTracks()
-      logger('handleRemoveTrackEvent | trackList:', trackList)
+      console.log('handleRemoveTrackEvent | trackList:', trackList)
 
       if (trackList.length === 0) {
         this.terminateCall()
@@ -298,7 +297,7 @@ export const useWebSocketStore = defineStore({
     },
 
     handleICEConnectionStateChangeEvent(event) {
-      logger('handleICEConnectionStateChangeEvent | event:', event)
+      console.log('handleICEConnectionStateChangeEvent | event:', event)
 
       switch (this.myPeerConnection.iceConnectionState) {
         case 'closed':
@@ -309,15 +308,15 @@ export const useWebSocketStore = defineStore({
     },
 
     handleICEGatheringStateChangeEvent(event) {
-      logger('handleICEGatheringStateChangeEvent | event:', event)
-      logger('handleICEGatheringStateChangeEvent | state:', this.myPeerConnection.iceGatheringState)
+      console.log('handleICEGatheringStateChangeEvent | event:', event)
+      console.log('handleICEGatheringStateChangeEvent | state:', this.myPeerConnection.iceGatheringState)
       // Our sample just logs information to console here,
       // but you can do whatever you need.
     },
 
     handleSignalingStateChangeEvent(event) {
-      logger('handleSignalingStateChangeEvent | event:', event)
-      logger('handleSignalingStateChangeEvent | signalingState:', this.myPeerConnection.signalingState)
+      console.log('handleSignalingStateChangeEvent | event:', event)
+      console.log('handleSignalingStateChangeEvent | signalingState:', this.myPeerConnection.signalingState)
 
       switch (this.myPeerConnection.signalingState) {
         case 'closed':
@@ -329,14 +328,14 @@ export const useWebSocketStore = defineStore({
     checkIceMsgQueue() {
       for (const candidate of this.iceCandidateMsgQueue) {
         this.myPeerConnection.addIceCandidate(candidate)
-          .catch(err => logger('handleNewICECandidateMsg | error:', err))
+          .catch(err => console.log('handleNewICECandidateMsg | error:', err))
       }
     },
 
 
     handleCallOffer(response) {
-      logger('***************************************************************************')
-      logger('HandleWebRTCOffer | response:', response)
+      console.log('***************************************************************************')
+      console.log('HandleWebRTCOffer | response:', response)
 
       checkPermissions()
 
@@ -354,25 +353,25 @@ export const useWebSocketStore = defineStore({
         return navigator.mediaDevices.getUserMedia(this.mediaConstraints)
       })
         .then((stream) => {
-          logger('handleVideoOfferMsg | got user stream:', stream)
+          console.log('handleVideoOfferMsg | got user stream:', stream)
           localStream = stream
           // document.getElementById('local_video').srcObject = localStream
 
           localStream.getTracks().forEach(track => {
-            logger('track of stream:', track)
+            console.log('track of stream:', track)
             this.myPeerConnection.addTrack(track, localStream)
           })
         })
         .then(() => {
-          logger('handleVideoOfferMsg | creating answer')
+          console.log('handleVideoOfferMsg | creating answer')
           return this.myPeerConnection.createAnswer()
         })
         .then((answer) => {
-          logger('handleVideoOfferMsg | answer:', answer)
+          console.log('handleVideoOfferMsg | answer:', answer)
           return this.myPeerConnection.setLocalDescription(answer)
         })
         .then(() => {
-          logger('send answer (localDescription):', this.myPeerConnection.localDescription)
+          console.log('send answer (localDescription):', this.myPeerConnection.localDescription)
           const userStore = useUserStore()
           const payload = {
             command: 3,
@@ -383,7 +382,7 @@ export const useWebSocketStore = defineStore({
               sdp: this.myPeerConnection.localDescription,
             },
           }
-          logger('handleVideoOfferMsg | answer payload:', payload)
+          console.log('handleVideoOfferMsg | answer payload:', payload)
           this.sendToWS(payload)
         })
         .catch(this.handleGetUserMediaError)
@@ -393,18 +392,18 @@ export const useWebSocketStore = defineStore({
     },
 
     handleCallAnswer(response) {
-      logger('*** handleVideoAnswerMsg | data:', response.data)
+      console.log('*** handleVideoAnswerMsg | data:', response.data)
 
       // Configure the remote description, which is the SDP payload
       // in our "answer" message.
 
       const desc = new RTCSessionDescription(response.data.sdp)
       this.myPeerConnection.setRemoteDescription(desc)
-        .catch(err => logger('handleVideoAnswerMsg error:', err))
+        .catch(err => console.log('handleVideoAnswerMsg error:', err))
     },
 
     rejectCall() {
-      logger('reject call')
+      console.log('reject call')
 
       this.sendToWS({
         command: 3,
@@ -419,12 +418,12 @@ export const useWebSocketStore = defineStore({
     },
 
     handleCallReject(response) {
-      logger('call rejected')
+      console.log('call rejected')
       this.terminateCall()
     },
 
     hangUpCall() {
-      logger('hangUpCall')
+      console.log('hangUpCall')
 
       const userStore = useUserStore()
       this.sendToWS({
@@ -440,13 +439,13 @@ export const useWebSocketStore = defineStore({
     },
 
     handleCallHangUp(msg) {
-      logger('*** Received hang up notification from other peer')
+      console.log('*** Received hang up notification from other peer')
 
       this.terminateCall()
     },
 
     handleGetUserMediaError(e) {
-      logger('error:', e.name, e.message)
+      console.log('error:', e.name, e.message)
       switch (e.name) {
         case 'NotFoundError':
           console.error('Unable to open your call because no camera and/or microphone were found.')
@@ -464,8 +463,8 @@ export const useWebSocketStore = defineStore({
     },
 
     terminateCall() {
-      logger('closeVideoCall')
-      logger('closeVideoCall | myPeerConnection:', this.myPeerConnection)
+      console.log('closeVideoCall')
+      console.log('closeVideoCall | myPeerConnection:', this.myPeerConnection)
       // const remoteAudio = document.getElementById('video')
       this.hasCallInvite = false
 
@@ -511,8 +510,8 @@ function checkPermissions() {
   //   permissions.MODIFY_AUDIO_SETTINGS,
   //   permissions.RECORD_AUDIO,
   // ]
-  // const successCallback = () => logger('permissions success')
-  // const errorCallback = () => logger('permissions error')
+  // const successCallback = () => console.log('permissions success')
+  // const errorCallback = () => console.log('permissions error')
   //
   // permissions.requestPermissions(permissionList, successCallback, errorCallback)
 }

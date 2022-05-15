@@ -10,6 +10,7 @@
     clearable
     filled
     use-chips
+    :loading="loading"
     @filter="handleSearchInput"
     @virtual-scroll="onScroll"
     :error-message="errors"
