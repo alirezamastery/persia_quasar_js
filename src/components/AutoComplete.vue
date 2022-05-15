@@ -17,7 +17,6 @@
     :rules="rules"
   >
     <!--    :rules="[val => (isRequired || !!val) || $t('general.error.fieldIsRequired')]"-->
-
     <template v-slot:option="scope">
       <q-item v-bind="scope.itemProps">
         <q-item-section>
@@ -114,7 +113,7 @@ function onScroll({index, to, ref}) {
 }
 
 function handleSearchInput(val, update, abort) {
-  // console.log('handleSearchInput', val, update)
+  // console.log('handleSearchInput', val)
   update(
     () => {
       if(!val) return
@@ -154,13 +153,17 @@ watch(() => props.modelValue, (newVal, oldVal) => {
   if (Array.isArray(newVal)) {
     // console.log('newVal.length', newVal.length, 'isEqual', isEqual(newVal, oldVal))
     if (newVal.length > 0 && !isEqual(newVal, oldVal))
-      getInitialData(newVal)
+      getInitialDataToDisplay(newVal)
   } else if (newVal !== oldVal) {
-    getInitialData(newVal)
+    getInitialDataToDisplay(newVal)
   }
 })
 
-function getInitialData(modelVal) {
+/**
+ * if we are in an Edit view (we have primary key(s)), get the data from
+ * the server to display in the input field as chips
+ */
+function getInitialDataToDisplay(modelVal) {
   console.log('AutoComplete | modelVal', modelVal)
   if (!modelVal) return
   if (typeof modelVal === 'string' || typeof modelVal === 'number') {
@@ -200,8 +203,8 @@ watch(selectedValue, (newValue) => {
 })
 
 console.log('AutoComplete | auto complete initial modelValue:', props.modelValue)
-if (props.modelValue)
-  getInitialData(props.modelValue)
+if (props.modelValue) // if this is true it means we are in an Edit view
+  getInitialDataToDisplay(props.modelValue)
 
 axiosInstance.get(props.api)
   .then(res => {
