@@ -117,6 +117,7 @@ function handleSearchInput(val, update, abort) {
   // console.log('handleSearchInput', val, update)
   update(
     () => {
+      if(!val) return
       loading.value = true
       const url = `${props.api}?${props.queryParam}=${val}`
       console.log('url', url)
