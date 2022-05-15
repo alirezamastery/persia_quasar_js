@@ -218,9 +218,9 @@ function selectedBtnClass(isSelected, isDark) {
   if (isSelected) {
     return 'bg-green text-white'
   } else if (isDark) {
-    return 'bg-grey-4 text-grey-10'
+    return 'bg-blue text-grey-10'
   } else {
-    return 'bg-grey-14 text-white'
+    return 'bg-blue text-white'
   }
 }
 </script>
