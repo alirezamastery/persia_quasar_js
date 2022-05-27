@@ -94,7 +94,7 @@
           round
         />
         <q-btn
-          v-if="$q.screen.lt.sm"
+          v-if="$q.screen.lt.md"
           color="primary"
           size="lg"
           @click="handleCropperSubmit"
