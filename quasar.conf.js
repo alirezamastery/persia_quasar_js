@@ -62,7 +62,7 @@ module.exports = configure(function (ctx) {
       // transpileDependencies: [],
 
       // rtl: true, // https://quasar.dev/options/rtl-support
-      rtl: {source: 'ltr'},
+      rtl: {source: 'ltr'}, // *** this prevents making rtl css for libraries ***
       // preloadChunks: true,
       // showProgress: false,
       // gzip: true,

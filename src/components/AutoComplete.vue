@@ -98,9 +98,10 @@ function onScroll({index, to, ref}) {
     axiosInstance.get(nextPage.value)
       .then(res => {
         console.log('AutoComplete | onScroll response:', res)
-        for (const item of res.data.items) {
-          items.value.push(item) // must use ".value.push" to add to ref array
-        }
+        // for (const item of res.data.items) {
+        //   items.value.push(item) // must use ".value.push" to add to ref array
+        // }
+        items.value.push(...res.data.items)
         console.log(items.value)
         console.log('length items:' , items.value.length)
         nextPage.value = res.data.next
