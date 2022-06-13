@@ -1,13 +1,4 @@
 <template>
-<!--  <div class="q-pa-md q-ma-md">-->
-<!--    <q-card-section>-->
-<!--      <div class="text-h5">{{ $t('general.routes.invoices') }}</div>-->
-<!--    </q-card-section>-->
-<!--    <q-card-section>-->
-<!--      <q-btn color="primary" @click="getReport">{{ $t('robot.getReport') }}</q-btn>-->
-<!--    </q-card-section>-->
-<!--  </div>-->
-
     <Table
       :title="$t('robot.invoices')"
       :columns="columns"
@@ -23,18 +14,15 @@
       </template>
 
     </Table>
-
 </template>
 
 <script setup>
-import {ref} from 'vue'
 import urls from 'src/urls'
-import {notifyMessage, notifyErrors, notifyAxiosError} from 'src/composables/notif'
-import {axiosInstance} from 'src/boot/axios'
 import Table from 'src/components/table/Table.vue'
 import {useI18n} from 'vue-i18n'
 
 const {t} = useI18n()
+
 const apiRoot = urls.invoices
 const editRoute = 'variantEdit'
 const addRoute = 'variantAdd'
@@ -55,17 +43,4 @@ const filters = [
     label: 'general.untilDate',
   },
 ]
-
-function getReport() {
-  axiosInstance.get(urls.invoiceExcel)
-    .then(res => {
-      console.log('invoice', res)
-      const link = document.createElement('a')
-      link.href = process.env.SERVER_BASE_URL + '/' + res.data.path
-      link.click()
-    })
-    .catch(err => {
-      // notifyAxiosError(err)
-    })
-}
 </script>

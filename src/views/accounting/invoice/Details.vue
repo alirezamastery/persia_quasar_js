@@ -3,12 +3,12 @@
     <q-card-section v-if="invoice">
       <div class="row">
         <div class="col">
-          <span>{{$t('general.fromDate') + ':'}}</span>
-          {{invoice['start_date_persian']}}
+          <span>{{ $t('general.fromDate') + ':' }}</span>
+          {{ invoice['start_date_persian'] }}
         </div>
         <div class="col">
-          <span>{{$t('general.untilDate') + ':'}}</span>
-          {{invoice['end_date_persian']}}
+          <span>{{ $t('general.untilDate') + ':' }}</span>
+          {{ invoice['end_date_persian'] }}
         </div>
       </div>
     </q-card-section>

@@ -30,7 +30,7 @@
 
     </q-form>
 
-    <Delete
+    <DeleteDialog
       v-if="editingItemId"
       v-model="deleteDialog"
       :item-repr="itemRepr"
@@ -78,13 +78,13 @@ import {cloneDeep} from 'lodash'
 import {dataToolsMixin} from 'src/mixins/data-tools'
 import {addEditViewMixin} from 'src/mixins/add-edit'
 import FormActions from 'src/components/addEdit/FormActions.vue'
-import Delete from 'src/components/addEdit/DeleteDialog.vue'
+import DeleteDialog from 'src/components/addEdit/DeleteDialog.vue'
 import urls from 'src/urls'
 
 export default {
   name: 'AddEdit',
   components: {
-    Delete,
+    DeleteDialog,
     FormActions,
   },
   mixins: [dataToolsMixin, addEditViewMixin],
