@@ -31,7 +31,6 @@ export const useWebsocketStore = defineStore({
   getters: {},
   actions: {
     openWS() {
-      this.WS = null
       const accessToken = localDb.get('access_token')
       this.WS = new WebSocket(websocketServerURL, [accessToken])
       this.setupWS()
@@ -83,6 +82,7 @@ export const useWebsocketStore = defineStore({
 
       this.WS.onclose = ev => {
         console.log(`ws close | reason: ${ev.reason} | code: ${ev.code}`)
+        this.$reset()
         setTimeout(() => {
             this.openWS()
           },
@@ -112,8 +112,8 @@ export const useWebsocketStore = defineStore({
           console.log('ws close after logout')
         }
         this.WS.close()
-        this.WS = null
       }
+      this.$reset()
     },
 
     HandleWSIsOpen() {

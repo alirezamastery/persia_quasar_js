@@ -7,6 +7,7 @@ import {useRouter} from 'vue-router'
 import {notifyAxiosError} from 'src/composables/notif'
 import {routerInstance} from 'src/router'
 import useUserStore from '../stores/user'
+import useWebsocketStore from '../stores/websocket'
 
 function getCookie(name) {
   let cookieValue = null
@@ -89,20 +90,19 @@ axiosInstance.interceptors.response.use(
       }
     }
 
-
     if (
       error.response.status === 401 &&
-      originalRequest.url === baseURL + 'token/'
+      originalRequest.url === urls.refreshToken
     ) {
-      // window.location.href = '/login/';
+      userStore.Logout()
       return Promise.reject(error)
     }
 
     if (
-      error.response.status === 401 &&
-      originalRequest.url === baseURL + 'token/refresh/'
+      error.response.status === 403
+      && originalRequest.url === urls.refreshToken
     ) {
-      window.location.href = '/login/'
+      userStore.Logout()
       return Promise.reject(error)
     }
 
@@ -129,26 +129,22 @@ axiosInstance.interceptors.response.use(
               axiosInstance.defaults.headers['Authorization'] = 'Bearer ' + response.data.access
               originalRequest.headers['Authorization'] = 'Bearer ' + response.data.access
 
+              const wsStore = useWebsocketStore()
+              wsStore.HandleTokenUpdate()
+
               return axiosInstance(originalRequest)
             })
             .catch(async (err) => {
               console.log('error in refresh token part: ', err)
               userStore.Logout()
-              await routerInstance.push({name: 'Login'})
-              // window.location.href = '/login/'
             })
         } else {
           console.log('Refresh token is expired', tokenParts, now)
-          // throw new Error('refresh_token_expired')
-          // window.location.href = '/login/'
           userStore.Logout()
-          await routerInstance.push({name: 'Login'})
         }
       } else {
         console.log('in axiosInstance: Refresh token not available. refreshToken is: ', refreshToken)
-        // window.location.href = '/login/'
         userStore.Logout()
-        await routerInstance.push({name: 'Login'})
       }
     }
 

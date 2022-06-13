@@ -81,7 +81,6 @@ function handleSubmit() {
       axiosInstance.defaults.headers['Authorization'] = 'Bearer ' + localDb.get('access_token')
       userStore.Login(form.mobile)
       router.push({name: 'Home'})
-      wsStore.HandleTokenUpdate()
     })
     .catch(err => {
       console.log('axios error:', err)

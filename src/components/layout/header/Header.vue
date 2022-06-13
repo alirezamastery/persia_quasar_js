@@ -65,11 +65,6 @@ const isAuthenticated = computed(() => userStore.isAuthenticated)
 function toggleLeftDrawer() {
   generalState.sideOpen = !generalState.sideOpen
 }
-
-function handleLogout() {
-  void userStore.Logout()
-}
-
 </script>
 
 <style scoped>

@@ -30,6 +30,5 @@ function goBack() {
 
 function logout(){
   userStore.Logout()
-  wsStore.HandleLogout()
 }
 </script>

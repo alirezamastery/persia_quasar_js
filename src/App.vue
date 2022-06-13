@@ -57,13 +57,12 @@ const showAppLayout = computed(() => {
   return isAuthenticated.value && !noAuthRoutes.includes(String(route.name))
 })
 
-if (userStore.isAuthenticated) {
+if (userStore.isAuthenticated && !wsStore.WS) {
   wsStore.openWS()
 }
 
 broadcastInstance.addBroadcastCallback('LOGOUT', () => {
   userStore.Logout()
-  wsStore.HandleLogout()
 })
 
 let isDark = localDb.get('isDark')

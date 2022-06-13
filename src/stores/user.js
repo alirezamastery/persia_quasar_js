@@ -3,6 +3,9 @@ import {routerInstance} from 'src/router'
 import {axiosInstance} from 'src/boot/axios'
 import localDb from 'src/local-db'
 import {broadcastInstance} from '../boot/broadcast'
+import useWebsocketStore from './websocket'
+import useRobotStore from './robot'
+import useWebRTCStore from './webrtc'
 
 const storeID = 'user'
 
@@ -33,13 +36,22 @@ export const useUserStore = defineStore({
     Login(user) {
       this.user = user
       localDb.set('user', user)
+      const wsStore = useWebsocketStore()
+      wsStore.HandleTokenUpdate()
     },
     Logout() {
       this.user = null
       localDb.clearAll()
-      axiosInstance.defaults.headers['Authorization'] = ''
-      routerInstance.push({name: 'Login'})
+      delete axiosInstance.defaults.headers['Authorization']
       broadcastInstance.sendBroadcastMessage('LOGOUT', {})
+      const wsStore = useWebsocketStore()
+      wsStore.HandleLogout()
+      const robotStore = useRobotStore()
+      robotStore.$reset()
+      const webrtcStore = useWebRTCStore()
+      webrtcStore.$reset()
+      this.$reset()
+      routerInstance.push({name: 'Login'})
     },
     SetProfile(payload) {
       this.profile = payload

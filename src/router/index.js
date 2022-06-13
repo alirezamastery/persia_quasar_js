@@ -35,10 +35,12 @@ export default route(function (/* { store, ssrContext } */) {
     const needsAuthentication = to.matched.some((record) => record.meta['requiresAuth'])
     let isAuthenticated = userStore.isAuthenticated
     if (needsAuthentication) {
-      if (isAuthenticated)
+      if (!isAuthenticated && to.name !== 'Login') {
+        userStore.Logout() // Logout will push to Login
+        // next({name: 'Login'})
+      } else {
         next()
-      else
-        next({name: 'Login'})
+      }
     } else {
       next()
     }
