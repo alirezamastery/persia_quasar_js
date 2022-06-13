@@ -16,17 +16,6 @@ export const useWebsocketStore = defineStore({
     isWSOpen: false,
     wsMsgQueue: [],
     sentCommands: {},
-    myPeerConnection: null,
-    targetUsername: null,
-    mediaConstraints: {
-      audio: true,
-      video: false,
-    },
-    callee: null,
-    caller: null,
-    callOfferData: null,
-    hasCallInvite: false,
-    iceCandidateMsgQueue: [],
   }),
   getters: {},
   actions: {
