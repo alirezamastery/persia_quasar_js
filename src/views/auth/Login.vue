@@ -55,7 +55,7 @@ import {ref, reactive} from 'vue'
 import {useRouter} from 'vue-router'
 import {axiosInstance} from 'src/boot/axios'
 import useUserStore from 'src/stores/user'
-import useWebSocketStore from 'src/stores/robot'
+import useWebsocketStore from 'src/stores/websocket'
 import MatrixRain from 'src/components/MatrixRain.vue'
 import {isRequired} from 'src/composables/form-validation'
 import urls from 'src/urls'
@@ -64,7 +64,7 @@ import localDb from 'src/local-db'
 
 const q = useQuasar()
 const userStore = useUserStore()
-const wsStore = useWebSocketStore()
+const wsStore = useWebsocketStore()
 const router = useRouter()
 const showPassword = ref(false)
 const form = reactive({

@@ -13,21 +13,23 @@
 
 <script setup>
 import {ref, computed, watch} from 'vue'
-import useWebSocketStore from 'src/stores/robot'
-import GearsMotionless from '../../static/GearsMotionless.vue'
+import useWebsocketStore from 'src/stores/websocket'
+import useRobotStore from 'src/stores/robot'
+import GearsMotionless from 'src/components/static/GearsMotionless.vue'
 
-const wsStore = useWebSocketStore()
+const wsStore = useWebsocketStore()
+const robotStore = useRobotStore()
 
 const updatingStatus = ref(false)
-const robotRunning = computed(() => wsStore.robotRunning)
-const robotIsOn = computed(() => wsStore.robotIsOn)
+const robotRunning = computed(() => robotStore.robotRunning)
+const robotIsOn = computed(() => robotStore.robotIsOn)
 
 function updateRobotStatus(event) {
   console.log('event:', event)
   wsStore.SendCommandToWS({
-    'command': 2,
-    'payload': {
-      'stop': !event,
+    command: 2,
+    payload: {
+      stop: !event,
     },
   })
 }

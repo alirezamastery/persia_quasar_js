@@ -49,9 +49,9 @@
 </template>
 
 <script setup>
-import useWebSocketStore from '../../../stores/robot'
+import useWebsocketStore from 'src/stores/websocket'
 
-const wsStore = useWebSocketStore()
+const wsStore = useWebsocketStore()
 
 </script>
 

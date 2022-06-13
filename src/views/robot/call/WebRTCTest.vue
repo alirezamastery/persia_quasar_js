@@ -85,15 +85,15 @@
 <script setup>
 import {ref, computed} from 'vue'
 import adapter from 'webrtc-adapter'
-import useWebSocketStore from 'src/stores/robot'
-import {axiosInstance} from '../../../boot/axios'
-import urls from '../../../urls'
-import useUserStore from '../../../stores/user'
+import useWebsocketStore from 'src/stores/websocket'
+import {axiosInstance} from 'src/boot/axios'
+import urls from 'src/urls'
+import useUserStore from 'src/stores/user'
 import {useQuasar} from 'quasar'
 
 const q = useQuasar()
 
-const wsStore = useWebSocketStore()
+const wsStore = useWebsocketStore()
 const userStore = useUserStore()
 
 const users = ref([])

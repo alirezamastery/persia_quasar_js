@@ -18,11 +18,11 @@
 <script setup>
 import {useRouter} from 'vue-router'
 import useUserStore from '../../stores/user'
-import useWebSocketStore from '../../stores/robot'
+import useWebsocketStore from '../../stores/websocket'
 
 const router = useRouter()
 const userStore = useUserStore()
-const wsStore = useWebSocketStore()
+const wsStore = useWebsocketStore()
 
 function goBack() {
   router.go(-1)

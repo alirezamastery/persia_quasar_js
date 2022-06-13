@@ -29,7 +29,7 @@ import {computed} from 'vue'
 import {useRouter, useRoute} from 'vue-router'
 import useUserStore from 'src/stores/user'
 import useGeneralStore from 'src/stores/general'
-import useWebSocketStore from 'src/stores/robot'
+import useWebsocketStore from 'src/stores/websocket'
 import Header from 'src/components/layout/header/Header.vue'
 import Sidebar from 'src/components/layout/Sidebar.vue'
 import Banners from 'src/components/layout/Banners.vue'
@@ -43,7 +43,7 @@ const q = useQuasar()
 
 const userStore = useUserStore()
 const generalStore = useGeneralStore()
-const wsStore = useWebSocketStore()
+const wsStore = useWebsocketStore()
 
 const router = useRouter()
 const route = useRoute()
