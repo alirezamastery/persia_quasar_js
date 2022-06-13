@@ -382,7 +382,7 @@ const routesObj = {
   },
   test: {
     path: '/test',
-    name: 'productCostEdit',
+    name: 'testPage',
     component: views.test,
     props: true,
     meta: {
