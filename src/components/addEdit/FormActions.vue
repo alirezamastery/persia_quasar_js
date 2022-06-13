@@ -4,6 +4,7 @@
     :class="q.dark.isActive ? ['bg-grey-10'] : ['bg-grey-2']"
   >
     <q-btn
+      v-if="showDelete"
       :label="$t('general.delete')"
       type="button"
       color="red"

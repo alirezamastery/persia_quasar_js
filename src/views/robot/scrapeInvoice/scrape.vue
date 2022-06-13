@@ -107,7 +107,7 @@ function handleTaskId() {
           taskId.value = null
           if (taskState.value === 'SUCCESS') {
             notifyMessage('positive', t('general.alert.operationSuccess'))
-            router.push({name: 'invoiceDownload'})
+            router.push({name: 'invoiceList'})
           }
         }
       })

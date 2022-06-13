@@ -41,10 +41,9 @@ export const menuItems = [
       getRoute('editVariantStatus'),
       getRoute('editVariantStatusDKPC'),
       getRoute('inactiveVariants'),
-      getRoute('invoiceDownload'),
       getRoute('digiCredentials'),
       getRoute('scrapeInvoice'),
-      getRoute('WebRTCTest'),
+      // getRoute('WebRTCTest'),
     ],
   },
   {
@@ -53,6 +52,7 @@ export const menuItems = [
     titleI18n: 'acc.accounting',
     collapsed: false,
     children: [
+      getRoute('invoiceList'),
       getRoute('costTypeList'),
       getRoute('costList'),
       getRoute('incomeList'),

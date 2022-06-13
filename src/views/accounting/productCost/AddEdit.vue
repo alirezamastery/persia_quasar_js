@@ -59,7 +59,7 @@ import {cloneDeep} from 'lodash'
 import {dataToolsMixin} from 'src/mixins/data-tools'
 import {addEditViewMixin} from 'src/mixins/add-edit'
 import FormActions from 'src/components/addEdit/FormActions.vue'
-import Delete from 'src/components/addEdit/Delete.vue'
+import Delete from 'src/components/addEdit/DeleteDialog.vue'
 import QDateInput from 'src/components/QDateInput.vue'
 import urls from 'src/urls'
 

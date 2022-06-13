@@ -202,26 +202,6 @@ const routesObj = {
       requiresAuth: true,
     },
   },
-  // ********** Invoice List **********
-  invoiceDownload: {
-    path: '/robot/invoices',
-    name: 'invoiceDownload',
-    component: views.invoiceDownload,
-    meta: {
-      titleI18n: 'general.routes.invoices',
-      icon: 'receipt_long',
-      requiresAuth: true,
-    },
-  },
-  // ********** Invoice Details **********
-  invoiceDetails: {
-    path: '/robot/invoice/:id',
-    name: 'invoiceDetails',
-    component: views.invoiceDetails,
-    meta: {
-      requiresAuth: true,
-    },
-  },
   // ********** Digi Credentials **********
   digiCredentials: {
     path: '/robot/digi-creds',
@@ -268,6 +248,26 @@ const routesObj = {
   },
 
   // #################### Accounting ####################
+  // ********** Invoice List **********
+  invoiceList: {
+    path: '/accounting/invoices',
+    name: 'invoiceList',
+    component: views.invoiceList,
+    meta: {
+      titleI18n: 'general.routes.invoices',
+      icon: 'receipt_long',
+      requiresAuth: true,
+    },
+  },
+  // ********** Invoice Details **********
+  invoiceDetails: {
+    path: '/accounting/invoice/:id',
+    name: 'invoiceDetails',
+    component: views.invoiceDetails,
+    meta: {
+      requiresAuth: true,
+    },
+  },
   // ********** Cost **********
   costList: {
     path: '/accounting/costs',

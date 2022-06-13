@@ -49,20 +49,27 @@ export const variantAddEdit = () =>
 
 export const editVariantStatus = () =>
   import(/* webpackChunkName: "robot" */ '../views/robot/variantStatus/EditStatus.vue')
+
 export const editVariantStatusDKPC = () =>
   import(/* webpackChunkName: "robot" */ '../views/robot/variantStatusDKPC/Status.vue')
-export const invoiceDownload = () =>
-  import(/* webpackChunkName: "robot" */ '../views/robot/invoice/List.vue')
-export const invoiceDetails = () =>
-  import(/* webpackChunkName: "robot" */ '../views/robot/invoice/Details.vue')
+
 export const digiCredentials = () =>
   import(/* webpackChunkName: "robot" */ '../views/robot/digiCredentials/DigiCredentials.vue')
+
 export const scrapeInvoice = () =>
   import(/* webpackChunkName: "robot" */ '../views/robot/scrapeInvoice/scrape.vue')
+
 export const inactiveVariants = () =>
   import(/* webpackChunkName: "robot" */ '../views/robot/inactiveVariants/List.vue')
+
 export const WebRTCTest = () =>
     import(/* webpackChunkName: "robot" */ '../views/robot/call/WebRTCTest.vue')
+
+
+export const invoiceList = () =>
+  import(/* webpackChunkName: "robot" */ '../views/accounting/invoice/List.vue')
+export const invoiceDetails = () =>
+  import(/* webpackChunkName: "robot" */ '../views/accounting/invoice/Details.vue')
 
 export const costList  = () =>
   import(/* webpackChunkName: "accounting" */ '../views/accounting/cost/List.vue')
