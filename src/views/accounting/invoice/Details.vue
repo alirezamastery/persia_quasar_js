@@ -12,6 +12,11 @@
         </div>
       </div>
     </q-card-section>
+    <q-card-section>
+      <div>
+        <span class="text-h6">{{ `${$t('acc.totalCount')}: ${totalCount}` }}</span>
+      </div>
+    </q-card-section>
     <q-table
       :rows="items"
       :columns="columns"
@@ -38,6 +43,7 @@ const props = defineProps({
 })
 const invoice = ref(null)
 const items = ref([])
+const totalCount = ref(0)
 const columns = [
   {name: 'name', label: t('general.name'), field: 'name', align: 'left'},
   {name: 'count', label: t('general.count'), field: 'count', align: 'left'},
@@ -50,7 +56,8 @@ const url = urls.invoices + route.params.id + '/get_details/'
 axiosInstance.get(url)
   .then(res => {
     console.log('invoice details:', res.data)
-    items.value = res.data
+    items.value = res.data.items
+    totalCount.value = res.data.total_count
   })
 axiosInstance.get(urls.invoices + route.params.id)
   .then(res => {
