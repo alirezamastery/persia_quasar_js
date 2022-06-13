@@ -45,7 +45,7 @@ const editRoute = 'costEdit'
 const addRoute = 'costAdd'
 const columns = [
   {name: 'type', label: t('general.type'), field: 'type', align: 'left'},
-  {name: 'amount', label: t('general.amount'), field: 'amount',sortable:true},
+  {name: 'amount', label: t('general.amountToman'), field: 'amount',sortable:true},
   {name: 'date', label: t('general.date'), field: 'date'},
 ]
 

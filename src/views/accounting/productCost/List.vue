@@ -41,7 +41,7 @@ const apiRoot = urls.productCosts
 const editRoute = 'productCostEdit'
 const addRoute = 'productCostAdd'
 const columns = [
-  {name: 'amount', label: t('general.amount'), field: 'amount', align: 'left'},
+  {name: 'amount', label: t('general.amountToman'), field: 'amount', align: 'left'},
   {name: 'date', label: t('general.date'), field: 'date'},
 ]
 

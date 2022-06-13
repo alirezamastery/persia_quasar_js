@@ -41,8 +41,8 @@ const apiRoot = urls.incomes
 const editRoute = 'incomeEdit'
 const addRoute = 'incomeAdd'
 const columns = [
-  {name: 'amount', label: t('general.amount'), field: 'amount', align: 'left'},
-  {name: 'date', label: t('general.amount'), field: 'date'},
+  {name: 'amount', label: t('general.amountToman'), field: 'amount', align: 'left'},
+  {name: 'date', label: t('general.date'), field: 'date'},
 ]
 
 const filters = [
