@@ -1,7 +1,7 @@
 <template>
   <div class="custom-login-container">
 
-    <MatrixRain/>
+<!--    <MatrixRain/>-->
 
     <q-card bordered class="q-pa-md" style="z-index: 10000">
       <q-form
