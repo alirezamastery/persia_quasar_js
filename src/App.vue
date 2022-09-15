@@ -25,7 +25,7 @@
 </template>
 
 <script setup>
-import {computed, defineComponent, ref,onMounted} from 'vue'
+import {computed, defineComponent, ref, onMounted} from 'vue'
 import {useRouter, useRoute} from 'vue-router'
 import useUserStore from 'src/stores/user'
 import useGeneralStore from 'src/stores/general'
@@ -62,30 +62,46 @@ broadcastInstance.addBroadcastCallback('LOGOUT', () => {
 
 // TODO: QAjaxBar plugin
 
-async function authenticate(){
+async function authenticate() {
   await signInAnonymously(getAuth())
   await activate()
 }
 
-async function activate(){
-  const token = await getToken(messaging , {
-    vapidKey: process.env.VUE_APP_VAPID_KEY
+async function activate() {
+  const token = await getToken(messaging, {
+    vapidKey: process.env.VUE_APP_VAPID_KEY,
   })
+  console.log('firebase token:', token)
 
-  if (token){
+  if (token) {
     console.log('firebase token:', token)
-  }else {
+  } else {
     // request permission
   }
 }
 
-onMounted(()=>{
+onMounted(async () => {
   const messaging = getMessaging()
-  onMessage(messaging , (payload)=>{
-    console.log('firebase message when alive:' , payload)
+  await authenticate()
+  onMessage(messaging, (payload) => {
+    console.log('firebase message when alive:', payload)
   })
 })
 
-authenticate()
+// getToken(messaging, { vapidKey: process.env.VUE_APP_VAPID_KEY })
+//   .then((currentToken) => {
+//     console.log('****************************', currentToken)
+//   if (currentToken) {
+//     // Send the token to your server and update the UI if necessary
+//     // ...
+//   } else {
+//     // Show permission request UI
+//     console.log('No registration token available. Request permission to generate one.');
+//     // ...
+//   }
+// }).catch((err) => {
+//   console.log('An error occurred while retrieving token. ', err);
+//   // ...
+// });
 
 </script>
