@@ -35,7 +35,7 @@
             :label="$t('products.selectorValues')"
             :query-param="'search'"
             :obj-repr-field="'value'"
-            :api="urls.productTypeSelectorValues"
+            :api="urls.variantSelectors"
             :rules="[isRequired]"
           />
         </div>
@@ -124,7 +124,6 @@ const {formTitle, initialize, saveItem, editingItemId} = useAddEdit(
   form,
   apiRoot,
   listViewRoute,
-  ()
 )
 
 // const editingItemId = computed(() => route.params.id)

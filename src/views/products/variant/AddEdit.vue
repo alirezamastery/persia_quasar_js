@@ -37,7 +37,7 @@
             :label="$t('products.selectorValues')"
             :query-param="'search'"
             :obj-repr-field="'value'"
-            :api="urls.productTypeSelectorValues"
+            :api="urls.variantSelectors"
             :rules="[isRequired]"
           />
         </div>

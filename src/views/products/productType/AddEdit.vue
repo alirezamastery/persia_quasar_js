@@ -19,11 +19,11 @@
       <div class="row q-ma-sm">
         <div class="col col-xs-12 col-md-6 col-lg-4 col-xl-3">
           <AutoComplete
-            v-model="form.selector.id"
+            v-model="form.selector_type.id"
             :label="$t('products.productTypeSelector')"
             :query-param="'search'"
             :obj-repr-field="'title'"
-            :api="urls.productTypeSelectors"
+            :api="urls.variantSelectorTypes"
             :rules="[isRequired]"
           />
         </div>
@@ -71,7 +71,7 @@ export default {
       itemType: 'products.productType',
       form: {
         title: '',
-        selector: {id: null},
+        selector_type: {id: null},
       },
     }
   },
@@ -87,7 +87,7 @@ export default {
     getRequestData() {
       return {
         title: this.form.title,
-        selectors: this.form.selector.id,
+        selector_type: this.form.selector_type.id,
       }
     },
   },
