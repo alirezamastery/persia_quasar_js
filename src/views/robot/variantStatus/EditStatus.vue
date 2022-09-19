@@ -199,7 +199,7 @@ function handleVariantSelect(id) {
 
 function selectorStyles(selector) {
   console.log('selectorStyles | selector:', selector)
-  if (selector.selector.title === 'color') {
+  if (selector.selector_type.title === 'color') {
     if (selector['digikala_id'] === 1) {
       return {
         'background-color': '#000000',
