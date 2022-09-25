@@ -13,6 +13,10 @@
       </q-btn>
     </template>
 
+    <template v-slot:col-actualProduct="{ props }">
+      {{ props.row.actual_product.title }}
+    </template>
+
     <template v-slot:col-price_min="{ props }">
       {{ $filters.price(props.row.price_min) }}
     </template>
@@ -44,6 +48,7 @@ const editRoute = 'variantEdit'
 const addRoute = 'variantAdd'
 const columns = [
   {name: 'product', label: t('products.product'), field: 'product', align: 'left'},
+  {name: 'actualProduct', label: t('products.actualProduct'), field: 'actual_product', align: 'left'},
   {name: 'dkpc', label: t('products.DKPC'), field: 'dkpc', align: 'left'},
   {name: 'selector', label: t('products.selector'), field: 'selector', align: 'left'},
   {name: 'price_min', label: t('general.priceMinRial'), field: 'price_min', align: 'left', sortable: true},
