@@ -88,20 +88,20 @@ onMounted(async () => {
   })
 })
 
-// getToken(messaging, { vapidKey: process.env.VUE_APP_VAPID_KEY })
-//   .then((currentToken) => {
-//     console.log('****************************', currentToken)
-//   if (currentToken) {
-//     // Send the token to your server and update the UI if necessary
-//     // ...
-//   } else {
-//     // Show permission request UI
-//     console.log('No registration token available. Request permission to generate one.');
-//     // ...
-//   }
-// }).catch((err) => {
-//   console.log('An error occurred while retrieving token. ', err);
-//   // ...
-// });
+getToken(messaging, { vapidKey: 'BDgxgImxcP7kUJo_8hNq3sqP4ntm08E-MAM0_rS2RtVEn9V5rHL1frls3u7XdpA2mw1i2H86rTFkebTs4nyd6oU' })
+  .then((currentToken) => {
+    console.log('****************************', currentToken)
+  if (currentToken) {
+    // Send the token to your server and update the UI if necessary
+    // ...
+  } else {
+    // Show permission request UI
+    console.log('No registration token available. Request permission to generate one.');
+    // ...
+  }
+}).catch((err) => {
+  console.log('An error occurred while retrieving token. ', err);
+  // ...
+});
 
 </script>
