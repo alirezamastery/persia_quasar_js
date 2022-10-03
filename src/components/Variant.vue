@@ -6,19 +6,24 @@
         <div class="col-xs-12 col-sm-3 col-md-1 col-lg-1 text-h6 flex flex-center">
           <img :src="variant.dk.product.image" alt="" style="max-width: 60px;max-height: 60px"/>
         </div>
-        <div class="col-xs-12 col-sm-9 col-md-5 col-lg-3 text-h6">
-          {{ variant.product.title }}
-        </div>
-        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-1 text-body1">
-          {{ variant.selector.value }}
-        </div>
         <q-btn
           type="a"
           target="_blank"
-          class="col-xs-12 col-sm-6 col-md-3 col-lg-1 text-body1"
+          class="col-xs-12 col-sm-9 col-md-5 col-lg-3 text-h6"
+          color="blue"
+          flat
           :href="`https://www.digikala.com/product/dkp-${variant.product.dkp}`"
         >
-          {{ variant.dkpc }}
+          {{ variant.product.title }}
+        </q-btn>
+        <q-btn
+          flat
+          rounded
+          :glossy="variant.selector.selector_type.title === 'color'"
+          class="col-xs-12 col-sm-6 col-md-2 col-lg-1 text-body1 q-my-sm"
+          :style="visualizeVariantSelector(variant.selector)"
+        >
+          {{ variant.selector.value }}
         </q-btn>
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3 offset-lg-3">
           <q-toggle
@@ -194,6 +199,7 @@ import {axiosInstance} from 'src/boot/axios'
 import urls from 'src/urls'
 import {notifyAxiosError, notifyMessage} from 'src/composables/notif'
 import {useI18n} from 'vue-i18n'
+import {visualizeVariantSelector} from '../utils'
 
 
 const {t} = useI18n()

@@ -126,6 +126,7 @@
   "quantity": "تعداد",
   "call": "تماس",
   "users": "کاربرها",
+  "seeInDk": "در دیجیکالا",
   "alert": {
     "saveSuccess": "{type} \"{item}\" با موفقیت ثبت شد",
     "saveSuccessGeneral": "{type} با موفقیت ثبت شد",
@@ -137,7 +138,8 @@
     "saveError": "خطا در ثبت",
     "deleteError": "خطا در حذف",
     "saveSuccess": "تغییرات با موفقیت ثبت شد",
-    "fileFormatError": "فرمت فایل مورد قبول نیست"
+    "fileFormatError": "فرمت فایل مورد قبول نیست",
+    "enterStockPLease": "لطفا تعداد موجودی را وارد کنید"
   },
   "Q": {
     "deleteConfirm": "آیا مطمئن هستید که میخواهید {type} \"{item}\" را حذف کنید؟",

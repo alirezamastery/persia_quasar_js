@@ -12,6 +12,8 @@
           size="lg"
           class="full-width"
           :class="selectedBtnClass(brand.id === selectedIds.brand, $q.dark.isActive)"
+          :glossy="brand.id === selectedIds.brand"
+          :outline="brand.id !== selectedIds.brand"
           @click="handleBrandSelect(brand.id)"
         >
           {{ brand.title }}
@@ -29,11 +31,12 @@
           class="col-xs-12 col-sm-6 col-md-4 col-lg-2"
         >
           <q-btn
-            color="primary"
             size="md"
             class="full-width full-height"
             :class="selectedBtnClass(actual.id === selectedIds.actualProduct, $q.dark.isActive)"
             @click="handleActualProductSelect(actual.id)"
+            :glossy="actual.id === selectedIds.actualProduct"
+            :outline="actual.id !== selectedIds.actualProduct"
           >
             {{ actual.title }}
           </q-btn>
@@ -48,12 +51,12 @@
         <div
           v-for="selector in relatedSelectors"
           :key="selector.id"
-          class="col-xs-12 col-sm-6 col-md-3 col-lg-2"
+          class="col-xs-12 col-sm-6 col-md-3 col-lg-1"
         >
           <q-btn
             flat
             rounded
-            :style="selectorStyles(selector)"
+            :style="visualizeVariantSelector(selector)"
             @click="handleRelatedSelectorSelect(selector.id)"
           >
             <div class="no-wrap row">
@@ -72,12 +75,14 @@
         <div
           v-for="variant in variants"
           :key="variant.id"
-          class="col-xs-12 col-sm-6 col-lg-4"
+          class="col-xs-12 col-sm-6 col-md-4 col-lg-2"
         >
           <q-btn
-            color="primary"
             @click="handleVariantSelect(variant.dkpc)"
-            :class="selectedBtnClass(variant.dkpc === selectedIds.variant,$q.dark.isActive)"
+            :class="selectedBtnClass(variant.dkpc === selectedIds.variant, $q.dark.isActive)"
+            class="full-height"
+            :glossy="variant.dkpc === selectedIds.variant"
+            :outline="variant.dkpc !== selectedIds.variant"
           >
             {{ `${variant.product.title} ${variant.selector.value}` }}
           </q-btn>
@@ -100,6 +105,7 @@ import Variant from 'src/components/Variant.vue'
 import {axiosInstance} from 'src/boot/axios'
 import {notifyAxiosError, notifyErrors} from 'src/composables/notif'
 import {scroll} from 'quasar'
+import {visualizeVariantSelector} from 'src/utils'
 
 const {getScrollTarget, setVerticalScrollPosition} = scroll
 
@@ -193,33 +199,14 @@ function handleVariantSelect(dkpc) {
       el.scrollIntoView({behavior: 'smooth', block: 'start', inline: 'nearest'})
     })
     .catch(err => {
-      // notifyAxiosError(err)
+      console.log('handleVariantSelect | error:', err)
     })
-}
-
-function selectorStyles(selector) {
-  if (selector.selector_type.title === 'color') {
-    if (selector['digikala_id'] === 1) {
-      return {
-        'background-color': '#000000',
-        'color': '#FFFFFF',
-      }
-    }
-    return {
-      'background-color': selector['extra_info'],
-      'color': 'black',
-    }
-  }
-  return {}
 }
 
 function selectedBtnClass(isSelected, isDark) {
   if (isSelected) {
     return 'bg-green text-white'
-  } else if (isDark) {
-    return 'bg-blue text-grey-10'
-  } else {
-    return 'bg-blue text-white'
   }
+  return ''
 }
 </script>
