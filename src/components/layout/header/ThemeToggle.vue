@@ -10,7 +10,7 @@
   <q-btn
     v-else
     text-color="black"
-    icon="dark_mode"
+    icon="nightlight_round"
     class="bg-transparent"
     @click="handleThemeToggle"
     flat

@@ -20,7 +20,7 @@
           flat
           rounded
           :glossy="variant.selector.selector_type.title === 'color'"
-          class="col-xs-12 col-sm-6 col-md-2 col-lg-1 text-body1 q-my-sm"
+          class="col-xs-12 col-sm-6 col-md-2 col-lg-1 text-body1 q-ma-sm"
           :style="visualizeVariantSelector(variant.selector)"
         >
           {{ variant.selector.value }}
