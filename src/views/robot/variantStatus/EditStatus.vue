@@ -76,8 +76,8 @@
         >
           <q-btn
             color="primary"
-            @click="handleVariantSelect(variant.id)"
-            :class="selectedBtnClass(variant.id === selectedIds.variant,$q.dark.isActive)"
+            @click="handleVariantSelect(variant.dkpc)"
+            :class="selectedBtnClass(variant.dkpc === selectedIds.variant,$q.dark.isActive)"
           >
             {{ `${variant.product.title} ${variant.selector.value}` }}
           </q-btn>
@@ -180,9 +180,9 @@ function handleRelatedSelectorSelect(selectorId) {
     })
 }
 
-function handleVariantSelect(id) {
-  selectedIds.value.variant = id
-  const url = urls.variantDigiData + id + '/'
+function handleVariantSelect(dkpc) {
+  selectedIds.value.variant = dkpc
+  const url = urls.variantDigiDataDKPC + dkpc + '/'
   axiosInstance.get(url)
     .then(async (res) => {
       console.log('handleVariantSelect', res.data)
@@ -198,7 +198,6 @@ function handleVariantSelect(id) {
 }
 
 function selectorStyles(selector) {
-  console.log('selectorStyles | selector:', selector)
   if (selector.selector_type.title === 'color') {
     if (selector['digikala_id'] === 1) {
       return {

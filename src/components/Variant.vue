@@ -4,7 +4,7 @@
       <!--  First Row START -->
       <div class="row items-center q-col-gutter-sm">
         <div class="col-xs-12 col-sm-3 col-md-1 col-lg-1 text-h6 flex flex-center">
-          <img :src="variant['image_src']" alt="" style="max-width: 60px;max-height: 60px"/>
+          <img :src="variant.dk.product.image" alt="" style="max-width: 60px;max-height: 60px"/>
         </div>
         <div class="col-xs-12 col-sm-9 col-md-5 col-lg-3 text-h6">
           {{ variant.product.title }}
@@ -48,7 +48,7 @@
                 outline
                 disable
               >
-                {{ `${$t('products.ordered')}: ${variant.reserved}` }}
+                {{ `${$t('products.ordered')}: ${variant.dk.stock.dk_reserved_stock}` }}
               </q-btn>
             </div>
             <div class="col-6">
@@ -56,7 +56,7 @@
                 outline
                 disable
               >
-                {{ `${$t('products.inDigiStock')}: ${variant['warehouse_stock']}` }}
+                {{ `${$t('products.inDigiStock')}: ${variant.dk.stock.dk_stock}` }}
               </q-btn>
             </div>
           </div>
@@ -240,14 +240,14 @@ setInitialValues()
 function setInitialValues() {
   initialPriceMin.value = props.variant['price_min'].toString()
   newPriceMin.value = formatIntNumber(props.variant['price_min'].toString())
-  initialPrice.value = props.variant['price'].toString()
-  initialStock.value = props.variant['our_stock'].toString()
+  initialPrice.value = props.variant.dk.price.selling_price.toString()
+  initialStock.value = props.variant.dk.stock.seller_stock.toString()
   initialStopLoss.value = props.variant['stop_loss'].toString()
-  newPrice.value = formatIntNumber(props.variant['price'].toString())
-  newStock.value = props.variant['our_stock'].toString()
+  newPrice.value = formatIntNumber(props.variant.dk.price.selling_price.toString())
+  newStock.value = props.variant.dk.stock.seller_stock.toString()
   newStopLoss.value = formatIntNumber(props.variant['stop_loss'].toString())
-  robotStatus.value = props.variant['is_active']
-  digiStatus.value = props.variant['is_digi_active']
+  robotStatus.value = props.variant.is_active
+  digiStatus.value = props.variant.dk.is_active
 }
 
 function revertDigiChange() {
