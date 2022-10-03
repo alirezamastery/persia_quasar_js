@@ -8,7 +8,6 @@ export const logger = (...msg) => {
 }
 
 export function visualizeVariantSelector(selector) {
-  console.log('selector', selector)
   if (selector.selector_type.title === 'color') {
     if (selector['digikala_id'] === 1) {
       return {
