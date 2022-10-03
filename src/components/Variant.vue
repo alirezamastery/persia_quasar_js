@@ -261,13 +261,17 @@ function revertAtlasDataChange() {
 }
 
 function handleDigiStatusUpdate(event) {
-  loadingDigiStatus.value = true
+  if (!!event && initialStock.value === '0') {
+    notifyMessage('warning', t('general.snack.enterStockPLease'))
+    digiStatus.value = !event
+    return
+  }
   const data = {
-    'dkpc': props.variant.dkpc,
     'is_active': !!event,
   }
   digiStatus.value = !!event
-  axiosInstance.post(urls.updateVariantStatus, data)
+  const url = urls.updateVariantData + props.variant.dkpc + '/'
+  axiosInstance.post(url, data)
     .then(res => {
       console.log('handleDigiStatusUpdate | res', res)
       console.log('handleDigiStatusUpdate | digiStatus', digiStatus.value)
@@ -284,23 +288,22 @@ function handleDigiStatusUpdate(event) {
 function handleDigiDataUpdate() {
   loadingDigiData.value = true
   const data = {
-    'dkpc': props.variant.dkpc,
     'price': removeCommas(newPrice.value),
-    'our_stock': newStock.value,
+    'seller_stock': newStock.value,
   }
-  axiosInstance.post(urls.updateVariantData, data)
+  const url = urls.updateVariantData + props.variant.dkpc + '/'
+  axiosInstance.post(url, data)
     .then(res => {
       console.log('handleDigiDataUpdate | res', res)
       const data = res.data
-      initialPrice.value = data['price_sale_latin'].toString()
-      initialStock.value = data['marketplace_seller_stock_latin'].toString()
+      initialPrice.value = data.price.selling_price.toString()
+      initialStock.value = data.stock.seller_stock.toString()
       newPrice.value = initialPrice.value
       newStock.value = initialStock.value
       notifyMessage('info', t('general.snack.saveSuccess'))
     })
     .catch(err => {
       console.log('handleDigiDataUpdate | error', err)
-      // notifyAxiosError(err)
     })
     .finally(() => loadingDigiData.value = false)
 }
@@ -308,7 +311,6 @@ function handleDigiDataUpdate() {
 function handleRobotStatusUpdate(event) {
   loadingRobotStatus.value = true
   const data = {
-    'dkpc': props.variant.dkpc,
     'is_active': !!event,
   }
   console.log('data', data)
@@ -330,7 +332,6 @@ function handleRobotStatusUpdate(event) {
 function handleAtlasUpdate() {
   loadingAtlasData.value = true
   const data = {
-    'dkpc': props.variant.dkpc,
     'price_min': parseInt(removeCommas(newPriceMin.value)),
     'stop_loss': parseInt(removeCommas(newStopLoss.value)),
   }
