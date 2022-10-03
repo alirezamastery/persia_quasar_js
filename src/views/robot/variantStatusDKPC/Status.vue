@@ -25,7 +25,7 @@
     </template>
 
     <template v-if="notFound">
-      <q-separator class="q-my-lg" inset id="variant"/>
+      <q-separator class="q-my-lg" inset id="variant-not-found"/>
       <span>{{ $t('general.noItemsFound') }}</span>
     </template>
 
