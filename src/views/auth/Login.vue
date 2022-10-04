@@ -3,7 +3,20 @@
 
 <!--    <MatrixRain/>-->
 
-    <q-card bordered class="q-pa-md" style="z-index: 10000">
+    <div
+      v-show="isLoading"
+      class="absolute-full flex flex-center justify-center"
+    >
+      <div class="fixed-full bg-grey" style="opacity: 0.5;z-index: 2000"></div>
+      <q-spinner-tail
+        size="10rem"
+        color="teal-5"
+        class="fixed"
+        style="z-index: 3000"
+      />
+    </div>
+
+    <q-card bordered class="q-pa-md" style="z-index: 1000">
       <q-form
         @submit.prevent="handleSubmit"
         class="q-gutter-md"
@@ -81,8 +94,11 @@ const form = reactive({
   mobile: '',
   password: '',
 })
+const isLoading = ref(false)
 
 function handleSubmit() {
+  isLoading.value = true
+  storeCredentials()
   axiosInstance.post(urls.token, form)
     .then(res => {
       console.log('Login', res)
@@ -95,6 +111,7 @@ function handleSubmit() {
     .catch(err => {
       console.log('axios error:', err)
     })
+    .finally(() => isLoading.value = false)
 }
 
 function handleShowPassword() {
