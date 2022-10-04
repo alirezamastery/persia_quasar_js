@@ -2,5 +2,6 @@
   "robot": "ربات",
   "invoices": "صورت حساب ها",
   "digiPassword": "پسورد دیجیکالا",
-  "getReport": "دریافت گزارش"
+  "getReport": "دریافت گزارش",
+  "invoiceRowNumber" : "شماره ردیف صورت حساب در سایت دیجیکالا"
 }

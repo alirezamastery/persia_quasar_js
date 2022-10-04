@@ -22,19 +22,35 @@
         اونقدر بزن تا بالاخره اوکی شه. چون لاجیکش درسته ولی safety زیاد نذاشتم براش.
       </li>
       <li>
-        در ضمن کار کردن ربات به باز بودن این صفحه ربطی نداره.بعد از زدن دکمه میتونید این صفحه رو ببندید
+        در ضمن کار کردن ربات به باز بودن این صفحه ربطی نداره. بعد از زدن دکمه میتونید این صفحه رو ببندید
+      </li>
+      <li class="text-red">
+        حداکثر شماره ردیف قابل پشتیبانی 10 می باشد
       </li>
     </ul>
 
     <div>
-      <q-btn
-        v-if="taskId === null"
-        @click="handleScrape"
-        color="primary"
-        class="q-ma-sm"
-      >
-        {{ $t('general.start') }}
-      </q-btn>
+      <div v-if="taskId === null">
+        <div class="q-mt-md q-mb-sm">
+          {{ $t('robot.invoiceRowNumber') + ':' }}
+        </div>
+        <q-input
+          v-model="rowNumber"
+          type="number"
+          min="1"
+          max="10"
+          style="width: 200px"
+          filled
+          :rules="[positiveNaturalNumber]"
+        />
+        <q-btn
+          @click="handleScrape"
+          color="primary"
+          class="q-ma-sm"
+        >
+          {{ $t('general.start') }}
+        </q-btn>
+      </div>
       <q-spinner-gears
         v-else-if="taskId && !taskDone"
         color="amber"
@@ -55,6 +71,7 @@ import urls from 'src/urls'
 import {notifyAxiosError, notifyErrors, notifyMessage} from 'src/composables/notif'
 import {useRouter} from 'vue-router'
 import {useI18n} from 'vue-i18n'
+import {positiveNaturalNumber} from 'src/composables/form-validation'
 
 const router = useRouter()
 const {t} = useI18n()
@@ -62,6 +79,7 @@ const {t} = useI18n()
 const taskId = ref(null)
 const taskState = ref(null)
 const taskDone = ref(null)
+const rowNumber = ref(1)
 
 const stateInterval = ref(null)
 const taskColors = {
@@ -80,7 +98,8 @@ function stopChecking() {
 
 function handleScrape() {
   taskDone.value = false
-  axiosInstance.post(urls.scrapeInvoice)
+  const data = {'row_number': rowNumber.value}
+  axiosInstance.post(urls.scrapeInvoice, data)
     .then(res => {
       console.log('scrape task res', res)
       taskId.value = res.data.task_id
