@@ -51,7 +51,7 @@
         <div
           v-for="selector in relatedSelectors"
           :key="selector.id"
-          class="col-xs-12 col-sm-6 col-md-3 col-lg-1"
+          class="col-xs-12 col-sm-6 col-md-3 col-lg-2"
         >
           <q-btn
             flat
@@ -180,9 +180,14 @@ function handleRelatedSelectorSelect(selectorId) {
       console.log('variants:', res.data)
       variants.value = res.data
       variant.value = null
-      await nextTick()
-      const el = document.getElementById('variants')
-      el.scrollIntoView({behavior: 'smooth', block: 'start', inline: 'nearest'})
+
+      if (variants.value.length === 1) {
+        handleVariantSelect(variants.value[0].dkpc)
+      } else {
+        await nextTick()
+        const el = document.getElementById('variants')
+        el.scrollIntoView({behavior: 'smooth', block: 'start', inline: 'nearest'})
+      }
     })
 }
 
