@@ -36,13 +36,22 @@
             />
           </template>
         </q-input>
-        <q-btn
-          :label="$t('general.submit')"
-          type="submit"
-          color="green"
-          ripple
-          size="lg"
-        />
+        <div class="col">
+          <q-checkbox
+            v-model="rememberMe"
+            :label="$t('general.rememberMe')"
+          />
+        </div>
+        <div class="col flex justify-center">
+          <q-btn
+            :label="$t('general.routes.login')"
+            type="submit"
+            color="green"
+            ripple
+            size="lg"
+            style="min-width: 120px"
+          />
+        </div>
       </q-form>
     </q-card>
 
@@ -67,6 +76,7 @@ const userStore = useUserStore()
 const wsStore = useWebsocketStore()
 const router = useRouter()
 const showPassword = ref(false)
+const rememberMe = ref(false)
 const form = reactive({
   mobile: '',
   password: '',
@@ -89,6 +99,27 @@ function handleSubmit() {
 
 function handleShowPassword() {
   showPassword.value = !showPassword.value
+}
+
+function storeCredentials() {
+  q.localStorage.set('rememberMe', rememberMe.value)
+  if (rememberMe.value) {
+    q.localStorage.set('credentials', form)
+  } else {
+    q.localStorage.remove('credentials')
+  }
+}
+
+let rem = q.localStorage.getItem('rememberMe')
+if (rem === null) {
+  rem = false
+  q.localStorage.set('rememberMe', false)
+}
+rememberMe.value = rem
+if (rememberMe.value) {
+  const credentials = q.localStorage.getItem('credentials')
+  form.mobile = credentials.mobile
+  form.password = credentials.password
 }
 
 </script>
