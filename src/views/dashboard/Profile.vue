@@ -247,9 +247,6 @@ axiosInstance.get(urls.userProfile)
   .then(res => {
     console.log('Profile response', res)
     form.value = res.data
-    if (form.value.avatar !== null) {
-      form.value.avatar = process.env.SERVER_BASE_URL + form.value.avatar
-    }
     console.log('form data:', form.value)
   })
   .catch(err => {

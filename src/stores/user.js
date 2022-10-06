@@ -56,10 +56,7 @@ export const useUserStore = defineStore({
     SetProfile(payload) {
       this.profile = payload
       for (const [key, value] of Object.entries(payload)) {
-        let val = value
-        if (key === 'avatar' && value !== null)
-          val = process.env.SERVER_BASE_URL + value
-        this.profile[key] = val
+        this.profile[key] = value
       }
     },
   },
