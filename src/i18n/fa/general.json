@@ -45,6 +45,7 @@
   "ok": "ردیفه",
   "rememberMe": "مرا به خاطر بسپار",
   "create": "ایجاد",
+  "bulkCreate": "ایجاد گروهی",
   "change": "تغییر",
   "number": "شماره",
   "brands": "برندها",
@@ -142,7 +143,9 @@
     "deleteError": "خطا در حذف",
     "saveSuccess": "تغییرات با موفقیت ثبت شد",
     "fileFormatError": "فرمت فایل مورد قبول نیست",
-    "enterStockPLease": "لطفا تعداد موجودی را وارد کنید"
+    "enterStockPLease": "لطفا تعداد موجودی را وارد کنید",
+    "duplicateDkpc": "مقدارهای dkpc نباید تکراری باشد",
+    "duplicateSelector": "مقدار انتخابگرها نباید تکراری باشد"
   },
   "Q": {
     "deleteConfirm": "آیا مطمئن هستید که میخواهید {type} \"{item}\" را حذف کنید؟",

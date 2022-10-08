@@ -1,5 +1,4 @@
 import * as views from './chunks'
-import {profitByDate} from './chunks'
 
 const routesObj = {
   Home: {
@@ -173,6 +172,15 @@ const routesObj = {
     path: '/variants/edit/:id?',
     name: 'variantEdit',
     component: views.variantAddEdit,
+    props: true,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  variantBulkCreate: {
+    path: '/variants/bulk-create',
+    name: 'variantBulkCreate',
+    component: views.variantBulkCreate,
     props: true,
     meta: {
       requiresAuth: true,

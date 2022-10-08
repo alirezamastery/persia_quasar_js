@@ -45,7 +45,8 @@ export const variantsList = () =>
   import(/* webpackChunkName: "products" */ '../views/products/variant/List.vue')
 export const variantAddEdit = () =>
   import(/* webpackChunkName: "products" */ '../views/products/variant/AddEdit.vue')
-
+export const variantBulkCreate = () =>
+  import(/* webpackChunkName: "products" */ '../views/products/variant/BulkCreate.vue')
 
 export const editVariantStatus = () =>
   import(/* webpackChunkName: "robot" */ '../views/robot/variantStatus/EditStatus.vue')

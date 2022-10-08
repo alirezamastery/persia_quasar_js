@@ -4,6 +4,7 @@
     <Header
       :title="title"
       :add-route="addRoute"
+      :extra-links="extraLinks"
     />
 
     <div class="row no-wrap-md">
@@ -107,6 +108,7 @@ const props = defineProps({
   columns: {type: Array, required: true},
   editRoute: {type: String, required: false, default: null},
   addRoute: {type: String, required: false, default: null},
+  extraLinks: {type: Array, required: false, default: () => ([])},
   itemKey: {type: String, required: false, default: 'id'},
   denseRows: {type: Boolean, required: false, default: true},
   filters: {type: Array, required: false, default: () => ([])},

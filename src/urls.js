@@ -16,6 +16,7 @@ export const urls = {
   variantSelectorTypes: 'products/variant-selector-types/',
   variantSelectors: 'products/variant-selectors/',
   variants: 'products/variants/',
+  variantBulkCreate: 'products/variants/bulk-create/',
   brandsAll: 'products/brands-all/',
   actualProductByBrand: 'products/actual-product-by-brand/{0}/',
   robotVariantsFilter: 'products/robot-variants/',

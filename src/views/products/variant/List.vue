@@ -5,6 +5,7 @@
     :api-root="apiRoot"
     :add-route="addRoute"
     :filters="filters"
+    :extra-links="extraLinks"
   >
 
     <template v-slot:col-product="{ props }">
@@ -73,6 +74,10 @@ const filters = [
     queryParam: 'has_competition',
     label: 'general.hasCompetition',
   },
+]
+
+const extraLinks = [
+  {routeName:'variantBulkCreate', title:t('general.bulkCreate')}
 ]
 
 </script>

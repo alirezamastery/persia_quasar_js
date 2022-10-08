@@ -5,6 +5,18 @@
     <div class="col">
       <span class="text-h5">{{ title }}</span>
     </div>
+    <template
+      v-for="(link,i) in extraLinks"
+      :key="i"
+    >
+      <q-btn
+        color="primary"
+        class="q-mr-sm"
+        @click="$router.push({name:link.routeName})"
+      >
+        {{ link.title }}
+      </q-btn>
+    </template>
     <q-space/>
     <q-btn
       v-if="addRoute"
@@ -29,6 +41,11 @@ export default {
       type: String,
       required: false,
       default: null,
+    },
+    extraLinks: {
+      type: Array,
+      required: false,
+      default: () => ([]),
     },
   },
 }
